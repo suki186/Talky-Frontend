@@ -7,6 +7,7 @@ import { AfterMainBox } from "./components/AfterMainBox";
 import { StarMenuBox } from "./components/StarMenuBox";
 import { AfterLocationBox } from "./components/AfterLocationBox";
 import { BeforeMainBox } from "./components/BeforeMainBox";
+import { COLORS } from "../../styles/color";
 
 const TalkTalkScreen = () => {
   const [started, setStarted] = useState(false);
@@ -24,22 +25,21 @@ const TalkTalkScreen = () => {
 
         <TalkInput />
 
-        <>
-          { !started && (
-            <BeforeMainBox onStart = { (location, text) => {
-              setSelectedLocation(location);
-              setStateText(text);
-              setStarted(true);
-            }} />
-          )}
-
-          { started && (
+        { !started ? (
+            <BeforeMainBox 
+              onStart = { (location, text) => {
+                if (!location || !text.trim()) return;
+                setSelectedLocation(location);
+                setStateText(text);
+                setStarted(true);
+              }}
+            />
+        ) : (
             <>
               <AfterLocationBox location = { selectedLocation } mystate = { stateText } />
               <AfterMainBox selectedLocation = { selectedLocation } stateText = { stateText } />
             </>
           )}
-        </> 
 
         <StarMenuBox />
       </View>
@@ -51,9 +51,9 @@ export default TalkTalkScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    height: 780,
     paddingTop: 40, 
-    backgroundColor: "#FFFEF6",
+    backgroundColor: COLORS.BACKGROUND,
     alignItems: "center", 
     gap: 18
   },

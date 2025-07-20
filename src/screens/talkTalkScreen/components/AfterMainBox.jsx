@@ -3,6 +3,7 @@ import { AfterMainSentence } from "./AfterMainSentence";
 
 import RESET from "../../../assets/images/talktalk/reset.png";
 import { useState } from "react";
+import { COLORS } from "../../../styles/color";
 
 export const AfterMainBox = ({ selectedLocation, stateText }) => {
     const [sentences, setSentences] = useState([
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     container: {
         width: 327.33,
         height: 256,
-        backgroundColor: "#FFEC9F",
+        backgroundColor: COLORS.MAIN_YELLOW2,
         borderRadius: 33.33,
         padding: 12
     },
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     RecomTitle: {
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#FFD321",
+        backgroundColor: COLORS.MAIN_YELLOW3,
         borderRadius: 16.67,     
         paddingHorizontal: 10,
         paddingVertical: 6.67

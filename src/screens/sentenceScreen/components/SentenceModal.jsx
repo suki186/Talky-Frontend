@@ -9,18 +9,18 @@ import DELETED from "../../../assets/images/talktalk/deleted.png";
 import { SentenceRow } from "./SentenceRow";
 import Dialog from "../../../components/dialog/Dialog";
 import { truncateText } from "../../../utils/truncateText";
-import { useSentenceModal } from "../../../hooks/useSentenceModal";
+import { useDialogOpen } from "../../../hooks/useDialogOpen";
 
 export const SentenceModal = ({ visible, onClose, sentences  }) => {
     const {
         deleted,
         dialogVisible,
-        pendingDeleteIndex,
-        targetSentence,
+        targetIndex,
+        targetItem,
         openDialog,
         handleRealDelete,
         handleCancel,
-    } = useSentenceModal(sentences);    
+    } = useDialogOpen();    
 
     return (
         <Modal
@@ -53,10 +53,10 @@ export const SentenceModal = ({ visible, onClose, sentences  }) => {
                                 <SentenceRow
                                     key = { index }
                                     index = { index }
-                                    text = { sentences[index] }
+                                    text = { sentence }
                                     deleted = { deleted }
-                                    onDelete = { openDialog }
-                                    isPending = { index === pendingDeleteIndex }
+                                    onDelete = { () => openDialog(index, sentence) }
+                                    isPending = { index === targetIndex }
                                 />
                             );
                         })}
@@ -66,7 +66,7 @@ export const SentenceModal = ({ visible, onClose, sentences  }) => {
                 <Dialog 
                     visible = { dialogVisible }
                     title = "즐겨찾기 문장 삭제"
-                    message = { `[${truncateText(targetSentence)}]` }
+                    message = { `[${truncateText(targetItem)}]` }
                     subMessage = "즐겨찾기 한 문장을 삭제할까요?"
                     cancelText = "취소"
                     confirmText = "삭제하기"

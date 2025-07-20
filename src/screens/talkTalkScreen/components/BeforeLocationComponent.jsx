@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native"
+import { COLORS } from "../../../styles/color";
 
 export const BeforeLocationComponent = ({ selected, onSelect }) => {
     const locationList = [
@@ -34,13 +35,11 @@ export const BeforeLocationComponent = ({ selected, onSelect }) => {
 
 const styles = StyleSheet.create({
     container: {
-        display: "flex",
         flexDirection: "column",
         gap: 16
     },
 
     row: {
-        display: "flex",
         flexDirection: "row",
         gap: 16
     },
@@ -49,18 +48,18 @@ const styles = StyleSheet.create({
         width: 58,
         height: 34,
         borderRadius: 43.54,
-        display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#FFFFFF"
+        backgroundColor: COLORS.WHITE
     },
 
     selectedBox: {
-        backgroundColor: "#FFD321"
+        backgroundColor: COLORS.MAIN_YELLOW3
     },
 
     locationText: {
         fontSize: 15.68,
-        fontWeight: 400
+        fontWeight: "400",
+        lineHeight: 20
     }
 })

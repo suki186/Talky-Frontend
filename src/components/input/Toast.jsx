@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react"
 import { Animated, StyleSheet, Text } from "react-native"
+import { COLORS } from "../../styles/color";
 
-export const StarToast = ({ onHide }) => {
+export const Toast = ({ onHide, message }) => {
     const Animating = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -26,7 +27,7 @@ export const StarToast = ({ onHide }) => {
             toastStyles.toast,
             { opacity: Animating }
         ]}>
-            <Text style = { toastStyles.toastText }>즐겨찾기 완료</Text>
+            <Text style = { toastStyles.toastText }>{ message }</Text>
         </Animated.View>
     )
 }
@@ -47,7 +48,7 @@ const toastStyles = StyleSheet.create({
     },
 
     toastText: {
-        color: "#343434",
+        color: COLORS.BLACK,
         fontSize: 12,
         fontWeight: "400",
         lineHeight: 14

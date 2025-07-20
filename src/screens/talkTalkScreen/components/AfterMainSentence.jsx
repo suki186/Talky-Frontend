@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { COLORS } from "../../../styles/color"
 
 export const AfterMainSentence = ({ onPress, isSelected, text, pressed }) => {
     return (
@@ -10,9 +11,7 @@ export const AfterMainSentence = ({ onPress, isSelected, text, pressed }) => {
                     opacity: pressed !== undefined ? (pressed ? 1 : 0.5) : (isSelected ? 1 : 0.5)
                 }]}
         >
-            <View style = { styles.textContainer }>
-                <Text style = { styles.recomText }>{ text }</Text>
-            </View>
+            <Text style = { styles.recomText }>{ text }</Text>
         </TouchableOpacity>
     )
 }
@@ -21,7 +20,7 @@ const styles = StyleSheet.create({
     button: {
         width: 302.67,
         height: 40,
-        backgroundColor: "#FFF",
+        backgroundColor: COLORS.WHITE,
         borderRadius: 26.67,
         paddingHorizontal: 13,
         paddingVertical: 10,
@@ -31,6 +30,5 @@ const styles = StyleSheet.create({
     recomText: {
         fontSize: 12,
         fontWeight: "500",
-        opacity: 1,
     }
 })
