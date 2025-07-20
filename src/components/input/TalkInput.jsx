@@ -5,6 +5,7 @@ import { InputRight } from "./InputRight";
 import { useMemo, useState } from "react";
 import { Toast } from "./Toast";
 import { useInput } from "../../hooks/useInput";
+import { COLORS } from "../../styles/color";
 
 export const TalkInput = () => {
     const {
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
         width: 334.667,
         height: 54,
         borderWidth: 1.667,
-        borderColor: "#FFD321",
+        borderColor: COLORS.MAIN_YELLOW3,
         borderRadius: 20,
         gap: 5,
         backgroundColor: "transparent"
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     },
 
     typingContainer: {
-        backgroundColor: "#FFEC9F"
+        backgroundColor: COLORS.MAIN_YELLOW2
     },
     
     submitContainer: {
@@ -91,11 +92,11 @@ const styles = StyleSheet.create({
     },
 
     rightPressedContainer: {
-        backgroundColor: "#FFD321"
+        backgroundColor: COLORS.MAIN_YELLOW3
     },
 
     inputRightPressed: {
-        backgroundColor: "#FFFFFF"
+        backgroundColor: COLORS.WHITE
     },
 
     input: {
