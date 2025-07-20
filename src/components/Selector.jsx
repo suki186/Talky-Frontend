@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
   Pressable,
@@ -13,6 +14,8 @@ import { getDropdownBgColor } from "../utils/getDropdownBgColor";
 import { COLORS } from "../styles/color";
 
 const DEFAULT_ITEM_HEIGHT = 31.33; // 항목 하나 높이
+const MAX_VISIBLE_ITEMS = 12; // 최대 항목 개수: 넘어가면 스크롤
+const MAX_HEIGHT = DEFAULT_ITEM_HEIGHT * MAX_VISIBLE_ITEMS;
 
 const Selector = ({
   items = [],
@@ -37,7 +40,9 @@ const Selector = ({
   // 애니메이션 초기값 0
   const dropdownHeight = useRef(new Animated.Value(0)).current;
   useEffect(() => {
-    const toValue = modalVisible ? DEFAULT_ITEM_HEIGHT * items.length : 0;
+    const toValue = modalVisible
+      ? Math.min(DEFAULT_ITEM_HEIGHT * items.length, MAX_HEIGHT)
+      : 0;
 
     Animated.timing(dropdownHeight, {
       toValue,
@@ -84,27 +89,32 @@ const Selector = ({
           },
         ]}
       >
-        {items.map((item) => {
-          const isSelected = selectedValue === item;
-          return (
-            <Pressable
-              key={item}
-              style={[styles.modalItem, isSelected && styles.selectedItem]}
-              onPress={() => handleSelect(item)}
-            >
-              <Text style={styles.modalText}>{item}</Text>
-              {isSelected ? (
-                <Ionicons
-                  name="radio-button-on"
-                  size={16}
-                  color={COLORS.MAIN_YELLOW3}
-                />
-              ) : (
-                <FontAwesome name="circle" size={16} color={COLORS.WHITE} />
-              )}
-            </Pressable>
-          );
-        })}
+        <ScrollView
+          nestedScrollEnabled
+          scrollEnabled={items.length > MAX_VISIBLE_ITEMS}
+        >
+          {items.map((item) => {
+            const isSelected = selectedValue === item;
+            return (
+              <Pressable
+                key={item}
+                style={[styles.modalItem, isSelected && styles.selectedItem]}
+                onPress={() => handleSelect(item)}
+              >
+                <Text style={styles.modalText}>{item}</Text>
+                {isSelected ? (
+                  <Ionicons
+                    name="radio-button-on"
+                    size={16}
+                    color={COLORS.MAIN_YELLOW3}
+                  />
+                ) : (
+                  <FontAwesome name="circle" size={16} color={COLORS.WHITE} />
+                )}
+              </Pressable>
+            );
+          })}
+        </ScrollView>
       </Animated.View>
     </View>
   );
