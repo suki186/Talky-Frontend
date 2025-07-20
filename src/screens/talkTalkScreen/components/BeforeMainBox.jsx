@@ -4,6 +4,7 @@ import { AfterMainSentence } from "./AfterMainSentence";
 import RESET from "../../../assets/images/talktalk/reset.png";
 import { useState } from "react";
 import { BeforeLocationComponent } from "./BeforeLocationComponent";
+import { COLORS } from "../../../styles/color";
 
 export const BeforeMainBox = ({ onStart }) => {
     const [stateText, setStateText] = useState(""); // 입력 상태 저장
@@ -37,7 +38,7 @@ export const BeforeMainBox = ({ onStart }) => {
             </View>
             <TextInput 
                 placeholder = "장소, 현재 상태를 간단하게 입력해 주세요." 
-                placeholderTextColor = { "#9F9F9F" }   
+                placeholderTextColor = { COLORS.PLACE_HOLDER }   
                 style = { styles.input } 
                 onChangeText = { setStateText } // 입력 상태 업데이트       
             />
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
         height: 256,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#FFEC9F",
+        backgroundColor: COLORS.MAIN_YELLOW2,
         borderRadius: 33.33,
         padding: 12,
         gap: 13
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     BoxTitle: {
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#FFD321",
+        backgroundColor: COLORS.MAIN_YELLOW3,
         borderRadius: 16.67,     
         paddingHorizontal: 10,
         paddingVertical: 6.67
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
         width: 302.67,
         height: 40,
         borderRadius: 26.67,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: COLORS.WHITE,
         paddingLeft: 10,
         fontSize: 12
     },
@@ -109,12 +110,12 @@ const styles = StyleSheet.create({
         height: 39.21,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#FFD321",
+        backgroundColor: COLORS.MAIN_YELLOW3,
         borderRadius: 27.23
     },
 
     buttonText: {
-        color: "#000000",
+        color: COLORS.BLACK,
         fontSize: 22,
         fontWeight: "600",
         lineHeight: 30

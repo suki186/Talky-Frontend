@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, StyleSheet, View, Text } from "react-native";
+import { COLORS } from "../../../styles/color";
 
 export const CurrentBox = ({ icon, currentInfo, currentState, iconStyle }) => {
     return (
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
         width: 153,
         height: 36,
         borderRadius: 33,
-        backgroundColor: "#FFEC9F",
+        backgroundColor: COLORS.MAIN_YELLOW2,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center"

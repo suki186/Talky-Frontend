@@ -7,6 +7,7 @@ import { AfterMainBox } from "./components/AfterMainBox";
 import { StarMenuBox } from "./components/StarMenuBox";
 import { AfterLocationBox } from "./components/AfterLocationBox";
 import { BeforeMainBox } from "./components/BeforeMainBox";
+import { COLORS } from "../../styles/color";
 
 const TalkTalkScreen = () => {
   const [started, setStarted] = useState(false);
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
   container: {
     height: 780,
     paddingTop: 40, 
-    backgroundColor: "#FFFEF6",
+    backgroundColor: COLORS.BACKGROUND,
     alignItems: "center", 
     gap: 18
   },

@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { COLORS } from "../../../styles/color"
 
 export const AfterMainSentence = ({ onPress, isSelected, text, pressed }) => {
     return (
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     button: {
         width: 302.67,
         height: 40,
-        backgroundColor: "#FFF",
+        backgroundColor: COLORS.WHITE,
         borderRadius: 26.67,
         paddingHorizontal: 13,
         paddingVertical: 10,

@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native"
+import { COLORS } from "../../../styles/color"
 
 export const AfterLocationBox = ({ location, mystate }) => {
     return (
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center", 
         alignItems: "center",
-        backgroundColor: "#FFD321",
+        backgroundColor: COLORS.MAIN_YELLOW3,
         borderRadius: 33.33,
         gap: 8
     },
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     locationLine: {
         width: 1,
         height: 22.5,
-        backgroundColor: "#FFFFFF"
+        backgroundColor: COLORS.WHITE
     },
 
     locationSentence: {

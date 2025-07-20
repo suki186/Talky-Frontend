@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native"
+import { COLORS } from "../../../styles/color";
 
 export const BeforeLocationComponent = ({ selected, onSelect }) => {
     const locationList = [
@@ -49,11 +50,11 @@ const styles = StyleSheet.create({
         borderRadius: 43.54,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#FFFFFF"
+        backgroundColor: COLORS.WHITE
     },
 
     selectedBox: {
-        backgroundColor: "#FFD321"
+        backgroundColor: COLORS.MAIN_YELLOW3
     },
 
     locationText: {
