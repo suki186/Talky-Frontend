@@ -3,6 +3,7 @@ import { Alert, Image, Pressable, StyleSheet, TextInput, TouchableOpacity, View 
 import STAR from "../../assets/images/talktalk/star.png";
 import STAR_PRESS from "../../assets/images/talktalk/star_press.png";
 import { useState } from "react";
+import { COLORS } from "../../styles/color";
 
 export const InputLeft = ({ status, onFavoriteToggle }) => {
     const [selected, setSelected] = useState(false);
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: 28,
         height: 28,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: COLORS.WHITE,
         borderRadius: 33.3
     },
 

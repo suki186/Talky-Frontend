@@ -4,69 +4,25 @@ import { InputLeft } from "./InputLeft";
 import { InputRight } from "./InputRight";
 import { useMemo, useState } from "react";
 import { Toast } from "./Toast";
+import { useInput } from "../../hooks/useInput";
+import { COLORS } from "../../styles/color";
 
 export const TalkInput = () => {
-    const [text, setText] = useState("");
-    const [focused, setFocused] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
-
-    const [rightPressed, setRightPressed] = useState(false);
-
-    const [showToast, setShowToast] = useState(false);
-
-    const handleShowToast = () => {
-        setShowToast(true);
-    };
-
-    const status = useMemo(() => {
-        if (submitted) return "submitted"; /* 입력 완료 */
-        if (text !== "") return "typing"; /* 입력 중 */
-        if (focused) return "focused"; /* 텍스트 입력 없이 포커스 */
-        return "default";
-    }, [submitted, text, focused]);
-
-    const getPlaceholderColor = () => {
-        switch (status) {
-            case "focused": return "#D2D2D2";
-            default: return "#767676";
-        }
-    }
-
-    const getInputBorderColor = () => {
-        switch (status) {
-            case "focused": return "#FFD321CC";
-            case "typing": return "#FFD321CC";
-            case "submitted": return "#FFD321";
-            default: return "#FFEC9F33";
-        }
-    }
-
-    const handleRightPress = () => {
-        if (status === "submitted") setRightPressed(true);
-    }
-
-    const onFocus = () => {
-        setFocused(true);
-        setSubmitted(false);
-        setRightPressed(false);
-    }
-
-    const onBlur = () => {
-        setFocused(false);
-        if (text.trim() === "") setSubmitted(false);
-    }
-
-    const onChangeText = (value) => {
-        setText(value);
-        if (submitted) setSubmitted(false);
-        setRightPressed(false);
-    }
-
-    const onSubmit = () => {
-        if (text.trim() !== "") {
-            setSubmitted(true);
-        }
-    }
+    const {
+        text,
+        status,
+        rightPressed,
+        showToast,
+        setShowToast,
+        getPlaceholderColor,
+        getInputBorderColor,
+        onFocus,
+        onBlur,
+        onChangeText,
+        onSubmit,
+        handleRightPress,
+        handleShowToast,
+    } = useInput();
 
     return (
         <View style = {[ 
@@ -97,7 +53,12 @@ export const TalkInput = () => {
                 blurOnSubmit = { false }
             />
             <InputRight status = { status } onPress = { handleRightPress }/>
-            { showToast && <Toast onHide = { () => setShowToast(false) } message = { "즐겨찾기 완료!" } />}
+            { showToast && 
+                <Toast 
+                    message = "즐겨찾기 완료!"
+                    onHide = { () => setShowToast(false) } 
+                />
+            }
         </View>
     )
 }
@@ -110,7 +71,7 @@ const styles = StyleSheet.create({
         width: 334.667,
         height: 54,
         borderWidth: 1.667,
-        borderColor: "#FFD321",
+        borderColor: COLORS.MAIN_YELLOW3,
         borderRadius: 20,
         gap: 5,
         backgroundColor: "transparent"
@@ -123,7 +84,7 @@ const styles = StyleSheet.create({
     },
 
     typingContainer: {
-        backgroundColor: "#FFEC9F"
+        backgroundColor: COLORS.MAIN_YELLOW2
     },
     
     submitContainer: {
@@ -131,11 +92,11 @@ const styles = StyleSheet.create({
     },
 
     rightPressedContainer: {
-        backgroundColor: "#FFD321"
+        backgroundColor: COLORS.MAIN_YELLOW3
     },
 
     inputRightPressed: {
-        backgroundColor: "#FFFFFF"
+        backgroundColor: COLORS.WHITE
     },
 
     input: {

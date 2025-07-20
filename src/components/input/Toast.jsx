@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react"
 import { Animated, StyleSheet, Text } from "react-native"
+import { COLORS } from "../../styles/color";
 
 export const Toast = ({ onHide, message }) => {
     const Animating = useRef(new Animated.Value(0)).current;
@@ -47,7 +48,7 @@ const toastStyles = StyleSheet.create({
     },
 
     toastText: {
-        color: "#343434",
+        color: COLORS.BLACK,
         fontSize: 12,
         fontWeight: "400",
         lineHeight: 14
