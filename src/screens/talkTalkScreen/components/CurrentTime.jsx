@@ -9,15 +9,17 @@ export default function CurrentTime() {
         const updateTime = () => {
             const now = new Date();
             const hour = now.getHours();
-            const minute = now.getMinutes();
-            const paddedMinutes = minute.toString().padStart(2, '0');
+            const minute = now.getMinutes().toString().padStart(2, '0');
 
-            setCurrentTime(`${ hour }:${ paddedMinutes }`);
+            setCurrentTime(`${ hour }:${ minute }`);
         };
 
         updateTime();
 
-        const interval = setInterval(updateTime, 1000);
+        const interval = setInterval(() => {
+            const now = new Date();
+            if (now.getSeconds() === 0) updateTime();
+        }, 1000);
         
         return () => clearInterval(interval);
     }, []);

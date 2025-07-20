@@ -3,7 +3,7 @@ import { Image, Keyboard, StyleSheet, TextInput, View } from "react-native"
 import { InputLeft } from "./InputLeft";
 import { InputRight } from "./InputRight";
 import { useMemo, useState } from "react";
-import { StarToast } from "./StarToast";
+import { Toast } from "./Toast";
 
 export const TalkInput = () => {
     const [text, setText] = useState("");
@@ -97,7 +97,7 @@ export const TalkInput = () => {
                 blurOnSubmit = { false }
             />
             <InputRight status = { status } onPress = { handleRightPress }/>
-            { showToast && <StarToast onHide = { () => setShowToast(false) } />}
+            { showToast && <Toast onHide = { () => setShowToast(false) } message = { "즐겨찾기 완료!" } />}
         </View>
     )
 }

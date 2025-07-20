@@ -1,16 +1,16 @@
 import { useState } from "react";
 
-export const useSentenceModal = (sentences) => {
+export const useDialogOpen = () => {
     const [deleted, setDeleted] = useState([]); // 삭제 문장 인덱스 저장
     const [dialogVisible, setDialogVisible] = useState(false);
     const [targetIndex, setTargetIndex] = useState(null);
-    const [pendingDeleteIndex, setPendingDeleteIndex] = useState(null);
-    const [targetSentence, setTargetSentence] = useState("");
+    const [targetItem, setTargetItem] = useState(null);
+    // const [targetSentence, setTargetSentence] = useState("");
 
-    const openDialog = (index) => {
-        setPendingDeleteIndex(index);
+    const openDialog = (index, item) => {
+        // setPendingDeleteIndex(index);
         setTargetIndex(index);
-        setTargetSentence(sentences[index]);
+        setTargetItem(item);
         setDialogVisible(true);
     }
 
@@ -21,20 +21,20 @@ export const useSentenceModal = (sentences) => {
 
         setDialogVisible(false);
         setTargetIndex(null);
+        setTargetItem(null);
     }
 
     const handleCancel = () => { // 문장 삭제가 아닌 취소
         setDialogVisible(false);
         setTargetIndex(null);
-        setPendingDeleteIndex(null);
+        setTargetItem(null);
     }
 
     return {
         deleted,
         dialogVisible,
         targetIndex,
-        pendingDeleteIndex,
-        targetSentence,
+        targetItem,
         openDialog,
         handleRealDelete,
         handleCancel,

@@ -47,7 +47,12 @@ export const BeforeMainBox = ({ onStart }) => {
             />
             <TouchableOpacity 
                 style = { styles.startBtn } 
-                onPress = { () => onStart(selectedLocation, stateText) }
+                onPress = { 
+                    () => {
+                        if (!selectedLocation || !stateText.trim()) return;
+                        onStart(selectedLocation, stateText) 
+                    }
+                }
             >
                 <Text style = { styles.buttonText }>시작</Text>
             </TouchableOpacity>
@@ -59,7 +64,6 @@ const styles = StyleSheet.create({
     container: {
         width: 327.33,
         height: 256,
-        display: "flex",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#FFEC9F",
@@ -103,7 +107,6 @@ const styles = StyleSheet.create({
     startBtn: {
         width: 116,
         height: 39.21,
-        display: "flex",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#FFD321",
@@ -113,6 +116,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: "#000000",
         fontSize: 22,
-        fontWeight: 600
+        fontWeight: "600",
+        lineHeight: 30
     }
 })

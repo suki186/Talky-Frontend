@@ -24,22 +24,21 @@ const TalkTalkScreen = () => {
 
         <TalkInput />
 
-        <>
-          { !started && (
-            <BeforeMainBox onStart = { (location, text) => {
-              setSelectedLocation(location);
-              setStateText(text);
-              setStarted(true);
-            }} />
-          )}
-
-          { started && (
+        { !started ? (
+            <BeforeMainBox 
+              onStart = { (location, text) => {
+                if (!location || !text.trim()) return;
+                setSelectedLocation(location);
+                setStateText(text);
+                setStarted(true);
+              }}
+            />
+        ) : (
             <>
               <AfterLocationBox location = { selectedLocation } mystate = { stateText } />
               <AfterMainBox selectedLocation = { selectedLocation } stateText = { stateText } />
             </>
           )}
-        </> 
 
         <StarMenuBox />
       </View>
@@ -51,7 +50,7 @@ export default TalkTalkScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    height: 780,
     paddingTop: 40, 
     backgroundColor: "#FFFEF6",
     alignItems: "center", 

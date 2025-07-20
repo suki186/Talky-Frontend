@@ -34,13 +34,11 @@ export const BeforeLocationComponent = ({ selected, onSelect }) => {
 
 const styles = StyleSheet.create({
     container: {
-        display: "flex",
         flexDirection: "column",
         gap: 16
     },
 
     row: {
-        display: "flex",
         flexDirection: "row",
         gap: 16
     },
@@ -49,7 +47,6 @@ const styles = StyleSheet.create({
         width: 58,
         height: 34,
         borderRadius: 43.54,
-        display: "flex",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#FFFFFF"
@@ -61,6 +58,7 @@ const styles = StyleSheet.create({
 
     locationText: {
         fontSize: 15.68,
-        fontWeight: 400
+        fontWeight: "400",
+        lineHeight: 20
     }
 })

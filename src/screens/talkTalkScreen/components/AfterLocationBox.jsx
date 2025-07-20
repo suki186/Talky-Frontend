@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     locationBox: {
         width: 327.33,
         height: 36,
-        display: "flex",
         flexDirection: "row",
         justifyContent: "center", 
         alignItems: "center",
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
 
     locationText: {
         fontSize: 18.67,
-        fontWeight: 700,
+        fontWeight: "700",
     },
 
     locationLine: {
@@ -36,6 +35,6 @@ const styles = StyleSheet.create({
 
     locationSentence: {
         fontSize: 12,
-        fontWeight: 400,
+        fontWeight: "400",
     }
 })

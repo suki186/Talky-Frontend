@@ -3,7 +3,7 @@ import { Image, StyleSheet, View, Text } from "react-native";
 
 export const CurrentBox = ({ icon, currentInfo, currentState, iconStyle }) => {
     return (
-        <View style = { styles.container }>
+        <View style = { styles.container }> 
             <Image 
                 source = { icon }
                 style = { iconStyle }
@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFEC9F",
         flexDirection: "row",
         justifyContent: "center",
-        textAlign: "center",
         alignItems: "center"
     },
 

@@ -1,11 +1,10 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 
 import MENU_STAR from "../../../assets/images/talktalk/menu_star.png";
 import { SentenceScreen } from "../../sentenceScreen/SentenceScreen";
 
-export const StarMenuBox = ({ title, icon, onPress }) => {
+export const StarMenuBox = () => {
     const [modalOpen, setModalOpen] = useState(false);
 
     return (
@@ -23,12 +22,14 @@ export const StarMenuBox = ({ title, icon, onPress }) => {
                             resizeMode = "contain"
                         />
             </TouchableOpacity>
-            <SentenceScreen
-                visible = { modalOpen }
-                onClose = { () => setModalOpen(false) }
-            />
-        </View>
-        
+
+            { modalOpen && (
+                <SentenceScreen
+                    visible = { modalOpen }
+                    onClose = { () => setModalOpen(false) }
+                />
+            )}
+        </View>   
     )
 }
 

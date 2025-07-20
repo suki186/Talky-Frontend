@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { Animated, StyleSheet, Text } from "react-native"
 
-export const StarToast = ({ onHide }) => {
+export const Toast = ({ onHide, message }) => {
     const Animating = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export const StarToast = ({ onHide }) => {
             toastStyles.toast,
             { opacity: Animating }
         ]}>
-            <Text style = { toastStyles.toastText }>즐겨찾기 완료</Text>
+            <Text style = { toastStyles.toastText }>{ message }</Text>
         </Animated.View>
     )
 }
