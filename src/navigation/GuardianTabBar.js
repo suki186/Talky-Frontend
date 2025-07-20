@@ -5,8 +5,8 @@ import MapScreen from "../screens/mapScreen/MapScreen";
 import StatisticsScreen from "../screens/statisticsScreen/StatisticsScreen";
 import GuardianSettingScreen from "../screens/guardianSettingScreen/GuardianSettingScreen";
 
-import MAP_ICON from "../assets/tabbar/practice.png"; //변경예정
-import STATISTICS_ICON from "../assets/tabbar/talktalk.png"; //변경예정
+import MAP_ICON from "../assets/tabbar/map.png";
+import STATISTICS_ICON from "../assets/tabbar/statistics.png";
 import SETTING_ICON from "../assets/tabbar/setting.png";
 import Logo from "../components/Logo";
 import SosCall from "../components/SosCall";
