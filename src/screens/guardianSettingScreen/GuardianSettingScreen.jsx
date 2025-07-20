@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet, Text, View, ScrollView } from "react-nati
 import { LocationInfo } from "./components/LocationInfo";
 import { GuardianInfo } from "./components/GuardianInfo";
 import LogoutButton from "../../components/auth/LogoutButton";
+import { COLORS } from "../../styles/color";
 
 const GuardianSettingScreen = () => {
   return (
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     height: 780,
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "#FFFEF6",
+    backgroundColor: COLORS.BACKGROUND,
     paddingTop: 45,
     gap: 24
   },
@@ -34,12 +35,12 @@ const styles = StyleSheet.create({
     height: 28,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FFEC9F",
+    backgroundColor: COLORS.MAIN_YELLOW2,
     borderRadius: 33.33
   },
 
   logoutText: {
-    color: "#464646",
+    color: COLORS.BLACK,
     fontSize: 12,
     fontWeight: "400"
   }

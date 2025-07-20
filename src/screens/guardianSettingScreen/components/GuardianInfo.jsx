@@ -8,6 +8,7 @@ import { AccountComponent } from "./AccountComponent"
 import { useGuardianSetting } from "../../../hooks/useGurdianSetting"
 
 import ACCOUNT from "../../../assets/images/guardian-setting/connetAccount.png"
+import { COLORS } from "../../../styles/color"
 
 export const GuardianInfo = () => {
     // 연결 계정 삭제 다이얼로그 커스텀 훅
@@ -115,13 +116,13 @@ const styles = StyleSheet.create({
     },
 
     mainText: {
-        color: "#2B2B2B",
+        color: COLORS.BLACK,
         fontSize: 12,
         fontWeight: "500"
     },
 
     subText: {
-        color: "#464646",
+        color: COLORS.SUB_BLACK,
         fontSize: 10,
         fontWeight: 400
     },
@@ -131,15 +132,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: 102,
         height: 20,
-        backgroundColor: "#FFEC9F",
+        backgroundColor: COLORS.MAIN_YELLOW2,
         borderRadius: 10,
-        borderColor: "#FFD321",
+        borderColor: COLORS.MAIN_YELLOW3,
         borderWidth: 1,
         marginTop: 18
     },
 
     plus: {
-        color: "#2B2B2B",
+        color: COLORS.BLACK,
         fontSize: 12,
         fontWeight: "400",
         lineHeight: 15

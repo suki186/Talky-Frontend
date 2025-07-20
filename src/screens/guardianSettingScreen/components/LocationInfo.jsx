@@ -4,6 +4,7 @@ import { ToggleComponent } from "./ToggleComponent"
 
 import LOCATION from "../../../assets/images/talktalk/location.png"
 import { useState } from "react"
+import { COLORS } from "../../../styles/color"
 
 export const LocationInfo = () => {
     const [isToggled, setIsToggled] = useState(false); // 위치 알림 토글 상태 관리
@@ -16,7 +17,7 @@ export const LocationInfo = () => {
         <SettingBox 
             height = { 148 } 
             title = "위치 알림 서비스"
-            bgColor = { isToggled ? "#FFEC9F" : "#FFF3C7" }
+            bgColor = { isToggled ? COLORS.MAIN_YELLOW2 : COLORS.MAIN_YELLOW1 }
         >
             <View style = { styles.content }>
                 <View style = { styles.notify }>
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
         fontSize: 16.29,
         fontWeight: "400",
         lineHeight: 20,
-        color: "#2B2B2B"
+        color: COLORS.BLACK
     },
 
     explain: {
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     button: {
         width: 117,
         height: 28,
-        backgroundColor: "#FFFEF6",
+        backgroundColor: COLORS.BACKGROUND,
         borderRadius: 33.33,
         justifyContent: "center",
         alignItems: "center"
@@ -83,6 +84,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: "500",
         lineHeight: 16,
-        color: "#2B2B2B"
+        color: COLORS.BLACK
     }
 })

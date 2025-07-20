@@ -1,6 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native"
 
 import { useState } from "react"
+import { COLORS } from "../../../styles/color"
 
 {/* value: 현재 토글 상태, onToggle: 토글 상태 변경 시 호출 함수 */}
 export const ToggleComponent = ({ value, onToggle }) => {
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     notifyToggle: {
         width: 48,
         height: 24.42,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: COLORS.WHITE,
         borderRadius: 42.11,
         justifyContent: "center"
     },
@@ -48,12 +49,12 @@ const styles = StyleSheet.create({
     },
 
     toggleOn: {
-        backgroundColor: "#FFD321",
-        borderColor: "#FFEC9F"
+        backgroundColor: COLORS.MAIN_YELLOW3,
+        borderColor: COLORS.MAIN_YELLOW2
     },
 
     toggleOff: {
-        backgroundColor: "#9F9F9F",
-        borderColor: "#D9D9D9"
+        backgroundColor: COLORS.CANCLE_CLICK,
+        borderColor: COLORS.CANCLE_NORMAL
     }
 })
