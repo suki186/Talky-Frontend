@@ -22,23 +22,22 @@ const styles = StyleSheet.create({
         borderColor: COLORS.MAIN_YELLOW3,
         borderWidth: 3,
         borderRadius: 16.67,
-        paddingHorizontal: 52,
         paddingVertical: 15,
         gap: 7
     },
 
     stateTextBox: {
-        width: 45,
         height: 20,
         borderRadius: 16.67,
         backgroundColor: COLORS.MAIN_YELLOW2,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        paddingHorizontal: 10
     },
 
     stateText: {
         fontSize: 14,
         fontWeight: 600,
-        lineHeight: 20
+        lineHeight: 20,
     }
 })
