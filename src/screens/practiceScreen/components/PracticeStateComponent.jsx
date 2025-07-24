@@ -13,13 +13,14 @@ export const PracticeStateComponent = ({ imgSource, location, onPress }) => {
                 style = { styles.container }
                 onPress = { () => onPress(location) }  
             >
-                <Image source = { imgSource } />
-                <View style = { styles.stateTextBox }>
-                    <Text style = { styles.stateText }>{ location }</Text>
-                </View>
-            </TouchableOpacity>            
+                <View style = { styles.container }>
+                    <Image source = { imgSource } />
+                    <View style = { styles.stateTextBox }>
+                        <Text style = { styles.stateText }>{ location }</Text>
+                    </View>
+                </View> 
+            </TouchableOpacity>           
         </LinearGradient>
-
     )
 }
 
