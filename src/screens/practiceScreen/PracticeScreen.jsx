@@ -2,7 +2,7 @@ import React from "react";
 import { PracticeState } from "./components/PracticeState";
 import { LeftPracticeBox } from "./components/LeftPracticeBox";
 import { RightPracticeBox } from "./components/RightPracticeBox";
-import { Image, StyleSheet, View, Text } from "react-native";
+import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { COLORS } from "../../styles/color";
 
 // import RESTAURANT from "../../assets/images/practice/restaurant.png"
@@ -27,9 +27,17 @@ const PracticeScreen = () => {
 
 
         <View style =  { styles.practiceChat }>
-          <LeftPracticeBox />
-          <RightPracticeBox />          
+          <ScrollView>
+            <LeftPracticeBox />
+            <RightPracticeBox />             
+          </ScrollView>
+          <View>
+            <TouchableOpacity style = { styles.nextBox }>
+              <Text style = { styles.nextText }>다음</Text>
+            </TouchableOpacity>              
+          </View>
         </View>
+
       </View>    
     </>
   );
@@ -101,5 +109,20 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 13,
     gap: 22
+  },
+
+  nextBox: {
+    width: 150,
+    height: 32,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    backgroundColor: COLORS.MAIN_YELLOW2,
+    borderRadius: 14,
+  },
+
+  nextText: {
+    fontSize: 14,
+    lineHeight: 20
   }
 })

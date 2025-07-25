@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.MAIN_YELLOW1,
         justifyContent: "center",
         alignItems: "center",
+        alignSelf: "flex-end",
         gap: 6
     },
 
