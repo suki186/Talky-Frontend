@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { PracticeState } from "./components/PracticeState";
 import { LeftPracticeBox } from "./components/LeftPracticeBox";
 import { RightPracticeBox } from "./components/RightPracticeBox";
 import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { COLORS } from "../../styles/color";
+import { Toast } from "../../components/input/Toast";
 
 // import RESTAURANT from "../../assets/images/practice/restaurant.png"
+import REPEAT from "../../assets/images/practice/repeat.png"
 
 const PracticeScreen = () => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
+  const handleSpeakToggle = () => {
+    setIsSpeaking(prev => {
+      const next = !prev;
+      if (next) {
+        setShowToast(true);
+      }
+      return next;
+    });
+  };
+
   return (
     <>
       {/* <PracticeState /> */}
@@ -28,7 +43,11 @@ const PracticeScreen = () => {
 
         <View style =  { styles.practiceChat }>
           <ScrollView>
-            <LeftPracticeBox />
+            <LeftPracticeBox 
+              practiceText = { "몇 명이세요?" }
+              isSpeaking = { isSpeaking }
+              onPress = { handleSpeakToggle }
+            />
             <RightPracticeBox />             
           </ScrollView>
           <View>
@@ -38,8 +57,21 @@ const PracticeScreen = () => {
           </View>
         </View>
 
+        { showToast && (
+          <Toast
+            style = { styles.toast }
+            textStyle = {{ fontSize: 22, fontWeight: "500", lineHeight: 25 }}
+            message = "따라 말해 보세요!"
+            imageSource = { REPEAT }
+            borderColor = "#FFF3C7"
+            onHide = { () => setShowToast(false) }
+          />
+        )}
+
       </View>    
     </>
+
+    
   );
 };
 
@@ -50,7 +82,8 @@ const styles = StyleSheet.create({
     height: 780,
     backgroundColor: COLORS.BACKGROUND,
     alignItems: "center",
-    paddingTop: 15
+    paddingTop: 15,
+    position: "relative"
   },
 
   practiceTop: {
@@ -124,5 +157,11 @@ const styles = StyleSheet.create({
   nextText: {
     fontSize: 14,
     lineHeight: 20
+  },
+
+  toast: {
+    position: "absolute",
+    bottom: 450,
+    alignSelf: "center"
   }
 })

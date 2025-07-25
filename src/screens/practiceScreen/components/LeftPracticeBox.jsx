@@ -1,18 +1,22 @@
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { COLORS } from "../../../styles/color"
 
-import SPEAK from "../../../assets/images/talktalk/input_submit.png"
+import SPEAK from "../../../assets/images/practice/practice_before.png"
+import SPEAKED from "../../../assets/images/practice/practice_after.png"
 
-export const LeftPracticeBox = ({ practiceText }) => {
+export const LeftPracticeBox = ({ practiceText, onPress, isSpeaking }) => {
     return (
         <View style = { styles.container }>
             <Text style = { styles.text }>{ practiceText }</Text>
-            <View style = { styles.speakBox }>
+            <TouchableOpacity 
+                style = { styles.speakBox }
+                onPress = { onPress }
+            >
                 <Image 
-                    source = { SPEAK } 
+                    source = { isSpeaking ? SPEAKED : SPEAK  } 
                     style = { styles.speakImg }
                 />
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -21,7 +25,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         alignItems: "center",
-        alignSelf: "flex-start", // 넓이 자유롭게
+        alignSelf: "flex-start",
         paddingVertical: 5,
         paddingLeft: 7,
         paddingRight: 7,
