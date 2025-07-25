@@ -51,7 +51,10 @@ const PracticeScreen = () => {
             <RightPracticeBox />             
           </ScrollView>
           <View>
-            <TouchableOpacity style = { styles.nextBox }>
+            <TouchableOpacity 
+              style = { styles.nextBox }
+              onPress = { () => setShowToast(true) }
+            >
               <Text style = { styles.nextText }>다음</Text>
             </TouchableOpacity>              
           </View>
