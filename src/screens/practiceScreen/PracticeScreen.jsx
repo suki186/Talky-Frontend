@@ -8,19 +8,30 @@ import { Toast } from "../../components/input/Toast";
 
 // import RESTAURANT from "../../assets/images/practice/restaurant.png"
 import REPEAT from "../../assets/images/practice/repeat.png"
+import REPEATGOOD from "../../assets/images/practice/repeatGood.png"
 
 const PracticeScreen = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastImage, setToastImage] = useState(null);
 
   const handleSpeakToggle = () => {
     setIsSpeaking(prev => {
       const next = !prev;
       if (next) {
+        setToastMessage("따라 말해 보세요!");
+        setToastImage(REPEAT);
         setShowToast(true);
       }
       return next;
     });
+  };
+
+  const handleNext = () => {
+    setToastMessage("대단해요!");
+    setToastImage(REPEATGOOD);
+    setShowToast(true);
   };
 
   return (
@@ -53,7 +64,7 @@ const PracticeScreen = () => {
           <View>
             <TouchableOpacity 
               style = { styles.nextBox }
-              onPress = { () => setShowToast(true) }
+              onPress = { handleNext }
             >
               <Text style = { styles.nextText }>다음</Text>
             </TouchableOpacity>              
@@ -64,8 +75,8 @@ const PracticeScreen = () => {
           <Toast
             style = { styles.toast }
             textStyle = {{ fontSize: 22, fontWeight: "500", lineHeight: 25 }}
-            message = "따라 말해 보세요!"
-            imageSource = { REPEAT }
+            message = { toastMessage }
+            imageSource = { toastImage }
             borderColor = "#FFF3C7"
             onHide = { () => setShowToast(false) }
           />
