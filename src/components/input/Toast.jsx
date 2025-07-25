@@ -1,8 +1,16 @@
 import { useEffect, useRef } from "react"
-import { Animated, StyleSheet, Text } from "react-native"
+import { Animated, Image, StyleSheet, Text, View } from "react-native"
 import { COLORS } from "../../styles/color";
 
-export const Toast = ({ onHide, message }) => {
+export const Toast = ({ 
+    onHide, 
+    message, 
+    style, 
+    textStyle = {}, 
+    imageSource, 
+    borderColor = "#42360914" 
+}) => {
+
     const Animating = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -25,9 +33,15 @@ export const Toast = ({ onHide, message }) => {
     return (
         <Animated.View style = {[
             toastStyles.toast,
-            { opacity: Animating }
+            style,
+            { opacity: Animating, borderColor }
         ]}>
-            <Text style = { toastStyles.toastText }>{ message }</Text>
+            <View style = { toastStyles.row }>
+                { imageSource && (
+                    <Image source = { imageSource } style = { toastStyles.icon } />
+                )}
+                <Text style = { textStyle }>{ message }</Text>
+            </View>
         </Animated.View>
     )
 }
@@ -37,20 +51,23 @@ const toastStyles = StyleSheet.create({
         position: "absolute",
         justifyContent: "center",
         alignItems: "center",
-        height: 62,
-        bottom: 0,
         backgroundColor: "#FFFFFFCC",
-        paddingHorizontal: 66.67,
+        paddingHorizontal: 30,
+        paddingVertical: 15,
         borderRadius: 16.67,
-        borderColor: "#42360914",
         borderWidth: 2,
         zIndex: 1000
     },
 
-    toastText: {
-        color: COLORS.BLACK,
-        fontSize: 12,
-        fontWeight: "400",
-        lineHeight: 14
+    row: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 20
+    },
+
+    icon: {
+        height: 52,
+        resizeMode: "contain"
     }
 })
