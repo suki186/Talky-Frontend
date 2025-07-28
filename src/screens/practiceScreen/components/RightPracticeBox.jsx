@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { COLORS } from "../../../styles/color"
 import { useState } from "react"
 
-export const RightPracticeBox = () => {
+export const RightPracticeBox = ({ onPress }) => {
     const [selected, setSelected] = useState(null);
 
     const [sentence, setSentence] = useState([
@@ -20,8 +20,11 @@ export const RightPracticeBox = () => {
                     ]}
                     onPress = { () => {
                         if ( selected === index ) setSelected(null);
-                        else setSelected(index) }
-                    }
+                        else {
+                            setSelected(index);
+                            if (onPress) onPress(); 
+                        }
+                    }}
                 >
                     <Text style = { styles.text }>{ text }</Text>
                 </TouchableOpacity>                

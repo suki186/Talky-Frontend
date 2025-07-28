@@ -28,7 +28,7 @@ const PracticeScreen = () => {
     });
   };
 
-  const handleNext = () => {
+  const handleSelect = () => {
     setToastMessage("대단해요!");
     setToastImage(REPEATGOOD);
     setShowToast(true);
@@ -59,13 +59,12 @@ const PracticeScreen = () => {
               isSpeaking = { isSpeaking }
               onPress = { handleSpeakToggle }
             />
-            <RightPracticeBox />             
+            <RightPracticeBox 
+              onPress = { handleSelect }
+            />             
           </ScrollView>
           <View>
-            <TouchableOpacity 
-              style = { styles.nextBox }
-              onPress = { handleNext }
-            >
+            <TouchableOpacity style = { styles.nextBox }>
               <Text style = { styles.nextText }>다음</Text>
             </TouchableOpacity>              
           </View>
