@@ -15,16 +15,20 @@ const LineGraph = ({ data }) => {
       data={data}
       width={255}
       height={110}
+      isScrollable={false}
+      spacing={35}
+      initialSpacing={20}
+      endSpacing={20}
       minValue={minValue}
       maxValue={maxValue}
       stepValue={stepValue}
-      spacing={38}
       noOfSections={noOfSections}
       // 그래프 선
       thickness={2}
       color={COLORS.MAIN_YELLOW2}
       // x축 가로선
       hideRules={false}
+      rulesLength={255}
       rulesThickness={1}
       rulesColor={COLORS.GRAY}
       rulesType="solid"
@@ -39,6 +43,7 @@ const LineGraph = ({ data }) => {
       }}
       // x축
       xAxisLabelWidth={10}
+      xAxisLength={255}
       xAxisColor={COLORS.GRAY}
       xAxisLabelTextStyle={{
         fontSize: 8,
