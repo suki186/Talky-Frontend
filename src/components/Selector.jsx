@@ -26,12 +26,8 @@ const Selector = ({
   const [isFocused, setIsFocused] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { backgroundColor, iconColor } = getInputStyles(
-    isFocused,
-    selectedValue || "",
-    false,
-    variant
-  );
+  const { backgroundColor, iconColor, borderWidth, borderColor } =
+    getInputStyles(isFocused, selectedValue || "", false, variant);
   const dropdownBgColor = getDropdownBgColor(variant);
 
   // 애니메이션 초기값 0
@@ -60,7 +56,13 @@ const Selector = ({
         activeOpacity={0.8}
         style={[
           styles.selectorContainer,
-          { backgroundColor, width, height: DEFAULT_ITEM_HEIGHT },
+          {
+            backgroundColor,
+            width,
+            height: DEFAULT_ITEM_HEIGHT,
+            borderWidth,
+            borderColor,
+          },
         ]}
         onPress={() => {
           setIsFocused(true);
