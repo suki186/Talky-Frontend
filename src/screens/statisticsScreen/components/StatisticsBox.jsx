@@ -1,9 +1,10 @@
 // 보호자 통계 기본 박스
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { COLORS } from "../../../styles/color";
 
 const StatisticsBox = ({
+  title,
   height = 200,
   bgColor = COLORS.WHITE,
   borderColor,
@@ -22,6 +23,8 @@ const StatisticsBox = ({
         styles.shadow,
       ]}
     >
+      {/* title */}
+      <Text style={styles.title}>{title}</Text>
       {/* Content */}
       <View style={styles.content}>{children}</View>
     </View>
@@ -34,11 +37,15 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
+    gap: 16,
+  },
+  title: {
+    fontSize: 12,
+    fontWeight: "600",
   },
   content: {
     alignItems: "center",
     justifyContent: "center",
-    gap: 16,
   },
   shadow: {
     shadowColor: COLORS.SUB_BLACK,
