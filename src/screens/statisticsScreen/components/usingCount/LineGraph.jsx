@@ -16,6 +16,8 @@ const LineGraph = ({ data }) => {
       width={255}
       height={110}
       isScrollable={false}
+      isAnimated={true}
+      animateOnDataChange={true}
       spacing={35}
       initialSpacing={20}
       endSpacing={20}
@@ -52,6 +54,10 @@ const LineGraph = ({ data }) => {
       }}
       // 포인터 스타일
       showDataPoint
+      textColor1="#FFBF00"
+      textShiftY={-10}
+      textShiftX={-5}
+      textFontSize={8}
       dataPointsColor={COLORS.MAIN_YELLOW3}
       dataPointsRadius={5}
     />
