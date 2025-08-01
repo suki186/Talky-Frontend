@@ -1,21 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { COLORS } from "../../../../styles/color";
-
-const getBgColorByRank = (rank) => {
-  const opacityMap = {
-    1: 1,
-    2: 0.9,
-    3: 0.8,
-    4: 0.7,
-    5: 0.6,
-  };
-  const opacity = opacityMap[rank] ?? 0.5;
-  return `rgba(255,255,255,${opacity})`;
-};
+import { getRankBgColor } from "../../../../utils/getBgColor";
 
 const UsingTopItem = ({ rank = 1, text = "내용" }) => {
-  const backgroundColor = getBgColorByRank(rank); // 배경색
+  const backgroundColor = getRankBgColor(rank); // 배경색 투명도
 
   return (
     <View style={[styles.container, { backgroundColor }]}>

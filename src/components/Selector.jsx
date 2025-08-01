@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { getInputStyles } from "../utils/getInputStyles";
-import { getDropdownBgColor } from "../utils/getDropdownBgColor";
+import { getDropdownBgColor } from "../utils/getBgColor";
 import { COLORS } from "../styles/color";
 
 const DEFAULT_ITEM_HEIGHT = 31.33; // 항목 하나 높이
