@@ -1,13 +1,39 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Animated, View, Text, StyleSheet } from "react-native";
 import { COLORS } from "../../../../styles/color";
 import { getRankBgColor } from "../../../../utils/getBgColor";
 
-const UsingTopItem = ({ rank = 1, text = "내용" }) => {
+const UsingTopItem = ({ rank = 1, text = "내용", delay = 0 }) => {
+  const opacity = useRef(new Animated.Value(0)).current; // 초기 투명도
+  const translateY = useRef(new Animated.Value(10)).current; // y축 이동
+
   const backgroundColor = getRankBgColor(rank); // 배경색 투명도
 
+  // 부드러운 애니메이션
+  useEffect(() => {
+    // 투명도 0 -> 1로 부드럽게 변화
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 300,
+      delay,
+      useNativeDriver: true,
+    }).start();
+    // y축 10 -> 0으로 부드럽게 이동
+    Animated.timing(translateY, {
+      toValue: 0,
+      duration: 300,
+      delay,
+      useNativeDriver: true,
+    }).start();
+  }, [delay, opacity, translateY]);
+
   return (
-    <View style={[styles.container, { backgroundColor }]}>
+    <Animated.View
+      style={[
+        styles.container,
+        { backgroundColor, opacity, transform: [{ translateY }] },
+      ]}
+    >
       {/* 왼쪽: 순위 */}
       <View style={styles.left}>
         <Text style={styles.rankText}>{rank}위</Text>
@@ -20,7 +46,7 @@ const UsingTopItem = ({ rank = 1, text = "내용" }) => {
       <View style={styles.right}>
         <Text style={styles.text}>{text}</Text>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

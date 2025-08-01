@@ -13,7 +13,12 @@ const UsingTop = ({ data }) => {
     >
       <View style={{ flexDirection: "column", gap: 8 }}>
         {data.slice(0, 5).map((item, i) => (
-          <UsingTopItem key={i} rank={item.rank} text={item.text} />
+          <UsingTopItem
+            key={i}
+            rank={item.rank}
+            text={item.text}
+            delay={i * 100}
+          />
         ))}
       </View>
     </StatisticsBox>
