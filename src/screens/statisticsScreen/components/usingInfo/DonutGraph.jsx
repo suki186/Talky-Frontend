@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { View, Animated, StyleSheet } from "react-native";
+import { View, Animated, StyleSheet, Text } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import { COLORS } from "../../../../styles/color";
 import { getDonutBgColor } from "../../../../utils/getBgColor";
@@ -23,31 +23,52 @@ const DonutGraph = ({ data }) => {
         useNativeDriver: true,
       }),
     ]).start();
-  }, []);
+  }, [scale, opacity]);
 
+  // rank -> color 매핑
   const pieData = data.map((item) => ({
     value: item.value,
     color: getDonutBgColor(item.rank),
   }));
 
+  // legend 표시
+  const renderDot = (color) => <View style={styles.dot(color)} />;
+  const renderLegend = () => (
+    <View style={styles.legendContainer}>
+      {data.map((item) => (
+        <View key={item.rank} style={styles.legendItem}>
+          {renderDot(getDonutBgColor(item.rank))}
+          <Text style={styles.legendText}>{item.time}</Text>
+        </View>
+      ))}
+    </View>
+  );
+
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        {
-          transform: [{ scale: scale }],
-          opacity: opacity,
-        },
-      ]}
-    >
-      <PieChart donut data={pieData} radius={46} innerRadius={18} />
-      <View style={styles.centerCircle} />
-    </Animated.View>
+    <View style={styles.container}>
+      {renderLegend()}
+      <Animated.View
+        style={[
+          styles.chartContainer,
+          {
+            transform: [{ scale: scale }],
+            opacity: opacity,
+          },
+        ]}
+      >
+        <PieChart donut data={pieData} radius={46} innerRadius={18} />
+        <View style={styles.centerCircle} />
+      </Animated.View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: "center",
+    gap: 13,
+  },
+  chartContainer: {
     width: 92,
     height: 92,
     justifyContent: "center",
@@ -59,6 +80,27 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 100,
     backgroundColor: COLORS.BACKGROUND,
+  },
+  dot: (color) => ({
+    width: 8,
+    height: 8,
+    borderRadius: 50,
+    backgroundColor: color,
+    marginRight: 1,
+  }),
+  legendContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+  },
+  legendItem: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  legendText: {
+    fontSize: 8,
+    fontWeight: "500",
+    color: COLORS.BLACK,
   },
 });
 
