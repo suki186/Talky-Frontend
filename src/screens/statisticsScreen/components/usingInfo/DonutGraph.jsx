@@ -1,26 +1,48 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { View, Animated, StyleSheet } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import { COLORS } from "../../../../styles/color";
-
-const rankColors = [
-  "#FFD321FF", // 1위
-  "#FFD321A6", // 2위
-  "#FFD32159", // 3위
-  "#FFD32126", // 4위
-];
+import { getDonutBgColor } from "../../../../utils/getBgColor";
 
 const DonutGraph = ({ data }) => {
+  const scale = useRef(new Animated.Value(0.5)).current; // 크기
+  const opacity = useRef(new Animated.Value(0)).current; // 투명도
+
+  useEffect(() => {
+    Animated.parallel([
+      // 크기 0.5 -> 1로 부드럽게 커짐
+      Animated.timing(scale, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+      // 투명도 0 -> 1로 부드럽게 변화
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
   const pieData = data.map((item) => ({
     value: item.value,
-    color: rankColors[item.rank - 1] ?? "#FFD32110",
+    color: getDonutBgColor(item.rank),
   }));
 
   return (
-    <View style={styles.container}>
+    <Animated.View
+      style={[
+        styles.container,
+        {
+          transform: [{ scale: scale }],
+          opacity: opacity,
+        },
+      ]}
+    >
       <PieChart donut data={pieData} radius={46} innerRadius={18} />
       <View style={styles.centerCircle} />
-    </View>
+    </Animated.View>
   );
 };
 
