@@ -38,7 +38,7 @@ const DonutGraph = ({ data }) => {
       {data.map((item) => (
         <View key={item.rank} style={styles.legendItem}>
           {renderDot(getDonutBgColor(item.rank))}
-          <Text style={styles.legendText}>{item.time}</Text>
+          <Text style={styles.legendText}>{item.label}</Text>
         </View>
       ))}
     </View>
