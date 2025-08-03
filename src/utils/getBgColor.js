@@ -20,3 +20,20 @@ export const getRankBgColor = (rank) => {
   const opacity = opacityMap[rank] ?? 0.5;
   return `rgba(255,255,255,${opacity})`;
 };
+
+// DonutGraph의 항목별 배경색
+export const getDonutBgColor = (rank) => {
+  const rankColors = [
+    "#FFD321FF", // 1위
+    "#FFD321A6", // 2위
+    "#FFD32159", // 3위
+    "#FFD32126", // 4위
+    "#FFD32110", // 5위
+  ];
+
+  if (typeof rank !== "number" || rank < 1 || rank > 5) {
+    return "#FFD32110"; // 기본
+  }
+
+  return rankColors[rank - 1];
+};
