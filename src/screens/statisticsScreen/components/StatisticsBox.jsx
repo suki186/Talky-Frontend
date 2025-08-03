@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   box: {
     width: 328,
     borderRadius: 12,
+    marginTop: 10,
     justifyContent: "center",
     alignItems: "center",
     gap: 16,
