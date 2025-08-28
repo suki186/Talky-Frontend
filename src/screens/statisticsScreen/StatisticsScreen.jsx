@@ -1,4 +1,10 @@
-import { ScrollView, Text, View, StyleSheet } from "react-native";
+import {
+  ScrollView,
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
 import Selector from "../../components/Selector";
 import UsingCount from "./components/usingCount/UsingCount";
@@ -6,6 +12,7 @@ import UsingTop from "./components/usingTop/UsingTop";
 import UsingInfo from "./components/usingInfo/UsingInfo";
 import SosTable from "./components/SosTable";
 import { COLORS } from "../../styles/color";
+import Entypo from "@expo/vector-icons/Entypo";
 
 import countDummy from "../../datas/countDummy.json";
 import topDummy from "../../datas/topDummy.json";
@@ -15,6 +22,7 @@ import donut2Dummy from "../../datas/donut2Dummy.json";
 const StatisticsScreen = () => {
   const countData = countDummy; // 발화 횟수 예시 데이터
   const users = ["김예나", "조주한"]; // 연결된 계정 목록
+  const [sosOpen, setSosOpen] = useState(false); // 토글 상태
 
   const rows = [
     // 긴급 호출 예시 데이터
@@ -52,7 +60,27 @@ const StatisticsScreen = () => {
       <UsingInfo data1={donut1Dummy} data2={donut2Dummy} />
 
       {/* 긴급 호출 이력 표 */}
-      <SosTable rows={rows} />
+      <TouchableOpacity
+        style={[
+          styles.sosToggle,
+          {
+            backgroundColor: sosOpen
+              ? COLORS.MAIN_YELLOW2
+              : COLORS.MAIN_YELLOW1,
+          },
+        ]}
+        activeOpacity={0.8}
+        onPress={() => setSosOpen((prev) => !prev)}
+      >
+        <Entypo
+          name={sosOpen ? "triangle-down" : "triangle-right"}
+          size={18}
+          color={COLORS.MAIN_YELLOW3}
+        />
+        <Text style={styles.sosToggleText}>긴급 호출 이력</Text>
+      </TouchableOpacity>
+
+      {sosOpen && <SosTable rows={rows} />}
     </ScrollView>
   );
 };
@@ -74,6 +102,21 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: "400",
     color: "#8b8b8b",
+  },
+  sosToggle: {
+    backgroundColor: COLORS.MAIN_YELLOW1,
+    borderRadius: 50,
+    flexDirection: "row",
+    justifyContent: "center",
+    width: 116,
+    height: 21,
+    borderWidth: 1,
+    borderColor: COLORS.MAIN_YELLOW2,
+  },
+  sosToggleText: {
+    fontSize: 12,
+    fontWeight: 600,
+    color: COLORS.BLACK,
   },
 });
 
