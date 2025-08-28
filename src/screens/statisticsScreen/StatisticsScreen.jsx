@@ -4,6 +4,7 @@ import Selector from "../../components/Selector";
 import UsingCount from "./components/usingCount/UsingCount";
 import UsingTop from "./components/usingTop/UsingTop";
 import UsingInfo from "./components/usingInfo/UsingInfo";
+import SosTable from "./components/SosTable";
 import { COLORS } from "../../styles/color";
 
 import countDummy from "../../datas/countDummy.json";
@@ -14,6 +15,15 @@ import donut2Dummy from "../../datas/donut2Dummy.json";
 const StatisticsScreen = () => {
   const countData = countDummy; // 발화 횟수 예시 데이터
   const users = ["김예나", "조주한"]; // 연결된 계정 목록
+
+  const rows = [
+    // 긴급 호출 예시 데이터
+    ["6/30", "14:30", "서울특별시 성북구 삼선교로16길 116", "보호자"],
+    ["", "", "", ""],
+    ["", "", "", ""],
+    ["", "", "", ""],
+    ["", "", "", ""],
+  ];
 
   const [user, setUser] = useState(users[0]);
   return (
@@ -40,7 +50,9 @@ const StatisticsScreen = () => {
 
       {/* 시간, 장소별 사용 분포 원 그래프*/}
       <UsingInfo data1={donut1Dummy} data2={donut2Dummy} />
+
       {/* 긴급 호출 이력 표 */}
+      <SosTable rows={rows} />
     </ScrollView>
   );
 };
