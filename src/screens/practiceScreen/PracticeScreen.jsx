@@ -11,6 +11,26 @@ import REPEAT from "../../assets/images/practice/repeat.png"
 import REPEATGOOD from "../../assets/images/practice/repeatGood.png"
 import Dialog from "../../components/dialog/Dialog";
 
+import HOSPITAL from "../../assets/images/practice/hospital.png";
+import RESTAURANT from "../../assets/images/practice/restaurant.png";
+import SCHOOL from "../../assets/images/practice/school.png";
+import MART from "../../assets/images/practice/mart.png";
+import MOVE from "../../assets/images/practice/move.png";
+import BANK from "../../assets/images/practice/bank.png";
+import DRUG from "../../assets/images/practice/drug.png";
+import STAR from "../../assets/images/practice/favorite.png";
+
+const locationImages = {
+  병원: HOSPITAL,
+  식당: RESTAURANT,
+  학교: SCHOOL,
+  마트: MART,
+  교통: MOVE,
+  은행: BANK,
+  약국: DRUG,
+  즐겨찾기: STAR,
+};
+
 const PracticeScreen = () => {
   const [practiceSentence, setPracticeSentence] = useState([
     {
@@ -70,6 +90,7 @@ const PracticeScreen = () => {
           <View style = { styles.locationBox }>
             <Image 
               style = { styles.locationImg }
+              source = { locationImages[selectedLocation] }
             />
             <Text style = { styles.locationText }>{ selectedLocation }</Text>
           </View>
