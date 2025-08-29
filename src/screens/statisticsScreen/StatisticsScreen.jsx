@@ -10,7 +10,7 @@ import Selector from "../../components/Selector";
 import UsingCount from "./components/usingCount/UsingCount";
 import UsingTop from "./components/usingTop/UsingTop";
 import UsingInfo from "./components/usingInfo/UsingInfo";
-import SosTable from "./components/SosTable";
+import SosTable from "./components/sosTable/SosTable";
 import { COLORS } from "../../styles/color";
 import Entypo from "@expo/vector-icons/Entypo";
 
