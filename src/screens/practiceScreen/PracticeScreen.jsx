@@ -11,6 +11,25 @@ import REPEAT from "../../assets/images/practice/repeat.png"
 import REPEATGOOD from "../../assets/images/practice/repeatGood.png"
 
 const PracticeScreen = () => {
+  const [practiceSentence, setPracticeSentence] = useState([
+    {
+      left: "몇 명이세요?",
+      rightOptions: ["한 명이에요", "두 명이에요", "잠시만요"]
+    },
+    {
+      left: "드시고 가시나요?",
+      rightOptions: ["네", "아니요", "잠시만요"]
+    },
+    {
+      left: "주문하시겠어요?",
+      rightOptions: ["네 할게요", "조금만 더 볼게요", "추천 메뉴 있나요?"]
+    }
+  ])
+
+  const [currentSentence, setCurrentSentence] = useState(0);
+
+  const [isAnswered, setIsAnswered] = useState(false);
+
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -32,6 +51,7 @@ const PracticeScreen = () => {
     setToastMessage("대단해요!");
     setToastImage(REPEATGOOD);
     setShowToast(true);
+    setIsAnswered(true);
   };
 
   return (
@@ -54,19 +74,34 @@ const PracticeScreen = () => {
 
         <View style =  { styles.practiceChat }>
           <ScrollView>
-            <LeftPracticeBox 
-              practiceText = { "몇 명이세요?" }
-              isSpeaking = { isSpeaking }
-              onPress = { handleSpeakToggle }
-            />
-            <RightPracticeBox 
-              onPress = { handleSelect }
-            />             
+            { practiceSentence.slice(0, currentSentence + 1).map((d, idx) => (
+              <View key = { idx }>
+                <LeftPracticeBox 
+                  practiceText = { d.left }
+                  isSpeaking = { isSpeaking }
+                  onPress = { handleSpeakToggle }
+                />
+                <RightPracticeBox 
+                  options = { d.rightOptions }
+                  onPress = { (opt) => handleSelect(opt) }
+                />  
+            </View>
+          ))}
           </ScrollView>
+
           <View>
-            <TouchableOpacity style = { styles.nextBox }>
+            { isAnswered && currentSentence < practiceSentence.length - 1 && (
+            <TouchableOpacity 
+              style = { styles.nextBox }
+              onPress = { () => {
+                setCurrentSentence(prev => prev + 1);
+                setIsAnswered(false); 
+              }}
+            >
               <Text style = { styles.nextText }>다음</Text>
-            </TouchableOpacity>              
+            </TouchableOpacity>   
+            )}
+
           </View>
         </View>
 

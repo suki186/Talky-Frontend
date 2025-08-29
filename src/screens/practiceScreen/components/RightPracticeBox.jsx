@@ -2,31 +2,27 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { COLORS } from "../../../styles/color"
 import { useState } from "react"
 
-export const RightPracticeBox = ({ onPress }) => {
+export const RightPracticeBox = ({ options, onPress }) => {
     const [selected, setSelected] = useState(null);
-
-    const [sentence, setSentence] = useState([
-        "한 명이에요", "두 명이에요", "잠시만요"
-    ])
 
     return (
         <View style = { styles.container }>
-            { sentence.map((text, index) => (
+            { options.map((opt, idx) => (
                 <TouchableOpacity  
-                    key = { index }
+                    key = { idx }
                     style = {[ 
                         styles.choiceContainer,
-                        selected === index && styles.selectContainer 
+                        selected === idx && styles.selectContainer 
                     ]}
                     onPress = { () => {
-                        if ( selected === index ) setSelected(null);
+                        if ( selected === idx ) setSelected(null);
                         else {
-                            setSelected(index);
-                            if (onPress) onPress(); 
+                            setSelected(idx);
+                            if (onPress) onPress(opt); 
                         }
                     }}
                 >
-                    <Text style = { styles.text }>{ text }</Text>
+                    <Text style = { styles.text }>{ opt }</Text>
                 </TouchableOpacity>                
             ))}
         </View>

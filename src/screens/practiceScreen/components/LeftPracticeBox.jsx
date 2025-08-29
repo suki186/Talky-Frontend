@@ -3,6 +3,7 @@ import { COLORS } from "../../../styles/color"
 
 import SPEAK from "../../../assets/images/practice/practice_before.png"
 import SPEAKED from "../../../assets/images/practice/practice_after.png"
+import { useState } from "react"
 
 export const LeftPracticeBox = ({ practiceText, onPress, isSpeaking }) => {
     return (
