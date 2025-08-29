@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { PracticeState } from "./components/PracticeState";
 import { LeftPracticeBox } from "./components/LeftPracticeBox";
 import { RightPracticeBox } from "./components/RightPracticeBox";
-import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity, Pressable } from "react-native";
 import { COLORS } from "../../styles/color";
 import { Toast } from "../../components/input/Toast";
 
 // import RESTAURANT from "../../assets/images/practice/restaurant.png"
 import REPEAT from "../../assets/images/practice/repeat.png"
 import REPEATGOOD from "../../assets/images/practice/repeatGood.png"
+import Dialog from "../../components/dialog/Dialog";
 
 const PracticeScreen = () => {
   const [practiceSentence, setPracticeSentence] = useState([
@@ -35,6 +36,10 @@ const PracticeScreen = () => {
   const [toastMessage, setToastMessage] = useState("");
   const [toastImage, setToastImage] = useState(null);
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
   const handleSpeakToggle = () => {
     setIsSpeaking(prev => {
       const next = !prev;
@@ -55,20 +60,25 @@ const PracticeScreen = () => {
   };
 
   return (
-    <>
-      {/* <PracticeState /> */}
+    <View style = { styles.container }>
 
-      <View style = { styles.container }>
+    { selectedLocation === null ? (
+      <PracticeState onSelect = { setSelectedLocation } />
+    ) : (
+      <>
         <View style = { styles.practiceTop }>
           <View style = { styles.locationBox }>
             <Image 
               style = { styles.locationImg }
             />
-            <Text style = { styles.locationText }>식당</Text>
+            <Text style = { styles.locationText }>{ selectedLocation }</Text>
           </View>
-          <View style = { styles.endBox }>
+          <Pressable 
+            style = { styles.endBox }
+            onPress = { () => setIsDialogOpen(true) }
+          >
             <Text style = { styles.endText }>끝내기</Text>
-          </View>          
+          </Pressable>          
         </View>
 
 
@@ -116,10 +126,21 @@ const PracticeScreen = () => {
           />
         )}
 
-      </View>    
-    </>
-
-    
+        <Dialog
+          visible = { isDialogOpen }
+          title = "연습 종료"
+          message = "대단해요!"
+          subMessage = "연습을 끝내고 메인으로 돌아갈까요?"
+          cancelText = "아니요"
+          confirmText = "연습 끝내기"
+          onCancel = { () => setIsDialogOpen(false) }
+          onConfirm = { () => {
+            setIsDialogOpen(false);
+          }}
+        />
+      </>        
+    )}  
+  </View>    
   );
 };
 

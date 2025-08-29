@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { COLORS } from "../../../styles/color"
 import { LinearGradient } from "expo-linear-gradient"
 
-export const PracticeStateComponent = ({ imgSource, location }) => {
+export const PracticeStateComponent = ({ imgSource, location, onPress }) => {
     return (
         <LinearGradient
             colors = { [COLORS.MAIN_YELLOW2, COLORS.MAIN_YELLOW3] }
@@ -11,6 +11,7 @@ export const PracticeStateComponent = ({ imgSource, location }) => {
             <TouchableOpacity 
                 activeOpacity = { 0.8 }
                 style = { styles.container }
+                onPress = { () => onPress(location) }  
             >
                 <Image source = { imgSource } />
                 <View style = { styles.stateTextBox }>

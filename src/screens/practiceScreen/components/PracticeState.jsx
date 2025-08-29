@@ -12,7 +12,7 @@ import STAR from "../../../assets/images/practice/favorite.png"
 
 import { COLORS } from "../../../styles/color"
 
-export const PracticeState = () => {
+export const PracticeState = ({ onSelect }) => {
     return (
         <View style = { styles.container }>
             <Text style = { styles.mainText }>연습하고 싶은 상황을 선택해 보세요!</Text>
@@ -21,10 +21,12 @@ export const PracticeState = () => {
                 <PracticeStateComponent 
                     imgSource = { HOSPITAL }
                     location = "병원"
+                    onPress = { onSelect }
                 />
                 <PracticeStateComponent 
                     imgSource = { RESTAURANT }
                     location = "식당"
+                    onPress = { onSelect }
                 />
             </View>
 
@@ -32,10 +34,12 @@ export const PracticeState = () => {
                 <PracticeStateComponent 
                     imgSource = { SCHOOL }
                     location = "학교"
+                    onPress = { onSelect }
                 />
                 <PracticeStateComponent 
                     imgSource = { MART }
                     location = "마트"
+                    onPress = { onSelect }
                 />
             </View>
 
@@ -43,10 +47,12 @@ export const PracticeState = () => {
                 <PracticeStateComponent 
                     imgSource = { MOVE }
                     location = "교통"
+                    onPress = { onSelect }
                 />
                 <PracticeStateComponent 
                     imgSource = { BANK }
                     location = "은행"
+                    onPress = { onSelect }
                 />
             </View>
 
@@ -54,10 +60,12 @@ export const PracticeState = () => {
                 <PracticeStateComponent 
                     imgSource = { DRUG }
                     location = "약국"
+                    onPress = { onSelect }
                 />
                 <PracticeStateComponent 
                     imgSource = { STAR }
                     location = "즐겨찾기"
+                    onPress = { onSelect }
                 />
             </View>
         </View>
