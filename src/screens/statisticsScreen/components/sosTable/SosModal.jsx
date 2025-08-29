@@ -1,19 +1,20 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS } from "../../../../styles/color";
 import Feather from "@expo/vector-icons/Feather";
 import SOS from "../../../../assets/images/sos-call.png";
 
-const SosModal = () => {
+const SosModal = ({ onClose }) => {
   return (
     <View style={styles.modalContainer}>
       {/* 취소 아이콘 */}
-      <Feather
-        name="x"
-        size={24}
-        color={COLORS.CANCLE_CLICK}
+      <TouchableOpacity
+        onPress={onClose}
         style={styles.closeIcon}
-      />
+        accessibilityLabel="닫기"
+      >
+        <Feather name="x" size={24} color={COLORS.CANCLE_CLICK} />
+      </TouchableOpacity>
       {/* sos 아이콘, 제목 */}
       <View style={styles.modalTitle}>
         <Image

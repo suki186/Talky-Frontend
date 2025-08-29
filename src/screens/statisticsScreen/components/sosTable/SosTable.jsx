@@ -1,15 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { COLORS } from "../../../styles/color";
+import { View, Text, StyleSheet } from "react-native";
+import { COLORS } from "../../../../styles/color";
 
-const SosTable = ({ rows = [] }) => {
+const SosTable = ({ rows = [], onPressPlace }) => {
   const numRows = rows.length + 1; // 헤더 포함 +1
 
   const colWidths = [38, 39, 190, 61]; // 컬럼 너비
   const rowHeight = 120 / numRows;
 
   const headerRow = ["날짜", "시간", "장소 (클릭시 상세조회)", "대상"];
-  const isLink = (r, c) => r === 1 && c === 2;
 
   return (
     <View style={styles.table}>
@@ -49,12 +48,17 @@ const SosTable = ({ rows = [] }) => {
           ]}
         >
           {row.map((cell, c) => {
-            const CellWrap = isLink(r, c) ? TouchableOpacity : View;
-            const isPlaceCol = c === 2 && cell; // 장소 열
+            const isPlaceCol = c === 2; // 장소 컬럼
+            const hasText = typeof cell === "string" && cell.trim().length > 0;
 
             return (
-              <CellWrap
+              <View
                 key={`cell-${r}-${c}`}
+                onPress={
+                  isPlaceCol && onPressPlace
+                    ? () => onPressPlace(row)
+                    : undefined
+                }
                 style={[
                   styles.cell,
                   {
@@ -67,13 +71,18 @@ const SosTable = ({ rows = [] }) => {
                 <Text
                   style={[
                     styles.text,
-                    isPlaceCol && styles.placeText, // 장소만 밑줄+볼드
+                    isPlaceCol && hasText && styles.placeText,
                   ]}
                   numberOfLines={1}
+                  onPress={
+                    isPlaceCol && hasText && onPressPlace
+                      ? () => onPressPlace(row)
+                      : undefined
+                  }
                 >
                   {cell}
                 </Text>
-              </CellWrap>
+              </View>
             );
           })}
         </View>
