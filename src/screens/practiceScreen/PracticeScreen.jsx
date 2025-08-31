@@ -11,24 +11,24 @@ import REPEAT from "../../assets/images/practice/repeat.png"
 import REPEATGOOD from "../../assets/images/practice/repeatGood.png"
 import Dialog from "../../components/dialog/Dialog";
 
-import HOSPITAL from "../../assets/images/practice/hospital.png";
-import RESTAURANT from "../../assets/images/practice/restaurant.png";
-import SCHOOL from "../../assets/images/practice/school.png";
-import MART from "../../assets/images/practice/mart.png";
-import MOVE from "../../assets/images/practice/move.png";
-import BANK from "../../assets/images/practice/bank.png";
-import DRUG from "../../assets/images/practice/drug.png";
-import STAR from "../../assets/images/practice/favorite.png";
+import HOSPITALWH from "../../assets/images/practice/wh-hospital.png";
+import RESTAURANTWH from "../../assets/images/practice/wh-restaurant.png";
+import SCHOOLWH from "../../assets/images/practice/wh-school.png";
+import MARTWH from "../../assets/images/practice/wh-mart.png";
+import MOVEWH from "../../assets/images/practice/wh-move.png";
+import BANKWH from "../../assets/images/practice/wh-bank.png";
+import DRUGWH from "../../assets/images/practice/wh-drug.png";
+import STARWH from "../../assets/images/practice/wh-star.png";
 
 const locationImages = {
-  병원: HOSPITAL,
-  식당: RESTAURANT,
-  학교: SCHOOL,
-  마트: MART,
-  교통: MOVE,
-  은행: BANK,
-  약국: DRUG,
-  즐겨찾기: STAR,
+  병원: HOSPITALWH,
+  식당: RESTAURANTWH,
+  학교: SCHOOLWH,
+  마트: MARTWH,
+  교통: MOVEWH,
+  은행: BANKWH,
+  약국: DRUGWH,
+  즐겨찾기: STARWH,
 };
 
 const PracticeScreen = () => {
