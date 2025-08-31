@@ -21,6 +21,8 @@ const MapBox = ({ width = 328, height = 480 }) => {
 
         <Marker
           coordinate = {{ latitude: 37.5820, longitude: 127.0104 }}
+          image = { require("../../../assets/images/map/map-marker.png") }
+          style = {{ width: 35, height: 41 }}
         />
       </MapView>
     </View>
