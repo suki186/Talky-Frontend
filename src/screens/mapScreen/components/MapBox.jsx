@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
-const MapBox = ({ width = 328, height = 480 }) => {
+const MapBox = ({ width = 328, height = 480, selectedRegion }) => {
   const [stores, setStores] = useState([
-    { id: 1, latitude: 37.5825, longitude: 127.0108 },
-    { id: 2, latitude: 37.5830, longitude: 127.0095 },
-    { id: 3, latitude: 37.5815, longitude: 127.0110 },
+    { id: 1, latitude: 37.5825, longitude: 127.0108, region: "서울특별시" },
+    { id: 2, latitude: 37.5830, longitude: 127.0095, region: "인천광역시" },
+    { id: 3, latitude: 37.5815, longitude: 127.0110, region: "부산광역시" },
   ]);
+
+  const filteredStores =
+    selectedRegion && selectedRegion !== "전체"
+      ? stores.filter((s) => s.region === selectedRegion)
+      : stores;
 
   return (
     <View style = { [styles.mapContainer, { width, height }] }>
@@ -31,7 +36,7 @@ const MapBox = ({ width = 328, height = 480 }) => {
           style = {{ width: 35, height: 41 }}
         />
 
-        { stores.map((store) => (
+        { filteredStores.map((store) => (
           <Marker
             key = { store.id }
             coordinate = {{ latitude: store.latitude, longitude: store.longitude }}

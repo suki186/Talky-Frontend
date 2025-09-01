@@ -40,7 +40,7 @@ const MapScreen = () => {
       <Text style={styles.description}>
         전국 언어치료센터의 위치를 한 눈에 확인할 수 있습니다.
       </Text>
-      <MapBox />
+      <MapBox selectedRegion = { region } />
     </ScrollView>
   );
 };
