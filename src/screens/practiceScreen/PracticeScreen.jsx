@@ -157,6 +157,9 @@ const PracticeScreen = () => {
           onCancel = { () => setIsDialogOpen(false) }
           onConfirm = { () => {
             setIsDialogOpen(false);
+            setSelectedLocation(null);
+            setCurrentSentence(0);
+            setIsAnswered(false);
           }}
         />
       </>        
