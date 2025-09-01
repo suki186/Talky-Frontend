@@ -1,57 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, ActivityIndicator, Alert } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
 
 const MapBox = ({ width = 328, height = 480 }) => {
-  const [region, setRegion] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("위치 권한 거부");
-        return;
-      }
-
-      const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
-      const { latitude, longitude } = location.coords;
-
-      setRegion({
-        latitude,
-        longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      });
-    })();
-  }, []);
-
-  if (!region) {
-    return (
-      <View style={[styles.mapContainer, { width, height, justifyContent: "center", alignItems: "center" }]}>
-        <ActivityIndicator />
-      </View>
-    );
-  }
+  const [stores, setStores] = useState([
+    { id: 1, latitude: 37.5825, longitude: 127.0108 },
+    { id: 2, latitude: 37.5830, longitude: 127.0095 },
+    { id: 3, latitude: 37.5815, longitude: 127.0110 },
+  ]);
 
   return (
-    <View style={[styles.mapContainer, { width, height }]}>
+    <View style = { [styles.mapContainer, { width, height }] }>
       <MapView
-        style={StyleSheet.absoluteFillObject}
-        region={region}
-        showsUserLocation={true}
-        zoomEnabled
-        zoomControlEnabled
-        scrollEnabled
-        showsCompass
-        onRegionChangeComplete={(r) => setRegion(r)}
+        style = { StyleSheet.absoluteFillObject }
+        initialRegion = {{ // 학교 위치로 고정
+          latitude: 37.5820,
+          longitude: 127.0104,
+          latitudeDelta: 0.01, 
+          longitudeDelta: 0.01,
+        }}
+        zoomEnabled = { true }       
+        zoomControlEnabled = { true } 
+        scrollEnabled = { true }       
+        showsCompass = { true } 
       >
+
         <Marker
-          coordinate={{ latitude: region.latitude, longitude: region.longitude }}
-          image={require("../../../assets/images/map/map-marker.png")}
-          style={{ width: 35, height: 41 }}
+          coordinate = {{ latitude: 37.5820, longitude: 127.0104 }}
+          image = { require("../../../assets/images/map/map-marker.png") }
+          style = {{ width: 35, height: 41 }}
         />
+
+        { stores.map((store) => (
+          <Marker
+            key = { store.id }
+            coordinate = {{ latitude: store.latitude, longitude: store.longitude }}
+            title = { store.name }
+            image = { require("../../../assets/images/map/map-marker.png") }
+            style = {{ width: 35, height: 41 }}
+          />
+        ))}
       </MapView>
     </View>
   );
