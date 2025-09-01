@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "flex-end",
-        gap: 6
+        gap: 6,
+        marginBottom: 22
     },
 
     choiceContainer: {
