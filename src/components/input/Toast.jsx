@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { Animated, Image, StyleSheet, Text, View } from "react-native"
+import { Animated, StyleSheet, Text, Image, View } from "react-native"
 import { COLORS } from "../../styles/color";
 
 export const Toast = ({ 
@@ -69,5 +69,12 @@ const toastStyles = StyleSheet.create({
     icon: {
         height: 52,
         resizeMode: "contain"
+    },
+
+    toastText: {
+        color: COLORS.BLACK,
+        fontSize: 12,
+        fontWeight: "400",
+        lineHeight: 14
     }
 })
