@@ -15,8 +15,8 @@ Talky는 언어장애인을 위한 자동 문장 추천 앱서비스입니다.
 ## 🛠 기술 스택
 
 - **Language**: Javascript
-- **Framework**: React Native
-- **Styling**: SCSS
+- **Framework**: React Native, Expo
+- **Styling**: StyledSheet
 
 ---
 ## 🔹 커밋 메시지 규칙
