@@ -5,6 +5,7 @@ import { RightPracticeBox } from "./components/RightPracticeBox";
 import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity, Pressable } from "react-native";
 import { COLORS } from "../../styles/color";
 import { Toast } from "../../components/input/Toast";
+import { useToast } from "../../hooks/useToast";
 
 // import RESTAURANT from "../../assets/images/practice/restaurant.png"
 import REPEAT from "../../assets/images/practice/repeat.png"
@@ -32,6 +33,20 @@ const locationImages = {
 };
 
 const PracticeScreen = () => {
+  const {
+    isSpeaking,
+    setIsSpeaking,
+    isAnswered,
+    setIsAnswered,
+    showToast,
+    toastMessage,
+    toastImage,
+    handleSpeakToggle,
+    handleSelectAnswer,
+    hideToast,
+    resetState,
+  } = useToast();
+
   const [practiceSentence, setPracticeSentence] = useState([
     {
       left: "몇 명이세요?",
@@ -49,35 +64,9 @@ const PracticeScreen = () => {
 
   const [currentSentence, setCurrentSentence] = useState(0);
 
-  const [isAnswered, setIsAnswered] = useState(false);
-
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastImage, setToastImage] = useState(null);
-
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
-
-  const handleSpeakToggle = () => {
-    setIsSpeaking(prev => {
-      const next = !prev;
-      if (next) {
-        setToastMessage("따라 말해 보세요!");
-        setToastImage(REPEAT);
-        setShowToast(true);
-      }
-      return next;
-    });
-  };
-
-  const handleSelect = () => {
-    setToastMessage("대단해요!");
-    setToastImage(REPEATGOOD);
-    setShowToast(true);
-    setIsAnswered(true);
-  };
 
   return (
     <View style = { styles.container }>
@@ -114,7 +103,7 @@ const PracticeScreen = () => {
                 />
                 <RightPracticeBox 
                   options = { d.rightOptions }
-                  onPress = { (opt) => handleSelect(opt) }
+                  onPress = { handleSelectAnswer }
                 />  
             </View>
           ))}
@@ -143,7 +132,7 @@ const PracticeScreen = () => {
             message = { toastMessage }
             imageSource = { toastImage }
             borderColor = "#FFF3C7"
-            onHide = { () => setShowToast(false) }
+            onHide = { hideToast }
           />
         )}
 
