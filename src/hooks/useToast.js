@@ -12,19 +12,19 @@ export const useToast = () => {
 
   /** 말하기 토글 */
   const handleSpeakToggle = () => {
-    setIsSpeaking((prev) => {
-      const next = !prev;
-      if (next) {
-        triggerToast("따라 말해 보세요!", REPEAT);
-      }
-      return next;
-    });
+    setIsSpeaking((prev) => !prev);
   };
 
   /** 답변 선택 */
   const handleSelectAnswer = () => {
-    triggerToast("대단해요!", REPEATGOOD);
+    triggerToast("따라 말해 보세요!", REPEAT);
     setIsAnswered(true);
+  };
+
+  /** 다음 버튼 클릭 */
+  const handleNext = () => {
+    triggerToast("대단해요!", REPEATGOOD); // 새 함수 추가
+    setIsAnswered(false);
   };
 
   /** 토스트 띄우기 */
@@ -56,6 +56,7 @@ export const useToast = () => {
     toastImage,
     handleSpeakToggle,
     handleSelectAnswer,
+    handleNext,
     hideToast,
     resetState,
   };
