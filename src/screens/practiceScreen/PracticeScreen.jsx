@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import { PracticeState } from "./components/PracticeState";
 import { LeftPracticeBox } from "./components/LeftPracticeBox";
 import { RightPracticeBox } from "./components/RightPracticeBox";
-import { Image, StyleSheet, View, Text, ScrollView, TouchableOpacity, Pressable } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 import { COLORS } from "../../styles/color";
 import { Toast } from "../../components/input/Toast";
 import { useToast } from "../../hooks/useToast";
@@ -48,17 +56,17 @@ const PracticeScreen = () => {
   const [practiceSentence, setPracticeSentence] = useState([
     {
       left: "몇 명이세요?",
-      rightOptions: ["한 명이에요", "두 명이에요", "잠시만요"]
+      rightOptions: ["한 명이에요", "두 명이에요", "잠시만요"],
     },
     {
       left: "드시고 가시나요?",
-      rightOptions: ["네", "아니요", "잠시만요"]
+      rightOptions: ["네", "아니요", "잠시만요"],
     },
     {
       left: "주문하시겠어요?",
-      rightOptions: ["네 할게요", "조금만 더 볼게요", "추천 메뉴 있나요?"]
-    }
-  ])
+      rightOptions: ["네 할게요", "조금만 더 볼게요", "추천 메뉴 있나요?"],
+    },
+  ]);
 
   const [currentSentence, setCurrentSentence] = useState(0);
 
@@ -67,95 +75,91 @@ const PracticeScreen = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   return (
-    <View style = { styles.container }>
-
-    { selectedLocation === null ? (
-      <PracticeState onSelect = { setSelectedLocation } />
-    ) : (
-      <>
-        <View style = { styles.practiceTop }>
-          <View style = { styles.locationBox }>
-            <Image 
-              style = { styles.locationImg }
-              source = { locationImages[selectedLocation] }
-            />
-            <Text style = { styles.locationText }>{ selectedLocation }</Text>
-          </View>
-          <Pressable 
-            style = { styles.endBox }
-            onPress = { () => setIsDialogOpen(true) }
-          >
-            <Text style = { styles.endText }>끝내기</Text>
-          </Pressable>          
-        </View>
-
-
-        <View style =  { styles.practiceChat }>
-          <ScrollView>
-            { practiceSentence.slice(0, currentSentence + 1).map((d, idx) => (
-              <View key = { idx }>
-                <LeftPracticeBox 
-                  practiceText = { d.left }
-                  isSpeaking = { isSpeaking }
-                  onPress = { handleSpeakToggle }
-                />
-                <RightPracticeBox 
-                  options = { d.rightOptions }
-                  onPress = { handleSelectAnswer }
-                />  
+    <View style={styles.container}>
+      {selectedLocation === null ? (
+        <PracticeState onSelect={setSelectedLocation} />
+      ) : (
+        <>
+          <View style={styles.practiceTop}>
+            <View style={styles.locationBox}>
+              <Image
+                style={styles.locationImg}
+                source={locationImages[selectedLocation]}
+              />
+              <Text style={styles.locationText}>{selectedLocation}</Text>
             </View>
-          ))}
-          </ScrollView>
-
-          <View>
-            { isAnswered && currentSentence < practiceSentence.length - 1 && (
-            <TouchableOpacity 
-              style = { styles.nextBox }
-              onPress = { () => {
-                setCurrentSentence(prev => prev + 1);
-                handleNext();
-              }}
+            <Pressable
+              style={styles.endBox}
+              onPress={() => setIsDialogOpen(true)}
             >
-              <Text style = { styles.nextText }>다음</Text>
-            </TouchableOpacity>   
-            )}
-
+              <Text style={styles.endText}>끝내기</Text>
+            </Pressable>
           </View>
-        </View>
 
-        { showToast && (
+          <View style={styles.practiceChat}>
+            <ScrollView>
+              {practiceSentence.slice(0, currentSentence + 1).map((d, idx) => (
+                <View key={idx}>
+                  <LeftPracticeBox
+                    practiceText={d.left}
+                    isSpeaking={isSpeaking}
+                    onPress={handleSpeakToggle}
+                  />
+                  <RightPracticeBox
+                    options={d.rightOptions}
+                    onPress={handleSelectAnswer}
+                  />
+                </View>
+              ))}
+            </ScrollView>
 
-          <>
-            <View style={styles.toastOverlay} />
-            <Toast
-              style = { styles.toast }
-              textStyle = {{ fontSize: 22, fontWeight: "500", lineHeight: 25 }}
-              message = { toastMessage }
-              imageSource = { toastImage }
-              borderColor = "#FFF3C7"
-              onHide = { hideToast }
-            />
-          </>
-        )}
+            <View>
+              {isAnswered && currentSentence < practiceSentence.length - 1 && (
+                <TouchableOpacity
+                  style={styles.nextBox}
+                  onPress={() => {
+                    setCurrentSentence((prev) => prev + 1);
+                    handleNext();
+                  }}
+                >
+                  <Text style={styles.nextText}>다음</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
 
-        <Dialog
-          visible = { isDialogOpen }
-          title = "연습 종료"
-          message = "대단해요!"
-          subMessage = "연습을 끝내고 메인으로 돌아갈까요?"
-          cancelText = "아니요"
-          confirmText = "연습 끝내기"
-          onCancel = { () => setIsDialogOpen(false) }
-          onConfirm = { () => {
-            setIsDialogOpen(false);
-            setSelectedLocation(null);
-            setCurrentSentence(0);
-            setIsAnswered(false);
-          }}
-        />
-      </>        
-    )}  
-  </View>    
+          {showToast && (
+            <>
+              <View style={styles.toastOverlay} />
+              <Toast
+                style={styles.toast}
+                textStyle={{ fontSize: 22, fontWeight: "500", lineHeight: 25 }}
+                message={toastMessage}
+                imageSource={toastImage}
+                borderColor="#FFF3C7"
+                onHide={hideToast}
+              />
+            </>
+          )}
+
+          <Dialog
+            visible={isDialogOpen}
+            title="연습 종료"
+            message="대단해요!"
+            subMessage="연습을 끝내고 메인으로 돌아갈까요?"
+            cancelText="아니요"
+            confirmText="연습 끝내기"
+            onCancel={() => setIsDialogOpen(false)}
+            onConfirm={() => {
+              setIsDialogOpen(false);
+              setSelectedLocation(null);
+              setCurrentSentence(0);
+              setIsAnswered(false);
+            }}
+          />
+        </>
+      )}
+    </View>
   );
 };
 
@@ -167,14 +171,14 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.BACKGROUND,
     alignItems: "center",
     paddingTop: 15,
-    position: "relative"
+    position: "relative",
   },
 
   practiceTop: {
     flexDirection: "row",
     alignItems: "flex-end",
     marginLeft: 128,
-    gap: 77
+    gap: 77,
   },
 
   locationBox: {
@@ -185,20 +189,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: COLORS.MAIN_YELLOW3,
     borderRadius: 14,
-    gap: 6
+    gap: 6,
   },
 
   locationImg: {
     width: 15,
     height: 19,
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
 
   locationText: {
     color: COLORS.BLACK,
     fontSize: 14,
     fontWeight: 600,
-    lineHeight: 16
+    lineHeight: 16,
   },
 
   endBox: {
@@ -207,15 +211,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: COLORS.MAIN_YELLOW2,
-    borderRadius: 10
+    borderRadius: 10,
   },
 
   endText: {
     fontSize: 10,
     fontWeight: 400,
-    lineHeight: 15
+    lineHeight: 15,
   },
-  
+
   practiceChat: {
     width: 328,
     height: 509,
@@ -225,7 +229,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     paddingVertical: 16,
     paddingHorizontal: 13,
-    gap: 22
+    gap: 22,
   },
 
   nextBox: {
@@ -240,7 +244,7 @@ const styles = StyleSheet.create({
 
   nextText: {
     fontSize: 14,
-    lineHeight: 20
+    lineHeight: 20,
   },
 
   toastOverlay: {
@@ -258,6 +262,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 450,
     alignSelf: "center",
-    zIndex: 2
-  }
-})
+    zIndex: 2,
+  },
+});
