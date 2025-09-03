@@ -1,0 +1,6 @@
+[
+  { "rank": 1, "label": "낮", "value": 44 },
+  { "rank": 2, "label": "저녁", "value": 30 },
+  { "rank": 3, "label": "오전", "value": 17 },
+  { "rank": 4, "label": "밤/새벽", "value": 9 }
+]
