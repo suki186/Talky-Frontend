@@ -7,9 +7,6 @@ import { COLORS } from "../../styles/color";
 import { Toast } from "../../components/input/Toast";
 import { useToast } from "../../hooks/useToast";
 
-// import RESTAURANT from "../../assets/images/practice/restaurant.png"
-import REPEAT from "../../assets/images/practice/repeat.png"
-import REPEATGOOD from "../../assets/images/practice/repeatGood.png"
 import Dialog from "../../components/dialog/Dialog";
 
 import HOSPITALWH from "../../assets/images/practice/wh-hospital.png";
@@ -43,6 +40,7 @@ const PracticeScreen = () => {
     toastImage,
     handleSpeakToggle,
     handleSelectAnswer,
+    handleNext,
     hideToast,
     resetState,
   } = useToast();
@@ -115,7 +113,7 @@ const PracticeScreen = () => {
               style = { styles.nextBox }
               onPress = { () => {
                 setCurrentSentence(prev => prev + 1);
-                setIsAnswered(false); 
+                handleNext();
               }}
             >
               <Text style = { styles.nextText }>다음</Text>
@@ -126,14 +124,18 @@ const PracticeScreen = () => {
         </View>
 
         { showToast && (
-          <Toast
-            style = { styles.toast }
-            textStyle = {{ fontSize: 22, fontWeight: "500", lineHeight: 25 }}
-            message = { toastMessage }
-            imageSource = { toastImage }
-            borderColor = "#FFF3C7"
-            onHide = { hideToast }
-          />
+
+          <>
+            <View style={styles.toastOverlay} />
+            <Toast
+              style = { styles.toast }
+              textStyle = {{ fontSize: 22, fontWeight: "500", lineHeight: 25 }}
+              message = { toastMessage }
+              imageSource = { toastImage }
+              borderColor = "#FFF3C7"
+              onHide = { hideToast }
+            />
+          </>
         )}
 
         <Dialog
@@ -241,9 +243,21 @@ const styles = StyleSheet.create({
     lineHeight: 20
   },
 
+  toastOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(139, 139, 139, 0.30)",
+    dropFill: "blur(1.5px)",
+    zIndex: 1,
+  },
+
   toast: {
     position: "absolute",
     bottom: 450,
-    alignSelf: "center"
+    alignSelf: "center",
+    zIndex: 2
   }
 })
