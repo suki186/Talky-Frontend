@@ -9,14 +9,14 @@ const idCheckApi = async (loginId) => {
 
     if (httpStatus === 200 && isSuccess) {
       console.log("사용 가능한 아이디");
-      return null;
+      return true;
     } else {
       console.warn("사용 불가능한 아이디: ", message);
-      return null;
+      return false;
     }
   } catch (e) {
     console.error(e);
-    return null;
+    return false;
   }
 };
 
