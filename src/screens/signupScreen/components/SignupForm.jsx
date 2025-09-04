@@ -18,6 +18,7 @@ const SignupForm = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState(null);
+  const [isIdChecked, setIsIdChecked] = useState(false);
 
   // 오류 메시지 상태
   const [errors, setErrors] = useState({
@@ -58,23 +59,27 @@ const SignupForm = () => {
   const handleIdCheck = async () => {
     if (!id) {
       setErrors((prev) => ({ ...prev, id: "아이디를 입력해 주세요." }));
+      setIsIdChecked(false); 
       return;
     }
 
     try {
       const response = await idCheckApi(id);
 
-      if (response === null) {
+      if (response === true) {
         console.log("사용 가능한 아이디");
         setErrors((prev) => ({ ...prev, id: "" }));
+        setIsIdChecked(true); 
         return true;
       } else {
         console.error("사용 불가능한 아이디");
         setErrors((prev) => ({ ...prev, id: "이미 사용 중인 아이디입니다." }));
+        setIsIdChecked(false); 
         return false;
       }
     } catch (error) {
       console.error("아이디 중복 확인 실패");
+      setIsIdChecked(false); 
     }
   }
 
@@ -149,7 +154,7 @@ const SignupForm = () => {
       <SignButton
         title="회원가입"
         disabled={
-          !(name.length > 0 && id.length > 0 && password.length > 0 && role)
+          !(name.length > 0 && id.length > 0 && password.length > 0 && role && isIdChecked)
         }
         onPress={handleSignup}
       />
