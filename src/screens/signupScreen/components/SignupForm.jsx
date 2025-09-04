@@ -8,6 +8,7 @@ import { validateSignup } from "../../../utils/validation";
 import Selector from "../../../components/Selector";
 import signupUserApi from "../../../apis/auth/signupUserApi";
 import { useNavigation } from "@react-navigation/native";
+import idCheckApi from "../../../apis/auth/idCheckApi";
 
 const SignupForm = () => {
   const navigation = useNavigation();
@@ -54,6 +55,29 @@ const SignupForm = () => {
     }
   };
 
+  const handleIdCheck = async () => {
+    if (!id) {
+      setErrors((prev) => ({ ...prev, id: "아이디를 입력해 주세요." }));
+      return;
+    }
+
+    try {
+      const response = await idCheckApi(id);
+
+      if (response === null) {
+        console.log("사용 가능한 아이디");
+        setErrors((prev) => ({ ...prev, id: "" }));
+        return true;
+      } else {
+        console.error("사용 불가능한 아이디");
+        setErrors((prev) => ({ ...prev, id: "이미 사용 중인 아이디입니다." }));
+        return false;
+      }
+    } catch (error) {
+      console.error("아이디 중복 확인 실패");
+    }
+  }
+
   return (
     <View>
       {/* 이름 */}
@@ -86,6 +110,7 @@ const SignupForm = () => {
           hasError={!!errors.id}
           showCheckButton={true}
           checkButtonDisabled={false}
+          onCheckPress={handleIdCheck}
         />
         {errors.id && <ErrorIcon />}
       </View>
