@@ -6,8 +6,11 @@ import ErrorIcon from "../../../components/auth/ErrorIcon";
 import { COLORS } from "../../../styles/color";
 import { validateSignup } from "../../../utils/validation";
 import Selector from "../../../components/Selector";
+import signupUserApi from "../../../apis/auth/signupUserApi";
+import { useNavigation } from "@react-navigation/native";
 
 const SignupForm = () => {
+  const navigation = useNavigation();
   const roles = ["일반", "보호자"]; // 역할 목록
 
   const [name, setName] = useState("");
@@ -34,10 +37,20 @@ const SignupForm = () => {
   };
 
   // 회원가입 함수
-  const handleSignup = () => {
+  const handleSignup = async () => {
     // 회원가입 로직 구현 예정
     if (validate()) {
-      console.log("회원가입 ", { name, id, password, role });
+      const roleMapping = { "일반": "normal", "보호자": "guardian" };
+      const mappedRole = roleMapping[role];
+
+      const userId = await signupUserApi(name, id, password, mappedRole);
+
+      if (userId) {
+        console.log("회원가입 ", { name, id, password, mappedRole });
+        navigation.goBack(); 
+      } else {
+        console.error("회원가입 실패");
+      }
     }
   };
 
