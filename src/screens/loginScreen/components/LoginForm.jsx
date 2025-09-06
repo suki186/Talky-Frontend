@@ -4,20 +4,29 @@ import SignInput from "../../../components/auth/SignInput";
 import SignButton from "../../../components/auth/SignButton";
 import ErrorIcon from "../../../components/auth/ErrorIcon";
 import { COLORS } from "../../../styles/color";
+import loginUserApi from "../../../apis/auth/loginUserApi";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const LoginForm = () => {
+const LoginForm = ({ setIsLoggedIn, setUserType }) => {
+  const navigation = useNavigation();
+
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   // 로그인 함수
-  const handleLogin = () => {
-    // 로그인 로직 구현 예정
-    if (id === "test1234" && password === "test1234") {
-      console.log("로그인 ", { id, password });
-      setError("");
+  const handleLogin = async () => {
+    const result = await loginUserApi(id, password);
+
+    if (result) {
+      console.log("로그인 성공");
+      await AsyncStorage.setItem("idtoken", result.token);
+      await AsyncStorage.setItem("userType", result.userType);
+      setIsLoggedIn(true);
+      setUserType(result.userType);
     } else {
-      setError("아이디 또는 비밀번호가 올바르지 않습니다");
+      console.error("로그인 실패");
     }
   };
 
