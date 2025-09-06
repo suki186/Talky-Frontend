@@ -5,12 +5,16 @@ import AppStack from "./AppStack";
 import { useAuth } from "../hooks/useAuth"; // 로그인 상태, userType
 
 export default function RootNavigator() {
-  const { isLoggedIn, userType } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, userType, setUserType } = useAuth();
 
   return (
     <NavigationContainer>
-      {/* {!isLoggedIn ? <AuthStack /> : <AppStack userType={userType} />} */}
-      <AuthStack />
+      {!isLoggedIn ? (
+        <AuthStack setIsLoggedIn={setIsLoggedIn} setUserType={setUserType} />
+      ) : (
+        <AppStack userType={userType} />
+      )}
+      {/* <AuthStack /> */}
       {/* <AppStack userType={"user"} /> */}
     </NavigationContainer>
   );
