@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
 
     valueText : {
         fontSize: 18,
-        fontWeight: "700"
+        // fontWeight: "700"
+        fontFamily: "PretendardBold",
     }
 })

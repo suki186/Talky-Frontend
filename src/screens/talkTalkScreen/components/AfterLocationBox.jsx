@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
 
     locationText: {
         fontSize: 18.67,
-        fontWeight: "700",
+        // fontWeight: "700",
+        fontFamily: "PretendardBold",
     },
 
     locationLine: {
