@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
-    fontWeight: "500",
+    // fontWeight: "500",
+    fontFamily: "PretendardMedium",
     color: "#9F9F9F",
   },
 });

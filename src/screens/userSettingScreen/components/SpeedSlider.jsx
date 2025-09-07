@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
   },
   labelValue: {
     fontSize: 8,
-    fontWeight: "500",
+    // fontWeight: "500",
+    fontFamily: "PretendardMedium",
     color: COLORS.SUB_BLACK,
   },
 });

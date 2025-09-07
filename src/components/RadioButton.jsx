@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
   label: {
     marginLeft: 4,
     fontSize: 10,
-    fontWeight: "500",
+    // fontWeight: "500",
+    fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },
 });

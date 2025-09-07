@@ -122,7 +122,8 @@ const SignupForm = () => {
 const styles = StyleSheet.create({
   text: {
     fontSize: 9.33,
-    fontWeight: "500",
+    // fontWeight: "500",
+    fontFamily: "PretendardMedium",
     color: COLORS.SUB_BLACK,
     marginBottom: 5,
     marginLeft: 10,

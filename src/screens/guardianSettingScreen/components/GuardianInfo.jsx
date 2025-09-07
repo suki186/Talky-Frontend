@@ -118,7 +118,8 @@ const styles = StyleSheet.create({
     mainText: {
         color: COLORS.BLACK,
         fontSize: 12,
-        fontWeight: "500"
+        // fontWeight: "500"
+        fontFamily: "PretendardMedium",
     },
 
     subText: {
