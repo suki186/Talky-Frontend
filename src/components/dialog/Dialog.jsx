@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
   },
   subMessage: {
     fontSize: 12,
-    fontWeight: 400,
+    // fontWeight: 400,
+    fontFamily: "PretendardRegular",
     color: COLORS.SUB_BLACK,
   },
   buttonContainer: {

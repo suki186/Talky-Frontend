@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.SUB_BLACK,
-    fontWeight: "400",
+    // fontWeight: "400",
+    fontFamily: "PretendardRegular",
     fontSize: 8,
   },
   placeText: {

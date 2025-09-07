@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 10,
-    fontWeight: "400",
+    // fontWeight: "400",
+    fontFamily: "PretendardRegular",
     color: "#8b8b8b",
   },
   sosToggle: {

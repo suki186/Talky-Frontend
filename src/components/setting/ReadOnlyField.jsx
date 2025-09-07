@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: 12,
-    fontWeight: "400",
+    // fontWeight: "400",
+    fontFamily: "PretendardRegular",
     color: COLORS.BLACK,
   },
 });

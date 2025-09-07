@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
     registerText: {
         color: COLORS.CANCLE_CLICK,
         fontSize: 10,
-        fontWeight: "400",
+        // fontWeight: "400",
+        fontFamily: "PretendardRegular",
         lineHeight: 15
     },
 

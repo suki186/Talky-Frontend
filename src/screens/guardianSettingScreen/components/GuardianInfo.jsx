@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
     subText: {
         color: COLORS.SUB_BLACK,
         fontSize: 10,
-        fontWeight: 400
+        // fontWeight: 400
+        fontFamily: "PretendardRegular",
     },
 
     plusBox: {
@@ -143,7 +144,8 @@ const styles = StyleSheet.create({
     plus: {
         color: COLORS.BLACK,
         fontSize: 12,
-        fontWeight: "400",
+        // fontWeight: "400",
+        fontFamily: "PretendardRegular",
         lineHeight: 15
     }
 })

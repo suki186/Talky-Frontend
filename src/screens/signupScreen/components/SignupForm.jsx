@@ -130,7 +130,8 @@ const styles = StyleSheet.create({
   },
   error: {
     fontSize: 7.33,
-    fontWeight: "400",
+    // fontWeight: "400",
+    fontFamily: "PretendardRegular",
     color: COLORS.ERROR_MESSAGE,
     marginTop: 3,
     textAlign: "center",

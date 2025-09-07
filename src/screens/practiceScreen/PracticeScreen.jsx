@@ -217,7 +217,8 @@ const styles = StyleSheet.create({
 
   endText: {
     fontSize: 10,
-    fontWeight: 400,
+    // fontWeight: 400,
+    fontFamily: "PretendardRegular",
     lineHeight: 15,
   },
 
