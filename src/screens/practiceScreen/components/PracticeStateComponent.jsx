@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
 
     stateText: {
         fontSize: 14,
-        fontWeight: 600,
+        // fontWeight: 600,
+        fontFamily: "PretendardSemiBold",
         lineHeight: 20,
     }
 })

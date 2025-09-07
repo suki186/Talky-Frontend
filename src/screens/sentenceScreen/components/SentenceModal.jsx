@@ -120,7 +120,8 @@ const modalStyles = StyleSheet.create({
         paddingVertical: 6.67,
         color: "#4E4E4E",
         fontSize: 13,
-        fontWeight: "600",
+        // fontWeight: "600",
+        fontFamily: "PretendardSemiBold",
         lineHeight: 13
     },
 

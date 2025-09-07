@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
         borderRadius: 16.67,
         fontSize: 14,
         lineHeight: 14,
-        fontWeight: "600",
+        // fontWeight: "600",
+        fontFamily: "PretendardSemiBold",
         marginTop: 21.67
     },
 

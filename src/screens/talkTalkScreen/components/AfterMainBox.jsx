@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
     },
 
     TitleText: {
-        fontWeight: "600",
+        // fontWeight: "600",
+        fontFamily: "PretendardSemiBold",
         fontSize: 12,
         lineHeight: 14,
         textAlign: "center"

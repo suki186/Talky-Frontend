@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
   },
   labelTitle: {
     fontSize: 10,
-    fontWeight: "600",
+    // fontWeight: "600",
+    fontFamily: "PretendardSemiBold",
     color: COLORS.SUB_BLACK,
   },
   labelValue: {

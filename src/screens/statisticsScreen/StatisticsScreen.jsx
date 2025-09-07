@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
   },
   sosToggleText: {
     fontSize: 12,
-    fontWeight: 600,
+    // fontWeight: 600,
+    fontFamily: "PretendardSemiBold",
     color: COLORS.BLACK,
   },
 });

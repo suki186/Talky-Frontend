@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
   },
   rankText: {
     fontSize: 12,
-    fontWeight: "600",
+    // fontWeight: "600",
+    fontFamily: "PretendardSemiBold",
     color: COLORS.SUB_BLACK,
   },
   text: {

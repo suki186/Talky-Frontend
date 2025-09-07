@@ -201,7 +201,8 @@ const styles = StyleSheet.create({
   locationText: {
     color: COLORS.BLACK,
     fontSize: 14,
-    fontWeight: 600,
+    // fontWeight: 600,
+    fontFamily: "PretendardSemiBold",
     lineHeight: 16,
   },
 
