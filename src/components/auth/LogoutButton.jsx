@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { COLORS } from "../../styles/color";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LogoutButton = () => {
@@ -9,7 +9,7 @@ const LogoutButton = () => {
 
   const handleLogout = async () => {
     try {
-      await AsyncStorage.clear();
+      await AsyncStorage.multiRemove(["idtoken", "userType"]);
 
       setIsLoggedIn(false);
       setUserType(null);
