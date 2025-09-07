@@ -5,15 +5,14 @@ import SignButton from "../../../components/auth/SignButton";
 import ErrorIcon from "../../../components/auth/ErrorIcon";
 import { COLORS } from "../../../styles/color";
 import loginUserApi from "../../../apis/auth/loginUserApi";
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "../../../context/AuthContext";
 
-const LoginForm = ({ setIsLoggedIn, setUserType }) => {
-  const navigation = useNavigation();
-
+const LoginForm = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const { setIsLoggedIn, setUserType } = useAuth();
 
   // 로그인 함수
   const handleLogin = async () => {
