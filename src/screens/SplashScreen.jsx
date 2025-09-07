@@ -96,7 +96,7 @@ const SplashScreen = ({ isLoggedIn, onFinish }) => {
           ],
         }}
       >
-        <Logo width="186.67" height="52.67" />
+        <Logo width="140" height="43.73" />
       </Animated.View>
     </View>
   );

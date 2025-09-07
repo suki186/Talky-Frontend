@@ -37,7 +37,7 @@ const UserSettingScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 45,
+    paddingTop: 33,
     paddingBottom: 18,
     backgroundColor: COLORS.BACKGROUND,
     alignItems: "center",
