@@ -21,8 +21,6 @@ const LoginForm = ({ setIsLoggedIn, setUserType }) => {
 
     if (result) {
       console.log("로그인 성공");
-      await AsyncStorage.setItem("idtoken", result.token);
-      await AsyncStorage.setItem("userType", result.userType);
       setIsLoggedIn(true);
       setUserType(result.userType);
     } else {

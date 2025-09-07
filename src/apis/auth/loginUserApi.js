@@ -12,8 +12,10 @@ const loginUserApi = async (loginId, password) => {
     if (httpStatus === 200 && isSuccess) {
       console.log("로그인 성공");
       await AsyncStorage.setItem("idtoken", data.token);
+      await AsyncStorage.setItem("userType", data.userType);
 
       return {
+        token: data.token,
         userId: data.userId,
         userType: data.userType,
         username: data.username,
