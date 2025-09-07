@@ -3,7 +3,7 @@ import defaultInstance from "../utils/instance";
 
 const loginUserApi = async (loginId, password) => {
   try {
-    const response = await defaultInstance.post(`auth/login`, {
+    const response = await defaultInstance.post(`/auth/login`, {
         loginId: loginId,
         password: password
     });
