@@ -1,13 +1,13 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import { InputLeft } from "./InputLeft";
 import { InputRight } from "./InputRight";
-import { useCallback, useEffect, useState } from "react";
 import { Toast } from "./Toast";
 import { useInput } from "../../hooks/useInput";
 import { COLORS } from "../../styles/color";
-import createFavoriteApi from "../../apis/favorite/createFavoriteApi";
+import useFavorite from "../../hooks/useFavorite";
 
 export const TalkInput = () => {
+  // input 관련 훅
   const {
     text,
     status,
@@ -23,35 +23,11 @@ export const TalkInput = () => {
     handleRightPress,
   } = useInput();
 
-  const [favLoading, setFavLoading] = useState(false);
-  const [favSelected, setFavSelected] = useState(false);
-
-  const canFavorite = !!text?.trim(); // 빈 입력 방지
-
-  // 텍스트 변경 시 별 상태
-  useEffect(() => {
-    setFavSelected(false);
-  }, [text]);
-
-  // 즐겨찾기 등록
-  const handleFavorite = useCallback(async () => {
-    if (!canFavorite || favLoading) return; // 비어있거나 처리중이면 무시
-    try {
-      setFavLoading(true);
-      const res = await createFavoriteApi(text.trim());
-      if (res) {
-        // 성공하면 노란별, 토스트메세지 보이기
-        setFavSelected(true);
-        setShowToast(true);
-      } else {
-        console.warn("즐겨찾기 등록 실패");
-      }
-    } catch (e) {
-      console.error("handleFavorite Error:", e);
-    } finally {
-      setFavLoading(false);
-    }
-  }, [canFavorite, favLoading, text, setShowToast]);
+  // 즐겨찾기 관련 훅
+  const { favLoading, favSelected, canFavorite, handleFavorite } = useFavorite({
+    text,
+    setShowToast,
+  });
 
   return (
     <View
