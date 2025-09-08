@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
         borderRadius: 26.67,
         backgroundColor: COLORS.WHITE,
         paddingLeft: 10,
-        fontSize: 12
+        fontSize: 12,
+        fontFamily: "PretendardMedium",
     },
 
     startBtn: {
