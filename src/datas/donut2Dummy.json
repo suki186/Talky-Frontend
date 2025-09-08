@@ -1,0 +1,6 @@
+[
+  { "rank": 1, "label": "식당", "value": 44 },
+  { "rank": 2, "label": "병원", "value": 30 },
+  { "rank": 3, "label": "기타", "value": 17 },
+  { "rank": 4, "label": "마트", "value": 9 }
+]

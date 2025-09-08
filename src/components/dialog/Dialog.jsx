@@ -22,10 +22,8 @@ const Dialog = ({
     >
       <View style={styles.overlay}>
         <View style={styles.dialog}>
-          <View style={styles.header}>
-            {/* 즐겨찾기 문장 삭제 */}
-            <Text style={styles.title}>{title}</Text>
-          </View>
+          {/* 즐겨찾기 문장 삭제 */}
+          <Text style={styles.title}>{title}</Text>
 
           <View style={styles.content}>
             {/* 메인, 서브메세지 */}
@@ -68,6 +66,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dialog: {
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: COLORS.WHITE,
     borderRadius: 16.67,
     padding: 19,
@@ -85,17 +85,15 @@ const styles = StyleSheet.create({
     borderColor: COLORS.MAIN_YELLOW2,
     gap: 26,
   },
-  header: {
-    alignItems: "center",
-    width: 100,
-  },
   title: {
-    fontSize: 8,
-    fontWeight: 400,
+    width: 137,
+    height: 25,
+    textAlign: "center",
+    paddingTop: 2,
+    fontSize: 14,
+    fontWeight: 600,
     color: COLORS.SUB_BLACK,
     backgroundColor: COLORS.MAIN_YELLOW2,
-    paddingHorizontal: 6.67,
-    paddingVertical: 3.33,
     borderRadius: 16.67,
   },
   content: {
