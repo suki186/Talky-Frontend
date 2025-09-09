@@ -13,14 +13,14 @@ import STAR from "../../../assets/images/practice/favorite.png"
 import { COLORS } from "../../../styles/color"
 
 const ITEMS = [
-  { key: "hospital", img: HOSPITAL, label: "병원" },
-  { key: "restaurant", img: RESTAURANT, label: "식당" },
-  { key: "school", img: SCHOOL, label: "학교" },
-  { key: "mart", img: MART, label: "마트" },
-  { key: "move", img: MOVE, label: "교통" },
-  { key: "bank", img: BANK, label: "은행" },
-  { key: "drug", img: DRUG, label: "약국" },
-  { key: "star", img: STAR, label: "즐겨찾기" },
+  { key: "hospital", img: HOSPITAL, label: "병원", id: 1 },
+  { key: "restaurant", img: RESTAURANT, label: "식당", id: 2 },
+  { key: "school", img: SCHOOL, label: "학교", id: 3 },
+  { key: "mart", img: MART, label: "마트", id: 4 },
+  { key: "move", img: MOVE, label: "교통", id: 5 },
+  { key: "bank", img: BANK, label: "은행", id: 6 },
+  { key: "drug", img: DRUG, label: "약국", id: 7 },
+  { key: "star", img: STAR, label: "즐겨찾기", id: 8 },
 ];
 
 export const PracticeState = ({ onSelect }) => {
@@ -34,7 +34,7 @@ export const PracticeState = ({ onSelect }) => {
                     <PracticeStateComponent
                         imgSource = { item.img }
                         location = { item.label }
-                        onPress = { onSelect }
+                        onPress = { () => onSelect(item.id, item.label) }
                     />
                 )}
                 keyExtractor = { (item) => item.key }
