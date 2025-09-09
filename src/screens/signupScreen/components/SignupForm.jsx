@@ -6,14 +6,19 @@ import ErrorIcon from "../../../components/auth/ErrorIcon";
 import { COLORS } from "../../../styles/color";
 import { validateSignup } from "../../../utils/validation";
 import Selector from "../../../components/Selector";
+import signupUserApi from "../../../apis/auth/signupUserApi";
+import { useNavigation } from "@react-navigation/native";
+import idCheckApi from "../../../apis/auth/idCheckApi";
 
 const SignupForm = () => {
+  const navigation = useNavigation();
   const roles = ["일반", "보호자"]; // 역할 목록
 
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState(null);
+  const [isIdChecked, setIsIdChecked] = useState(false);
 
   // 오류 메시지 상태
   const [errors, setErrors] = useState({
@@ -34,12 +39,49 @@ const SignupForm = () => {
   };
 
   // 회원가입 함수
-  const handleSignup = () => {
+  const handleSignup = async () => {
     // 회원가입 로직 구현 예정
     if (validate()) {
-      console.log("회원가입 ", { name, id, password, role });
+      const roleMapping = { "일반": "normal", "보호자": "guardian" };
+      const mappedRole = roleMapping[role];
+
+      const userId = await signupUserApi(name, id, password, mappedRole);
+
+      if (userId) {
+        console.log("회원가입 ", { name, id, password, mappedRole });
+        navigation.goBack(); 
+      } else {
+        console.error("회원가입 실패");
+      }
     }
   };
+
+  const handleIdCheck = async () => {
+    if (!id) {
+      setErrors((prev) => ({ ...prev, id: "아이디를 입력해 주세요." }));
+      setIsIdChecked(false); 
+      return;
+    }
+
+    try {
+      const response = await idCheckApi(id);
+
+      if (response === true) {
+        console.log("사용 가능한 아이디");
+        setErrors((prev) => ({ ...prev, id: "" }));
+        setIsIdChecked(true); 
+        return true;
+      } else {
+        console.error("사용 불가능한 아이디");
+        setErrors((prev) => ({ ...prev, id: "이미 사용 중인 아이디입니다." }));
+        setIsIdChecked(false); 
+        return false;
+      }
+    } catch (error) {
+      console.error("아이디 중복 확인 실패");
+      setIsIdChecked(false); 
+    }
+  }
 
   return (
     <View>
@@ -73,6 +115,7 @@ const SignupForm = () => {
           hasError={!!errors.id}
           showCheckButton={true}
           checkButtonDisabled={false}
+          onCheckPress={handleIdCheck}
         />
         {errors.id && <ErrorIcon />}
       </View>
@@ -111,7 +154,7 @@ const SignupForm = () => {
       <SignButton
         title="회원가입"
         disabled={
-          !(name.length > 0 && id.length > 0 && password.length > 0 && role)
+          !(name.length > 0 && id.length > 0 && password.length > 0 && role && isIdChecked)
         }
         onPress={handleSignup}
       />

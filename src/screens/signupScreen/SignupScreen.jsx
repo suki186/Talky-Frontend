@@ -8,7 +8,7 @@ const SignupScreen = () => {
   return (
     <View style={styles.container}>
       {/* 로고 */}
-      <Logo width="140" height="43.73" />
+      <Logo width={140} height={43.73} />
       <View style={{ height: 63 }} />
       {/* 회원가입 폼 */}
       <SignupForm />

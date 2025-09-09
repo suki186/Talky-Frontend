@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RootNavigator from "./src/navigation/RootNavigator";
 import SplashScreen from "./src/screens/SplashScreen";
+import { AuthProvider, useAuth } from "./src/context/AuthContext";
 import { Text } from "react-native";
 import { useFonts } from "expo-font";
 
@@ -39,11 +40,14 @@ export default function App() {
   if (!splashDone) {
     return (
       <SplashScreen
-        isLoggedIn={isLoggedIn}
         onFinish={() => setSplashDone(true)}
       />
     );
   }
 
-  return <RootNavigator />;
+  return (
+    <AuthProvider>
+      <RootNavigator />
+    </AuthProvider>
+  );
 }
