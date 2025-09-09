@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
         lineHeight: 14,
         // fontWeight: "600",
         fontFamily: "PretendardSemiBold",
-        marginTop: 21.67
         fontSize: 18,
         color: "#4E4E4E",
         lineHeight: 25,
