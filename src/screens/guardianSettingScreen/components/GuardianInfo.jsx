@@ -10,7 +10,7 @@ import { useGuardianSetting } from "../../../hooks/useGurdianSetting"
 import ACCOUNT from "../../../assets/images/guardian-setting/connetAccount.png"
 import { COLORS } from "../../../styles/color"
 
-export const GuardianInfo = ({ name, id }) => {
+export const GuardianInfo = ({ name, id, onChangeName }) => {
     // 연결 계정 삭제 다이얼로그 커스텀 훅
     const {
         dialogVisible, 
@@ -36,7 +36,11 @@ export const GuardianInfo = ({ name, id }) => {
     return (
         <SettingBox height = { dynamicHeight } title = "사용자 정보" bgColor = "#FFF3C7">
             <View style = { styles.content }>
-                <NameIdGroup name = { name } id = { id } />
+                <NameIdGroup 
+                    name = { name } 
+                    id = { id } 
+                    onChangeName = { onChangeName }
+                />
                 <View style = { styles.accountContent }>
                     <View style = { styles.title }>
                         <Image source = { ACCOUNT } style = { styles.accountImg }/>

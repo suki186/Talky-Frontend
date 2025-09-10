@@ -27,6 +27,7 @@ const GuardianSettingScreen = () => {
           <GuardianInfo 
             name = { profile.name }
             id = { profile.id }
+            onChangeName = { (newName) => setProfile((prev) => ({ ...prev, name: newName })) }
           />
         }
         <LogoutButton />
