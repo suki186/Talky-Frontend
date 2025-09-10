@@ -40,8 +40,6 @@ const locationImages = {
 
 const PracticeScreen = () => {
   const {
-    isSpeaking,
-    setIsSpeaking,
     isAnswered,
     setIsAnswered,
     showToast,
@@ -53,6 +51,8 @@ const PracticeScreen = () => {
     hideToast,
     resetState,
   } = useToast();
+
+  const [speakingId, setSpeakingId] = useState(null);
 
   const [practiceSentence, setPracticeSentence] = useState([]);
 
@@ -113,8 +113,14 @@ const PracticeScreen = () => {
                   <View key={q.id}>
                     <LeftPracticeBox
                       practiceText={q.content}
-                      isSpeaking={isSpeaking}
-                      onPress={handleSpeakToggle}
+                      isSpeaking={speakingId === q.id}
+                      onPress={() => {
+                        if (speakingId === q.id) {
+                          setSpeakingId(null);
+                        } else {
+                          setSpeakingId(q.id);
+                        }
+                      }}
                     />
                     <RightPracticeBox
                       options={q.answers.map((a) => a.answer)}
