@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     fontSize: 10.67,
-    // fontWeight: "400",
     fontFamily: "PretendardRegular",
     color: "#000",
     padding: 0,
@@ -102,7 +101,6 @@ const styles = StyleSheet.create({
 
   checkButtonText: {
     fontSize: 12,
-    // fontWeight: "400",
     fontFamily: "PretendardRegular",
     color: "#B1B1B1",
   },

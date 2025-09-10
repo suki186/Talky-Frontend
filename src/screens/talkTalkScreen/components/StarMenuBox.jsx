@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
         borderRadius: 16.67,
         fontSize: 14,
         lineHeight: 14,
-        // fontWeight: "600",
         fontFamily: "PretendardSemiBold",
         fontSize: 18,
         color: "#4E4E4E",

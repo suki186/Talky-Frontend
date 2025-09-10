@@ -40,7 +40,6 @@ const LineGraph = ({ data }) => {
       yAxisColor="transparent"
       yAxisTextStyle={{
         fontSize: 8,
-        // fontWeight: "500",
         fontFamily: "PretendardMedium",
         color: "#666666",
       }}
@@ -50,7 +49,6 @@ const LineGraph = ({ data }) => {
       xAxisColor={COLORS.GRAY}
       xAxisLabelTextStyle={{
         fontSize: 8,
-        // fontWeight: "500",
         fontFamily: "PretendardMedium",
         color: "#666666",
       }}

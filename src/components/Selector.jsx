@@ -137,7 +137,6 @@ const styles = StyleSheet.create({
   },
   selectorText: {
     fontSize: 11.33,
-    // fontWeight: "500",
     fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },
@@ -165,7 +164,6 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontSize: 11.33,
-    // fontWeight: "500",
     fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },

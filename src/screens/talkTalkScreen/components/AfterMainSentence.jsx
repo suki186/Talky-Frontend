@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
 
     recomText: {
         fontSize: 12,
-        // fontWeight: "500",
         fontFamily: "PretendardMedium",
     }
 })

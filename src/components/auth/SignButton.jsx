@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    // fontWeight: "600",
     fontFamily: "PretendardSemiBold",
     color: COLORS.WHITE,
   },

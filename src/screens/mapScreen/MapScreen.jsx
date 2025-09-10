@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 10,
-    // fontWeight: "400",
     fontFamily: "PretendardRegular",
     color: COLORS.BLACK,
     textAlign: "center",

@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 12,
-    // fontWeight: "600",
     fontFamily: "PretendardSemiBold",
   },
   content: {
