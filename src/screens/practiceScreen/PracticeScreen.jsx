@@ -55,7 +55,9 @@ const PracticeScreen = () => {
   } = useToast();
 
   const [practiceSentence, setPracticeSentence] = useState([]);
-  const [currentSentence, setCurrentSentence] = useState(0);
+
+  const [shownQuestionIds, setShownQuestionIds] = useState([]);
+  const [pendingNextId, setPendingNextId] = useState(null);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -67,8 +69,8 @@ const PracticeScreen = () => {
       if (pracId !== null) {
         const data = await sentencePracticeApi(pracId);
         if (data && data.question) {
-          setPracticeSentence(data.question); // 질문 리스트 세팅
-          setCurrentSentence(0);
+          setPracticeSentence(data.question); 
+          setShownQuestionIds([data.question[0].id]);
         }
       }
     };
@@ -104,42 +106,44 @@ const PracticeScreen = () => {
 
           <View style={styles.practiceChat}>
             <ScrollView>
-              {practiceSentence.slice(0, currentSentence + 1).map((q) => (
-                <View key={q.id}>
-                  <LeftPracticeBox
-                    practiceText={q.content}
-                    isSpeaking={isSpeaking}
-                    onPress={handleSpeakToggle}
-                  />
-                  <RightPracticeBox
-                    options={q.answers.map((a) => a.answer)}
-                    onPress={(answer) => {
-                      handleSelectAnswer(answer);
-
-                      const selected = q.answers.find((a) => a.answer === answer);
-
-                      if (selected && selected.nextQuestionId !== 0) {
-                        const nextIndex = practiceSentence.findIndex(
-                          (x) => x.id === selected.nextQuestionId
-                        );
-
-                        if (nextIndex !== -1) {
-                          setCurrentSentence(nextIndex);
+              {shownQuestionIds.map(id => {
+                const q = practiceSentence.find(item => item.id === id);
+                if (!q) return null;
+                return (
+                  <View key={q.id}>
+                    <LeftPracticeBox
+                      practiceText={q.content}
+                      isSpeaking={isSpeaking}
+                      onPress={handleSpeakToggle}
+                    />
+                    <RightPracticeBox
+                      options={q.answers.map((a) => a.answer)}
+                      onPress={(answer) => {
+                        handleSelectAnswer(answer);
+                        const selected = q.answers.find((a) => a.answer === answer);
+                        if (selected) {
+                          setPendingNextId(selected.nextQuestionId);
+                          setIsAnswered(true);
                         }
-                      }
-                    }}
-                  />
-                </View>
-              ))}
+                      }}
+                    />
+                  </View>
+                );
+              })}
             </ScrollView>
-
             <View>
-              {isAnswered && currentSentence < practiceSentence.length - 1 && (
+              {isAnswered && (
                 <TouchableOpacity
                   style={styles.nextBox}
-                  onPress={() => {
-                    setCurrentSentence((prev) => prev + 1);
-                    handleNext();
+                  onPress={() =>{
+                    if (pendingNextId === 0) {
+                      setIsDialogOpen(true);
+                    } else {
+                      setShownQuestionIds(prev => [...prev, pendingNextId]);
+                      handleNext();
+                    }
+                    setPendingNextId(null);
+                    setIsAnswered(false);
                   }}
                 >
                   <Text style={styles.nextText}>다음</Text>
@@ -173,7 +177,7 @@ const PracticeScreen = () => {
             onConfirm={() => {
               setIsDialogOpen(false);
               setSelectedLocation(null);
-              setCurrentSentence(0);
+              setCurrentQuestionId(null);
               setIsAnswered(false);
             }}
           />
