@@ -12,9 +12,11 @@ const defaultInstance = axios.create({
 
 defaultInstance.interceptors.request.use(async (config) => {
   const token = await AsyncStorage.getItem("idtoken");
+
   if (token) {
-    config.headers.Authorization = `Bearer ${ token }`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
+  //console.log("요청 body:", JSON.stringify(config.data)); // 디버깅용
   return config;
 });
 
