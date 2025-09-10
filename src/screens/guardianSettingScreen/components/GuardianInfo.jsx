@@ -9,6 +9,7 @@ import { useGuardianSetting } from "../../../hooks/useGurdianSetting"
 
 import ACCOUNT from "../../../assets/images/guardian-setting/connetAccount.png"
 import { COLORS } from "../../../styles/color"
+import updateGuardianNameApi from "../../../apis/guardian/updateGuardianNameApi"
 
 export const GuardianInfo = ({ name, id, onChangeName }) => {
     // 연결 계정 삭제 다이얼로그 커스텀 훅
@@ -39,7 +40,10 @@ export const GuardianInfo = ({ name, id, onChangeName }) => {
                 <NameIdGroup 
                     name = { name } 
                     id = { id } 
-                    onChangeName = { onChangeName }
+                    onChangeName = { async (newName) => {
+                        await updateGuardianNameApi(newName); 
+                        onChangeName(newName); // API 호출
+                    }}
                 />
                 <View style = { styles.accountContent }>
                     <View style = { styles.title }>
