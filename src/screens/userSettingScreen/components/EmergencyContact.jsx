@@ -5,7 +5,7 @@ import { COLORS } from "../../../styles/color";
 import EditableField from "../../../components/setting/EditableField";
 import RadioButton from "../../../components/RadioButton";
 
-const EmergencyContact = ({ id }) => {
+const EmergencyContact = ({ guardName, phone }) => {
   const [selectedOption, setSelectedOption] = useState("119");
 
   return (
@@ -14,11 +14,13 @@ const EmergencyContact = ({ id }) => {
       <View style={styles.infoContainer}>
         <EditableField
           label="보호자 이름"
+          value={guardName}
           placeholder="이름을 입력해 주세요"
           width={126}
         />
         <EditableField
           label="보호자 연락처"
+          value={phone}
           placeholder="010-0000-0000"
           width={126}
         />
