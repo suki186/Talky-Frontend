@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
         // fontWeight: "400",
         fontFamily: "PretendardRegular",
+        maxWidth: 250,
         lineHeight: 20
     },
 
