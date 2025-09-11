@@ -1,7 +1,6 @@
 import { ScrollView, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import UserInfo from "./components/UserInfo";
-import userData from "../../datas/userDummy.json";
 import EmergencyContact from "./components/EmergencyContact";
 import VoiceSetting from "./components/VoiceSetting";
 import LogoutButton from "../../components/auth/LogoutButton";
