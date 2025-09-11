@@ -5,12 +5,18 @@ import NameIdGroup from "../../../components/setting/NameIdGroup";
 import ReadOnlyField from "../../../components/setting/ReadOnlyField";
 import EditableField from "../../../components/setting/EditableField";
 
-const UserInfo = ({ userName, loginId, connectionCode, introduction }) => {
+const UserInfo = ({
+  userName,
+  loginId,
+  connectionCode,
+  introduction,
+  onChangeName,
+}) => {
   return (
     <SettingBox height={216} title="사용자 정보">
       {/* 이름, 아이디 */}
       <View style={styles.item}>
-        <NameIdGroup name={userName} id={loginId} />
+        <NameIdGroup name={userName} id={loginId} onComplete={onChangeName} />
       </View>
       {/* 고유번호 */}
       <View style={styles.item}>

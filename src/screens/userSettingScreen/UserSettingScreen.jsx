@@ -6,6 +6,7 @@ import VoiceSetting from "./components/VoiceSetting";
 import LogoutButton from "../../components/auth/LogoutButton";
 import { COLORS } from "../../styles/color";
 import getUserInfoApi from "../../apis/userSetting/getUserInfoApi";
+import editUserNameApi from "../../apis/userSetting/editUserNameApi";
 
 const UserSettingScreen = () => {
   const [user, setUser] = useState(null);
@@ -45,6 +46,16 @@ const UserSettingScreen = () => {
     };
   }, []);
 
+  // 일반사용자 이름 변경 함수
+  const handleUserNameChange = async (newName) => {
+    try {
+      await editUserNameApi(newName);
+      setUserName(newName);
+    } catch (error) {
+      console.error("이름 변경 실패:", error);
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* 사용자 정보 */}
@@ -54,6 +65,7 @@ const UserSettingScreen = () => {
         loginId={user?.loginId ?? "-"}
         connectionCode={user?.connectionCode ?? "-"}
         introduction={user?.introduction ?? "-"}
+        onChangeName={handleUserNameChange}
       />
 
       {/* 긴급 연락처 */}
