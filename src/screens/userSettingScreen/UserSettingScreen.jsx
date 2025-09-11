@@ -7,10 +7,10 @@ import LogoutButton from "../../components/auth/LogoutButton";
 import { COLORS } from "../../styles/color";
 import getUserInfoApi from "../../apis/userSetting/getUserInfoApi";
 import editUserNameApi from "../../apis/userSetting/editUserNameApi";
+import editUserIntroApi from "../../apis/userSetting/editUserIntroApi";
 
 const UserSettingScreen = () => {
   const [user, setUser] = useState(null);
-  const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(true);
 
   // 사용자 정보 조회
@@ -24,15 +24,12 @@ const UserSettingScreen = () => {
         if (!isMounted) return;
         if (data) {
           setUser(data);
-          setUserName(data?.username ?? "-");
         } else {
           setUser(null);
-          setUserName("-");
         }
       } catch (e) {
         if (!isMounted) return;
         setUser(null);
-        setUserName("-");
         console.error("UserSettingScreen useEffect Error:", e);
       } finally {
         if (isMounted) setLoading(false);
@@ -40,7 +37,6 @@ const UserSettingScreen = () => {
     };
 
     fetchUser();
-
     return () => {
       isMounted = false;
     };
@@ -50,9 +46,19 @@ const UserSettingScreen = () => {
   const handleUserNameChange = async (newName) => {
     try {
       await editUserNameApi(newName);
-      setUserName(newName);
+      setUser((prev) => (prev ? { ...prev, username: newName } : prev));
     } catch (error) {
       console.error("이름 변경 실패:", error);
+    }
+  };
+
+  // 일반사용자 소개글 변경 함수
+  const handleIntroChange = async (newIntro) => {
+    try {
+      await editUserIntroApi(newIntro);
+      setUser((prev) => (prev ? { ...prev, introduction: newIntro } : prev));
+    } catch (error) {
+      console.error("소개글 변경 실패:", error);
     }
   };
 
@@ -60,12 +66,15 @@ const UserSettingScreen = () => {
     <ScrollView contentContainerStyle={styles.container}>
       {/* 사용자 정보 */}
       <UserInfo
-        userName={userName}
-        onChange={setUserName}
+        userName={user?.username ?? "이름을 입력해 주세요"}
         loginId={user?.loginId ?? "-"}
         connectionCode={user?.connectionCode ?? "-"}
-        introduction={user?.introduction ?? "-"}
+        introduction={
+          user?.introduction ??
+          "저는 언어 표현이 어려운 상황입니다. 양해 부탁드립니다."
+        }
         onChangeName={handleUserNameChange}
+        onChangeIntro={handleIntroChange}
       />
 
       {/* 긴급 연락처 */}

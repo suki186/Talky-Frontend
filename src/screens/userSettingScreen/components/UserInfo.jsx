@@ -11,6 +11,7 @@ const UserInfo = ({
   connectionCode,
   introduction,
   onChangeName,
+  onChangeIntro,
 }) => {
   return (
     <SettingBox height={216} title="사용자 정보">
@@ -33,6 +34,7 @@ const UserInfo = ({
           width={267}
           value={introduction} // 받아올 예정
           placeholder="저는 언어 표현이 어려운 상황입니다. 양해 부탁드립니다."
+          onComplete={onChangeIntro}
         />
       </View>
     </SettingBox>
