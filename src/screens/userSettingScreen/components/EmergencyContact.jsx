@@ -1,13 +1,15 @@
-import React, { useState } from "react";
 import SettingBox from "../../../components/setting/SettingBox";
 import { Text, View, StyleSheet } from "react-native";
 import { COLORS } from "../../../styles/color";
 import EditableField from "../../../components/setting/EditableField";
 import RadioButton from "../../../components/RadioButton";
 
-const EmergencyContact = ({ guardName, phone }) => {
-  const [selectedOption, setSelectedOption] = useState("119");
-
+const EmergencyContact = ({
+  guardName,
+  phone,
+  selectedTarget = "119",
+  onChangeTarget,
+}) => {
   return (
     <SettingBox height={162} title="긴급 연락처" bgColor={COLORS.MAIN_YELLOW1}>
       {/* 보호자 정보 */}
@@ -31,14 +33,14 @@ const EmergencyContact = ({ guardName, phone }) => {
       <View style={styles.radioContainer}>
         <RadioButton
           label="보호자"
-          selected={selectedOption === "guardian"}
-          onPress={() => setSelectedOption("guardian")}
+          selected={selectedTarget === "guardian"}
+          onPress={() => onChangeTarget?.("guardian")}
         />
 
         <RadioButton
           label="119"
-          selected={selectedOption === "119"}
-          onPress={() => setSelectedOption("119")}
+          selected={selectedTarget === "119"}
+          onPress={() => onChangeTarget?.("119")}
         />
       </View>
     </SettingBox>

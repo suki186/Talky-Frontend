@@ -1,5 +1,6 @@
 import editUserNameApi from "../../apis/userSetting/editUserNameApi";
 import editUserIntroApi from "../../apis/userSetting/editUserIntroApi";
+import editUserSosApi from "../../apis/userSetting/editUserSosApi";
 
 export const buildUserSettingHandlers = (setUser) => {
   // 일반사용자 이름 변경 함수
@@ -40,8 +41,27 @@ export const buildUserSettingHandlers = (setUser) => {
     }
   };
 
+  const handleSosChange = async (target) => {
+    if (target == null) return;
+
+    try {
+      const res = await editUserSosApi(target);
+      if (res === true || res?.ok === true) {
+        setUser((prev) => (prev ? { ...prev, emergencyTarget: target } : prev));
+        return { ok: true };
+      } else {
+        console.warn("handleSosChange False: ", res);
+        return { ok: false, error: res };
+      }
+    } catch (error) {
+      console.error("handleSosChange Error: ", error);
+      return { ok: false, error };
+    }
+  };
+
   return {
     handleUserNameChange,
     handleUserIntroChange,
+    handleSosChange,
   };
 };

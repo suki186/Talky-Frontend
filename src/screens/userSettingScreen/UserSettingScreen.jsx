@@ -41,10 +41,8 @@ const UserSettingScreen = () => {
     };
   }, []);
 
-  const { handleUserNameChange, handleUserIntroChange } = useMemo(
-    () => buildUserSettingHandlers(setUser),
-    [setUser]
-  );
+  const { handleUserNameChange, handleUserIntroChange, handleSosChange } =
+    useMemo(() => buildUserSettingHandlers(setUser), [setUser]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -63,6 +61,8 @@ const UserSettingScreen = () => {
 
       {/* 긴급 연락처 */}
       <EmergencyContact
+        selectedTarget={user?.emergencyTarget ?? "119"}
+        onChangeTarget={handleSosChange}
         guardName={user?.guardianInfo?.username ?? "이름을 입력해 주세요"}
         phone={user?.guardianInfo?.phoneNumber ?? "010-0000-0000"}
       />
