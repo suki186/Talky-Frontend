@@ -12,6 +12,8 @@ export const AccountComponent = ({ value, onChangeText, isRegistered, onPress })
                     placeholderTextColor = { COLORS.PLACE_HOLDER }
                     value = { value }
                     onChangeText = { onChangeText }
+                    keyboardType = "numeric"
+                    maxLength = { 6 }
                 />
             </View>
             <TouchableOpacity 
