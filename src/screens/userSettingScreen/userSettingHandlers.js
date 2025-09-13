@@ -1,6 +1,7 @@
 import editUserNameApi from "../../apis/userSetting/editUserNameApi";
 import editUserIntroApi from "../../apis/userSetting/editUserIntroApi";
 import editUserSosApi from "../../apis/userSetting/editUserSosApi";
+import editUserTtsApi from "../../apis/userSetting/editUserTtsApi";
 
 export const buildUserSettingHandlers = (setUser) => {
   // 일반사용자 이름 변경 함수
@@ -41,6 +42,7 @@ export const buildUserSettingHandlers = (setUser) => {
     }
   };
 
+  // 일반사용자 긴급호출 대상 변경 함수
   const handleSosChange = async (target) => {
     if (target == null) return;
 
@@ -59,9 +61,32 @@ export const buildUserSettingHandlers = (setUser) => {
     }
   };
 
+  // 일반사용자 TTS 설정 함수
+  const handleTtsChange = async ({ ttsSpeed, ttsLanguage, ttsGender }) => {
+    try {
+      const res = await editUserTtsApi({ ttsSpeed, ttsLanguage, ttsGender });
+
+      if (res === true || res?.ok === true) {
+        setUser((prev) =>
+          prev
+            ? { ...prev, ttsSettings: { ttsSpeed, ttsLanguage, ttsGender } }
+            : prev
+        );
+        return { ok: true };
+      } else {
+        console.warn("handleTtsChange False: ", res);
+        return { ok: false, error: res };
+      }
+    } catch (error) {
+      console.error("handleTtsChange Error: ", error);
+      return { ok: false, error };
+    }
+  };
+
   return {
     handleUserNameChange,
     handleUserIntroChange,
     handleSosChange,
+    handleTtsChange,
   };
 };

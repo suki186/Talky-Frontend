@@ -8,30 +8,28 @@ import Selector from "../../../components/Selector";
 const LANGUAGE_MAP = { ko: "한국어", en: "영어", zh: "중국어", ja: "일본어" };
 const GENDER_MAP = { male: "남성", female: "여성" };
 
-const VoiceSetting = ({ speed = 1, language = "ko", gender = "male" }) => {
-  const languages = ["한국어", "영어", "중국어", "일본어"]; // 언어 목록
-  const genders = ["남성", "여성"]; // 성별 목록
+const VoiceSetting = ({ ttsSettings = {}, onSave }) => {
+  const {
+    ttsSpeed = 1.0,
+    ttsLanguage = "ko",
+    ttsGender = "male",
+  } = ttsSettings;
 
-  const [speedValue, setSpeedValue] = useState(speed);
-  const [languageValue, setLanguageValue] = useState(
-    LANGUAGE_MAP[language] ?? "한국어"
-  );
-  const [genderValue, setGenderValue] = useState(GENDER_MAP[gender] ?? "남성");
+  const languages = ["한국어", "영어", "중국어", "일본어"];
+  const genders = ["남성", "여성"];
 
-  // props 변경 시 state 동기화
+  const [speedValue, setSpeedValue] = useState(ttsSpeed);
+  const [languageValue, setLanguageValue] = useState(LANGUAGE_MAP[ttsLanguage]);
+  const [genderValue, setGenderValue] = useState(GENDER_MAP[ttsGender]);
+
+  // ttsSettings 변경 시 state 동기화
   useEffect(() => {
-    setSpeedValue(speed);
-  }, [speed]);
+    setSpeedValue(ttsSettings.ttsSpeed ?? 1.0);
+    setLanguageValue(LANGUAGE_MAP[ttsSettings.ttsLanguage] ?? "한국어");
+    setGenderValue(GENDER_MAP[ttsSettings.ttsGender] ?? "남성");
+  }, [ttsSettings]);
 
-  useEffect(() => {
-    setLanguageValue(LANGUAGE_MAP[language] ?? "한국어");
-  }, [language]);
-
-  useEffect(() => {
-    setGenderValue(GENDER_MAP[gender] ?? "남성");
-  }, [gender]);
-
-  // UI → code 변환
+  // UI → 서버 코드 변환
   const getLanguageCode = (label) =>
     Object.keys(LANGUAGE_MAP).find((key) => LANGUAGE_MAP[key] === label);
   const getGenderCode = (label) =>
@@ -51,11 +49,7 @@ const VoiceSetting = ({ speed = 1, language = "ko", gender = "male" }) => {
             width="112"
             items={languages}
             selectedValue={languageValue}
-            onSelect={(label) => {
-              setLanguageValue(label);
-              const code = getLanguageCode(label);
-              console.log("선택된 언어:", code);
-            }}
+            onSelect={setLanguageValue}
             variant="setting"
           />
         </View>
@@ -65,18 +59,24 @@ const VoiceSetting = ({ speed = 1, language = "ko", gender = "male" }) => {
             width="112"
             items={genders}
             selectedValue={genderValue}
-            onSelect={(label) => {
-              setGenderValue(label);
-              const code = getGenderCode(label);
-              console.log("선택된 성별:", code);
-            }}
+            onSelect={setGenderValue}
             variant="setting"
           />
         </View>
       </View>
       <View style={{ height: 70 }} />
-      {/* 수정버튼 */}
-      <TouchableOpacity style={styles.editButton}>
+
+      {/* 저장 버튼 */}
+      <TouchableOpacity
+        style={styles.editButton}
+        onPress={() =>
+          onSave({
+            ttsSpeed: speedValue,
+            ttsLanguage: getLanguageCode(languageValue),
+            ttsGender: getGenderCode(genderValue),
+          })
+        }
+      >
         <Text style={styles.editText}>저장</Text>
       </TouchableOpacity>
     </SettingBox>
@@ -84,15 +84,8 @@ const VoiceSetting = ({ speed = 1, language = "ko", gender = "male" }) => {
 };
 
 const styles = StyleSheet.create({
-  selectors: {
-    width: "100%",
-    flexDirection: "row",
-    gap: 43,
-  },
-  selectorBox: {
-    flexDirection: "column",
-    gap: 3,
-  },
+  selectors: { width: "100%", flexDirection: "row", gap: 43 },
+  selectorBox: { flexDirection: "column", gap: 3 },
   labelText: {
     fontSize: 10,
     fontWeight: "500",
@@ -108,11 +101,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: 8,
   },
-  editText: {
-    fontSize: 10,
-    fontWeight: "400",
-    color: COLORS.SUB_BLACK,
-  },
+  editText: { fontSize: 10, fontWeight: "400", color: COLORS.SUB_BLACK },
 });
 
 export default VoiceSetting;

@@ -8,6 +8,7 @@ const getUserInfoApi = async () => {
 
     if (httpStatus === 200 && isSuccess) {
       console.log("일반사용자 정보 조회 성공");
+      //console.log("getUserInfoApi data:", data);
       return data;
     } else if (httpStatus === 404 && !isSuccess) {
       console.warn("존재하지 않는 사용자: ", message);
