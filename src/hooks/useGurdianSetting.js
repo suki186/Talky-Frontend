@@ -1,8 +1,10 @@
 import { useState } from "react"
+import postGuardianCodeApi from "../apis/guardian/postGuardianCodeApi";
 
 export const useGuardianSetting = (openDialog, handleRealDelete) => {
     const [plus, setPlus] = useState([{ id: Date.now(), isRegistered: false, value: "" }]);
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const [toastMessage, setToastMessage] = useState("");
     const [showToast, setShowToast] = useState(false);
 
     // 추가 시 id 부여
@@ -14,16 +16,22 @@ export const useGuardianSetting = (openDialog, handleRealDelete) => {
         ]);
     };
 
-    const handleRegister = (index) => {
-        const updated = [...plus];
+    const handleRegister = async (index) => {
+        const code = plus[index].value;
+        const success = await postGuardianCodeApi(code);
 
-        if (!updated[index].isRegistered) {
-            updated[index].isRegistered = true;
-            setPlus(updated);           
+        if (success) {
+            setPlus((prev) => {
+                const updated = [...prev];
+                updated[index].isRegistered = true;
+                return updated;
+            });
+
+            setToastMessage("연결 계정 등록 완료!");
             setShowToast(true);
         } else {
-            setSelectedIndex(index);
-            openDialog();
+            setToastMessage("연결 계정 등록 실패");
+            setShowToast(true);
         }
     };
 
@@ -47,6 +55,7 @@ export const useGuardianSetting = (openDialog, handleRealDelete) => {
         setPlus,
         selectedIndex,
         setSelectedIndex,
+        toastMessage,
         showToast,
         setShowToast,
         handleAddComponent,
