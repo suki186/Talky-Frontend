@@ -1,10 +1,10 @@
 // 일반사용자 긴급호출 대상 수정 API(PUT)
 import defaultInstance from "../utils/instance";
 
-const editUserSosApi = async (target) => {
+const editUserSosApi = async (emergencyTarget) => {
   try {
     const response = await defaultInstance.put(`/users/me/emergencyTarget`, {
-      target,
+      emergencyTarget,
     });
 
     const { httpStatus, isSuccess, message } = response.data;
