@@ -9,7 +9,6 @@ const SignupScreen = () => {
     <View style={styles.container}>
       {/* 로고 */}
       <Logo width={140} height={43.73} />
-
       <View style={{ height: 63 }} />
       {/* 회원가입 폼 */}
       <SignupForm />
@@ -25,7 +24,8 @@ const styles = StyleSheet.create({
   },
   signText: {
     fontSize: 8,
-    fontWeight: 500,
+    // fontWeight: 500,
+    fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },
 });

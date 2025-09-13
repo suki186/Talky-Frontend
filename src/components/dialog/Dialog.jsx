@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingTop: 2,
     fontSize: 14,
-    fontWeight: 600,
+    // fontWeight: 600,
+    fontFamily: "PretendardSemiBold",
     color: COLORS.SUB_BLACK,
     backgroundColor: COLORS.MAIN_YELLOW2,
     borderRadius: 16.67,
@@ -101,13 +102,15 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: 14,
-    fontWeight: 500,
+    // fontWeight: 500,
+    fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
     marginBottom: 5.33,
   },
   subMessage: {
     fontSize: 12,
-    fontWeight: 400,
+    // fontWeight: 400,
+    fontFamily: "PretendardRegular",
     color: COLORS.SUB_BLACK,
   },
   buttonContainer: {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PracticeState } from "./components/PracticeState";
 import { LeftPracticeBox } from "./components/LeftPracticeBox";
 import { RightPracticeBox } from "./components/RightPracticeBox";
@@ -25,6 +25,7 @@ import MOVEWH from "../../assets/images/practice/wh-move.png";
 import BANKWH from "../../assets/images/practice/wh-bank.png";
 import DRUGWH from "../../assets/images/practice/wh-drug.png";
 import STARWH from "../../assets/images/practice/wh-star.png";
+import sentencePracticeApi from "../../apis/practice/sentencePracticeApi";
 
 const locationImages = {
   병원: HOSPITALWH,
@@ -39,8 +40,6 @@ const locationImages = {
 
 const PracticeScreen = () => {
   const {
-    isSpeaking,
-    setIsSpeaking,
     isAnswered,
     setIsAnswered,
     showToast,
@@ -53,31 +52,40 @@ const PracticeScreen = () => {
     resetState,
   } = useToast();
 
-  const [practiceSentence, setPracticeSentence] = useState([
-    {
-      left: "몇 명이세요?",
-      rightOptions: ["한 명이에요", "두 명이에요", "잠시만요"],
-    },
-    {
-      left: "드시고 가시나요?",
-      rightOptions: ["네", "아니요", "잠시만요"],
-    },
-    {
-      left: "주문하시겠어요?",
-      rightOptions: ["네 할게요", "조금만 더 볼게요", "추천 메뉴 있나요?"],
-    },
-  ]);
+  const [speakingId, setSpeakingId] = useState(null);
 
-  const [currentSentence, setCurrentSentence] = useState(0);
+  const [practiceSentence, setPracticeSentence] = useState([]);
+
+  const [shownQuestionIds, setShownQuestionIds] = useState([]);
+  const [pendingNextId, setPendingNextId] = useState(null);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const [pracId, setPracId] = useState(null); 
   const [selectedLocation, setSelectedLocation] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (pracId !== null) {
+        const data = await sentencePracticeApi(pracId);
+        if (data && data.question) {
+          setPracticeSentence(data.question); 
+          setShownQuestionIds([data.question[0].id]);
+        }
+      }
+    };
+    fetchData();
+  }, [pracId]);
 
   return (
     <View style={styles.container}>
       {selectedLocation === null ? (
-        <PracticeState onSelect={setSelectedLocation} />
+        <PracticeState 
+          onSelect = {(id, label) => {
+            setPracId(id);
+            setSelectedLocation(label);
+          }}
+        />
       ) : (
         <>
           <View style={styles.practiceTop}>
@@ -98,28 +106,50 @@ const PracticeScreen = () => {
 
           <View style={styles.practiceChat}>
             <ScrollView>
-              {practiceSentence.slice(0, currentSentence + 1).map((d, idx) => (
-                <View key={idx}>
-                  <LeftPracticeBox
-                    practiceText={d.left}
-                    isSpeaking={isSpeaking}
-                    onPress={handleSpeakToggle}
-                  />
-                  <RightPracticeBox
-                    options={d.rightOptions}
-                    onPress={handleSelectAnswer}
-                  />
-                </View>
-              ))}
+              {shownQuestionIds.map(id => {
+                const q = practiceSentence.find(item => item.id === id);
+                if (!q) return null;
+                return (
+                  <View key={q.id}>
+                    <LeftPracticeBox
+                      practiceText={q.content}
+                      isSpeaking={speakingId === q.id}
+                      onPress={() => {
+                        if (speakingId === q.id) {
+                          setSpeakingId(null);
+                        } else {
+                          setSpeakingId(q.id);
+                        }
+                      }}
+                    />
+                    <RightPracticeBox
+                      options={q.answers.map((a) => a.answer)}
+                      onPress={(answer) => {
+                        handleSelectAnswer(answer);
+                        const selected = q.answers.find((a) => a.answer === answer);
+                        if (selected) {
+                          setPendingNextId(selected.nextQuestionId);
+                          setIsAnswered(true);
+                        }
+                      }}
+                    />
+                  </View>
+                );
+              })}
             </ScrollView>
-
             <View>
-              {isAnswered && currentSentence < practiceSentence.length - 1 && (
+              {isAnswered && (
                 <TouchableOpacity
                   style={styles.nextBox}
-                  onPress={() => {
-                    setCurrentSentence((prev) => prev + 1);
-                    handleNext();
+                  onPress={() =>{
+                    if (pendingNextId === 0) {
+                      setIsDialogOpen(true);
+                    } else {
+                      setShownQuestionIds(prev => [...prev, pendingNextId]);
+                      handleNext();
+                    }
+                    setPendingNextId(null);
+                    setIsAnswered(false);
                   }}
                 >
                   <Text style={styles.nextText}>다음</Text>
@@ -153,7 +183,7 @@ const PracticeScreen = () => {
             onConfirm={() => {
               setIsDialogOpen(false);
               setSelectedLocation(null);
-              setCurrentSentence(0);
+              setCurrentQuestionId(null);
               setIsAnswered(false);
             }}
           />
@@ -201,7 +231,8 @@ const styles = StyleSheet.create({
   locationText: {
     color: COLORS.BLACK,
     fontSize: 14,
-    fontWeight: 600,
+    // fontWeight: 600,
+    fontFamily: "PretendardSemiBold",
     lineHeight: 16,
   },
 
@@ -216,7 +247,8 @@ const styles = StyleSheet.create({
 
   endText: {
     fontSize: 10,
-    fontWeight: 400,
+    // fontWeight: 400,
+    fontFamily: "PretendardRegular",
     lineHeight: 15,
   },
 

@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
         paddingLeft: 12,
         borderRadius: 33.333,
         borderWidth: 1.668,
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        fontFamily: "PretendardRegular",
     }
 })

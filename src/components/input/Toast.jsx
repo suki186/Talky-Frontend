@@ -74,7 +74,8 @@ const toastStyles = StyleSheet.create({
     toastText: {
         color: COLORS.BLACK,
         fontSize: 12,
-        fontWeight: "400",
+        // fontWeight: "400",
+        fontFamily: "PretendardRegular",
         lineHeight: 14
     }
 })

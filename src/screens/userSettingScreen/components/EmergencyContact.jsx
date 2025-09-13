@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 10,
-    fontWeight: "500",
+    // fontWeight: "500",
+    fontFamily: "PretendardMedium",
   },
   item: {
     marginTop: 8,

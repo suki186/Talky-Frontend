@@ -71,7 +71,8 @@ const LoginForm = () => {
 const styles = StyleSheet.create({
   error: {
     fontSize: 7.33,
-    fontWeight: "400",
+    // fontWeight: "400",
+    fontFamily: "PretendardRegular",
     color: COLORS.ERROR_MESSAGE,
     textAlign: "center",
     marginTop: 3,
