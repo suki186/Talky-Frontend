@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity, StyleSheet, Text, View, ScrollView } from "react-native";
 import { LocationInfo } from "./components/LocationInfo";
 import { GuardianInfo } from "./components/GuardianInfo";
 import LogoutButton from "../../components/auth/LogoutButton";
 import { COLORS } from "../../styles/color";
+import guardianProfileApi from "../../apis/guardian/guardianProfileApi";
 
 const GuardianSettingScreen = () => {
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const data = await guardianProfileApi();
+      if (data) {
+        setProfile(data);
+      }
+    };
+    fetchProfile();
+  }, []);
+
   return (
     <ScrollView>
       <View style = { styles.container }>
         <LocationInfo />
-        <GuardianInfo />
+        { profile &&
+          <GuardianInfo 
+            name = { profile.name }
+            id = { profile.id }
+            onChangeName = { (newName) => setProfile((prev) => ({ ...prev, name: newName })) }
+          />
+        }
         <LogoutButton />
       </View>
     </ScrollView>
