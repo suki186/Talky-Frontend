@@ -24,6 +24,7 @@ export const GuardianInfo = ({ name, id, onChangeName }) => {
     const {
         plus,
         selectedIndex,
+        toastMessage,
         showToast,
         setShowToast,
         handleAddComponent,
@@ -76,7 +77,7 @@ export const GuardianInfo = ({ name, id, onChangeName }) => {
                 {/* 등록 성공 토스트 메시지 */}
                 { showToast && (
                     <Toast
-                        message = "연결 계정 등록 완료!"
+                        message = { toastMessage }
                         onHide = { () => setShowToast(false) }
                     />
                 )}
