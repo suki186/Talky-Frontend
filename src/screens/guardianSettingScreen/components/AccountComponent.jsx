@@ -10,21 +10,25 @@ export const AccountComponent = ({ value, onChangeText, isRegistered, onPress })
                     style = { styles.inputBox }
                     placeholder = "일반 계정에 있는 고유 번호를 입력해 주세요"
                     placeholderTextColor = { COLORS.PLACE_HOLDER }
+                    value = { value }
+                    onChangeText = { onChangeText }
                 />
             </View>
             <TouchableOpacity 
                 style = {[ 
                     styles.registerBox,
-                    isRegistered ? styles.deleteBox : styles.registerBox // 등록 여부에 따라 스타일 변경
+                    isRegistered && styles.deleteBox, // 등록 여부에 따라 스타일 변경
                 ]}
-                onPress = { onPress }
+
+                onPress = { () => {
+                    if (!value && !isRegistered) return; 
+                    onPress();
+                }}
                 activeOpacity = { 0.5 }
-                value = { value }
-                onChangeText = { onChangeText }
             >
                 <Text style = {[ 
                     styles.registerText,
-                    isRegistered ? styles.deleteText : styles.registerText // 등록 여부에 따라 스타일 변경
+                    isRegistered && styles.deleteText // 등록 여부에 따라 스타일 변경
                 ]}>
                     { isRegistered ? "삭제" : "등록" }
                 </Text>
