@@ -10,7 +10,6 @@ const Label = ({ children }) => {
 const styles = StyleSheet.create({
   label: {
     fontSize: 10,
-    // fontWeight: "500",
     fontFamily: "PretendardMedium",
     color: COLORS.SUB_BLACK,
     marginBottom: 2,

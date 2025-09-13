@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   },
   legendText: {
     fontSize: 8,
-    // fontWeight: "500",
     fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },

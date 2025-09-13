@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 8,
-    // fontWeight: "400",
     fontFamily: "PretendardRegular",
     color: COLORS.BLACK,
     padding: 0,
@@ -92,7 +91,6 @@ const styles = StyleSheet.create({
   },
   editText: {
     fontSize: 8,
-    // fontWeight: "400",
     fontFamily: "PretendardRegular",
     color: COLORS.SUB_BLACK,
   },

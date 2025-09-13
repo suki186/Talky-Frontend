@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
   logoutText: {
     color: COLORS.BLACK,
     fontSize: 12,
-    // fontWeight: "400"
     fontFamily: "PretendardRegular",
   }
 })

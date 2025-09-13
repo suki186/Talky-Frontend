@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 10,
-    // fontWeight: "500",
     fontFamily: "PretendardMedium",
   },
   item: {

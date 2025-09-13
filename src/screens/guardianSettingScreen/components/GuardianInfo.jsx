@@ -126,14 +126,12 @@ const styles = StyleSheet.create({
     mainText: {
         color: COLORS.BLACK,
         fontSize: 12,
-        // fontWeight: "500"
         fontFamily: "PretendardMedium",
     },
 
     subText: {
         color: COLORS.SUB_BLACK,
         fontSize: 10,
-        // fontWeight: 400
         fontFamily: "PretendardRegular",
     },
 
@@ -152,7 +150,6 @@ const styles = StyleSheet.create({
     plus: {
         color: COLORS.BLACK,
         fontSize: 12,
-        // fontWeight: "400",
         fontFamily: "PretendardRegular",
         lineHeight: 15
     }

@@ -78,13 +78,11 @@ const styles = StyleSheet.create({
   },
   rankText: {
     fontSize: 12,
-    // fontWeight: "600",
     fontFamily: "PretendardSemiBold",
     color: COLORS.SUB_BLACK,
   },
   text: {
     fontSize: 12,
-    // fontWeight: "400",
     fontFamily: "PretendardRegular",
     color: COLORS.SUB_BLACK,
   },

@@ -231,7 +231,6 @@ const styles = StyleSheet.create({
   locationText: {
     color: COLORS.BLACK,
     fontSize: 14,
-    // fontWeight: 600,
     fontFamily: "PretendardSemiBold",
     lineHeight: 16,
   },
@@ -247,7 +246,6 @@ const styles = StyleSheet.create({
 
   endText: {
     fontSize: 10,
-    // fontWeight: 400,
     fontFamily: "PretendardRegular",
     lineHeight: 15,
   },

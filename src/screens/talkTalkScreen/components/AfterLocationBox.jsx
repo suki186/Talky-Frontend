@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
 
     locationText: {
         fontSize: 18.67,
-        // fontWeight: "700",
         fontFamily: "PretendardBold",
     },
 
@@ -37,7 +36,6 @@ const styles = StyleSheet.create({
 
     locationSentence: {
         fontSize: 12,
-        // fontWeight: "400",
         fontFamily: "PretendardRegular",
     }
 })

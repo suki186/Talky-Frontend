@@ -109,12 +109,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.SUB_BLACK,
-    // fontWeight: "400",
     fontFamily: "PretendardRegular",
     fontSize: 8,
   },
   placeText: {
-    // fontWeight: "500",
     fontFamily: "PretendardMedium",
     textDecorationLine: "underline",
   },

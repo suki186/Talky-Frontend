@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
 
     notifyText: {
         fontSize: 16.29,
-        // fontWeight: "400",
         fontFamily: "PretendardRegular",
         lineHeight: 20,
         color: COLORS.BLACK
@@ -67,7 +66,6 @@ const styles = StyleSheet.create({
 
     explain: {
         fontSize: 10,
-        // fontWeight: "400",
         fontFamily: "PretendardRegular",
         textAlign: "center",
         color: "#4E4E4E"
@@ -84,7 +82,6 @@ const styles = StyleSheet.create({
 
     buttonText: {
         fontSize: 14,
-        // fontWeight: "500",
         fontFamily: "PretendardMedium",
         lineHeight: 16,
         color: COLORS.BLACK
