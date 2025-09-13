@@ -62,8 +62,8 @@ export const GuardianInfo = ({ name, id, onChangeName }) => {
                                 value = { component.value }
                                 isRegistered = { component.isRegistered }
                                 onChangeText = { (text) => handleChange(index, text) }
-                                onPress = { () => handleRegister(index) }
-                                onDeletePress = { () => {
+                                onRegister = { () => handleRegister(index) }
+                                onDelete = { () => {
                                     setSelectedIndex(index);
                                     openDialog();
                                 }}

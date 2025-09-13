@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { COLORS } from "../../../styles/color"
 
-{/* isRegisterd: 등록 여부, onPress: 등록 삭제 버튼 클릭 시 실행 함수 */}
-export const AccountComponent = ({ value, onChangeText, isRegistered, onPress }) => {
+{/* isRegistered: 등록 여부, onPress: 등록 삭제 버튼 클릭 시 실행 함수 */}
+export const AccountComponent = ({ value, onChangeText, isRegistered, onDelete, onRegister }) => {
     return (
         <View style = { styles.container }>
             <View style = { styles.input }>
@@ -23,8 +23,11 @@ export const AccountComponent = ({ value, onChangeText, isRegistered, onPress })
                 ]}
 
                 onPress = { () => {
-                    if (!value && !isRegistered) return; 
-                    onPress();
+                    if (isRegistered) {
+                        onDelete();
+                    } else {
+                        onRegister();
+                    }
                 }}
                 activeOpacity = { 0.5 }
             >
