@@ -111,5 +111,6 @@ const styles = StyleSheet.create({
     borderRadius: 33.333,
     borderWidth: 1.668,
     backgroundColor: "transparent",
+    fontFamily: "PretendardRegular",
   },
 });

@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     },
 
     TitleText: {
-        fontWeight: "600",
+        fontFamily: "PretendardSemiBold",
         fontSize: 12,
         lineHeight: 14,
         textAlign: "center"
@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
         borderRadius: 26.67,
         backgroundColor: COLORS.WHITE,
         paddingLeft: 10,
-        fontSize: 12
+        fontSize: 12,
+        fontFamily: "PretendardMedium",
     },
 
     startBtn: {
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: COLORS.BLACK,
         fontSize: 22,
-        fontWeight: "600",
+        fontFamily: "PretendardSemiBold",
         lineHeight: 30
     }
 })

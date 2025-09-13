@@ -70,10 +70,13 @@ const styles = StyleSheet.create({
 
   titleText: {
     textAlign: "center",
+    borderRadius: 16.67,
+    fontSize: 14,
+    lineHeight: 14,
+    fontFamily: "PretendardSemiBold",
     fontSize: 18,
     color: "#4E4E4E",
     lineHeight: 25,
-    fontWeight: "600",
   },
 
   leftIcon: {

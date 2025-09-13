@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.BACKGROUND,
         borderRadius: 20,
         fontSize: 12,
+        fontFamily: "PretendardRegular",
         paddingVertical: 1,
         paddingHorizontal: 12,
     },
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     registerText: {
         color: COLORS.CANCLE_CLICK,
         fontSize: 10,
-        fontWeight: "400",
+        fontFamily: "PretendardRegular",
         lineHeight: 15
     },
 

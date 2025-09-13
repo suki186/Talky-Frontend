@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 12,
-    fontWeight: "500",
+    fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },
   content: {

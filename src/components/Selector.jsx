@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   selectorText: {
     fontSize: 11.33,
-    fontWeight: "500",
+    fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },
   dropdown: {
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontSize: 11.33,
-    fontWeight: "500",
+    fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },
 });
