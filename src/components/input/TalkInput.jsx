@@ -5,6 +5,7 @@ import { Toast } from "./Toast";
 import { useInput } from "../../hooks/useInput";
 import { COLORS } from "../../styles/color";
 import useFavorite from "../../hooks/useFavorite";
+import { useTTS } from "../../hooks/useTTS";
 
 export const TalkInput = () => {
   // input 관련 훅
@@ -28,6 +29,49 @@ export const TalkInput = () => {
     text,
     setShowToast,
   });
+
+  // TTS 관련 훅
+  const { speaking, speak, stop } = useTTS({
+    language: "ko",
+    pitch: 1.0,
+    rate: 0.8,
+  });
+
+  // handleRightPress + TTS
+  const handleRightTTS = () => {
+    try {
+      handleRightPress();
+    } catch (e) {
+      console.warn("handleRightPress Error:", e);
+    }
+
+    // 텍스트 없으면 return
+    if (!text || text.trim().length === 0) return;
+
+    // 이미 말하고 있으면 중복 호출 방지
+    if (speaking) {
+      stop()
+        .then(() => {
+          speak(text, {
+            onError: (e) => console.log("TTS 에러:", e),
+            onDone: () => console.log("TTS 완료"),
+          });
+        })
+        .catch(() => {
+          speak(text, {
+            onError: (e) => console.log("TTS 에러:", e),
+            onDone: () => console.log("TTS 완료"),
+          });
+        });
+      return;
+    }
+
+    // TTS 시작
+    speak(text, {
+      onError: (e) => console.log("TTS 에러:", e),
+      onDone: () => console.log("TTS 완료"),
+    });
+  };
 
   return (
     <View
@@ -60,7 +104,7 @@ export const TalkInput = () => {
         returnKeyType="done"
         blurOnSubmit={false}
       />
-      <InputRight status={status} onPress={handleRightPress} />
+      <InputRight status={status} onPress={handleRightTTS} />
       {showToast && (
         <Toast message="즐겨찾기 완료!" onHide={() => setShowToast(false)} />
       )}
