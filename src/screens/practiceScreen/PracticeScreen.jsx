@@ -70,8 +70,8 @@ const PracticeScreen = () => {
   const [pracId, setPracId] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
-  // LeftPracticeBox 클릭 핸들러
-  const handleLeftPractice = async (id, text) => {
+  // LeftPracticeBox, RightPracticeBox 클릭 핸들러
+  const handlePractice = async (id, text) => {
     // 이미 같은 질문 말하는 중이면 멈춤
     if (speakingId === id && speaking) {
       await stop();
@@ -141,12 +141,13 @@ const PracticeScreen = () => {
                     <LeftPracticeBox
                       practiceText={q.content}
                       isSpeaking={speakingId === q.id}
-                      onPress={() => handleLeftPractice(q.id, q.content)}
+                      onPress={() => handlePractice(q.id, q.content)}
                     />
                     <RightPracticeBox
                       options={q.answers.map((a) => a.answer)}
                       onPress={(answer) => {
                         handleSelectAnswer(answer);
+                        handlePractice(`answer-${q.id}-${answer}`, answer);
                         const selected = q.answers.find(
                           (a) => a.answer === answer
                         );
