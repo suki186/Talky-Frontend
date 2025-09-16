@@ -14,6 +14,7 @@ import {
 import { COLORS } from "../../styles/color";
 import { Toast } from "../../components/input/Toast";
 import { useToast } from "../../hooks/useToast";
+import { useTTS } from "../../hooks/useTTS";
 
 import Dialog from "../../components/dialog/Dialog";
 
@@ -45,12 +46,17 @@ const PracticeScreen = () => {
     showToast,
     toastMessage,
     toastImage,
-    handleSpeakToggle,
     handleSelectAnswer,
     handleNext,
     hideToast,
     resetState,
   } = useToast();
+
+  const { speaking, speak, stop } = useTTS({
+    language: "ko",
+    pitch: 1.0,
+    rate: 0.8,
+  });
 
   const [speakingId, setSpeakingId] = useState(null);
 
@@ -61,15 +67,36 @@ const PracticeScreen = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const [pracId, setPracId] = useState(null); 
+  const [pracId, setPracId] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
+
+  // LeftPracticeBox 클릭 핸들러
+  const handleLeftPractice = async (id, text) => {
+    // 이미 같은 질문 말하는 중이면 멈춤
+    if (speakingId === id && speaking) {
+      await stop();
+      setSpeakingId(null);
+      return;
+    }
+
+    // 다른 질문 말하는 중이면 멈추고 새로 시작
+    await stop();
+    speak(text, {
+      onDone: () => setSpeakingId(null),
+      onError: (e) => {
+        console.warn("TTS Error:", e);
+        setSpeakingId(null);
+      },
+    });
+    setSpeakingId(id);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       if (pracId !== null) {
         const data = await sentencePracticeApi(pracId);
         if (data && data.question) {
-          setPracticeSentence(data.question); 
+          setPracticeSentence(data.question);
           setShownQuestionIds([data.question[0].id]);
         }
       }
@@ -80,8 +107,8 @@ const PracticeScreen = () => {
   return (
     <View style={styles.container}>
       {selectedLocation === null ? (
-        <PracticeState 
-          onSelect = {(id, label) => {
+        <PracticeState
+          onSelect={(id, label) => {
             setPracId(id);
             setSelectedLocation(label);
           }}
@@ -106,27 +133,23 @@ const PracticeScreen = () => {
 
           <View style={styles.practiceChat}>
             <ScrollView>
-              {shownQuestionIds.map(id => {
-                const q = practiceSentence.find(item => item.id === id);
+              {shownQuestionIds.map((id) => {
+                const q = practiceSentence.find((item) => item.id === id);
                 if (!q) return null;
                 return (
                   <View key={q.id}>
                     <LeftPracticeBox
                       practiceText={q.content}
                       isSpeaking={speakingId === q.id}
-                      onPress={() => {
-                        if (speakingId === q.id) {
-                          setSpeakingId(null);
-                        } else {
-                          setSpeakingId(q.id);
-                        }
-                      }}
+                      onPress={() => handleLeftPractice(q.id, q.content)}
                     />
                     <RightPracticeBox
                       options={q.answers.map((a) => a.answer)}
                       onPress={(answer) => {
                         handleSelectAnswer(answer);
-                        const selected = q.answers.find((a) => a.answer === answer);
+                        const selected = q.answers.find(
+                          (a) => a.answer === answer
+                        );
                         if (selected) {
                           setPendingNextId(selected.nextQuestionId);
                           setIsAnswered(true);
@@ -141,11 +164,11 @@ const PracticeScreen = () => {
               {isAnswered && (
                 <TouchableOpacity
                   style={styles.nextBox}
-                  onPress={() =>{
+                  onPress={() => {
                     if (pendingNextId === 0) {
                       setIsDialogOpen(true);
                     } else {
-                      setShownQuestionIds(prev => [...prev, pendingNextId]);
+                      setShownQuestionIds((prev) => [...prev, pendingNextId]);
                       handleNext();
                     }
                     setPendingNextId(null);
@@ -183,7 +206,7 @@ const PracticeScreen = () => {
             onConfirm={() => {
               setIsDialogOpen(false);
               setSelectedLocation(null);
-              setCurrentQuestionId(null);
+              resetState();
               setIsAnswered(false);
             }}
           />
