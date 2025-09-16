@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { PracticeState } from "./components/PracticeState";
 import { LeftPracticeBox } from "./components/LeftPracticeBox";
 import { RightPracticeBox } from "./components/RightPracticeBox";
@@ -40,6 +40,8 @@ const locationImages = {
 };
 
 const PracticeScreen = () => {
+  const scrollViewRef = useRef(null); // 자동 하단 스크롤을 위한 ref
+
   const {
     isAnswered,
     setIsAnswered,
@@ -104,6 +106,13 @@ const PracticeScreen = () => {
     fetchData();
   }, [pracId]);
 
+  // shownQuestionIds가 바뀔 때마다 하단 스크롤
+  useEffect(() => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollToEnd({ animated: true });
+    }
+  }, [shownQuestionIds]);
+
   return (
     <View style={styles.container}>
       {selectedLocation === null ? (
@@ -132,7 +141,7 @@ const PracticeScreen = () => {
           </View>
 
           <View style={styles.practiceChat}>
-            <ScrollView>
+            <ScrollView ref={scrollViewRef}>
               {shownQuestionIds.map((id) => {
                 const q = practiceSentence.find((item) => item.id === id);
                 if (!q) return null;
