@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { LocationInfo } from "./components/LocationInfo";
 import { GuardianInfo } from "./components/GuardianInfo";
 import LogoutButton from "../../components/auth/LogoutButton";
@@ -21,19 +21,20 @@ const GuardianSettingScreen = () => {
 
   return (
     <ScrollView>
-      <View style = { styles.container }>
+      <View style={styles.container}>
         <LocationInfo />
-        { profile &&
-          <GuardianInfo 
-            name = { profile.name }
-            id = { profile.id }
-            onChangeName = { (newName) => setProfile((prev) => ({ ...prev, name: newName })) }
+        {profile && (
+          <GuardianInfo
+            name={profile.name}
+            id={profile.id}
+            onChangeName={(newName) =>
+              setProfile((prev) => ({ ...prev, name: newName }))
+            }
           />
-        }
+        )}
         <LogoutButton />
       </View>
     </ScrollView>
-    
   );
 };
 
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: COLORS.BACKGROUND,
     paddingTop: 45,
-    gap: 24
+    gap: 24,
   },
 
   logoutButton: {
@@ -55,12 +56,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: COLORS.MAIN_YELLOW2,
-    borderRadius: 33.33
+    borderRadius: 33.33,
   },
 
   logoutText: {
     color: COLORS.BLACK,
     fontSize: 12,
     fontFamily: "PretendardRegular",
-  }
-})
+  },
+});

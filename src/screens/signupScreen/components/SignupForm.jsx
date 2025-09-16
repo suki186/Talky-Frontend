@@ -42,14 +42,14 @@ const SignupForm = () => {
   const handleSignup = async () => {
     // 회원가입 로직 구현 예정
     if (validate()) {
-      const roleMapping = { "일반": "normal", "보호자": "guardian" };
+      const roleMapping = { 일반: "normal", 보호자: "guardian" };
       const mappedRole = roleMapping[role];
 
       const userId = await signupUserApi(name, id, password, mappedRole);
 
       if (userId) {
         console.log("회원가입 ", { name, id, password, mappedRole });
-        navigation.goBack(); 
+        navigation.goBack();
       } else {
         console.error("회원가입 실패");
       }
@@ -59,7 +59,7 @@ const SignupForm = () => {
   const handleIdCheck = async () => {
     if (!id) {
       setErrors((prev) => ({ ...prev, id: "아이디를 입력해 주세요." }));
-      setIsIdChecked(false); 
+      setIsIdChecked(false);
       return;
     }
 
@@ -69,19 +69,19 @@ const SignupForm = () => {
       if (response === true) {
         console.log("사용 가능한 아이디");
         setErrors((prev) => ({ ...prev, id: "" }));
-        setIsIdChecked(true); 
+        setIsIdChecked(true);
         return true;
       } else {
         console.error("사용 불가능한 아이디");
         setErrors((prev) => ({ ...prev, id: "이미 사용 중인 아이디입니다." }));
-        setIsIdChecked(false); 
+        setIsIdChecked(false);
         return false;
       }
     } catch (error) {
-      console.error("아이디 중복 확인 실패");
-      setIsIdChecked(false); 
+      console.error("아이디 중복 확인 실패" + error);
+      setIsIdChecked(false);
     }
-  }
+  };
 
   return (
     <View>
@@ -154,7 +154,13 @@ const SignupForm = () => {
       <SignButton
         title="회원가입"
         disabled={
-          !(name.length > 0 && id.length > 0 && password.length > 0 && role && isIdChecked)
+          !(
+            name.length > 0 &&
+            id.length > 0 &&
+            password.length > 0 &&
+            role &&
+            isIdChecked
+          )
         }
         onPress={handleSignup}
       />
