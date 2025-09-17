@@ -229,7 +229,6 @@ const styles = StyleSheet.create({
     height: 780,
     backgroundColor: COLORS.BACKGROUND,
     alignItems: "center",
-    paddingTop: 15,
     position: "relative",
   },
 
