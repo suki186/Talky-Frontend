@@ -1,14 +1,15 @@
 import { useState, useCallback } from "react";
+import { useVoiceSettings } from "../context/VoiceSettingsContext";
 import {
   speak as speakUtil,
   stop as stopUtil,
   isSpeaking as isSpeakingUtil,
 } from "../utils/tts";
 
-export const useTTS = (
-  defaultOptions = { language: "ko", pitch: 1.0, rate: 0.8 }
-) => {
+export const useTTS = () => {
   const [speaking, setSpeaking] = useState(false);
+  const { settings } = useVoiceSettings();
+  const { ttsLanguage, ttsSpeed, ttsGender } = settings; // context 값 가져오기
 
   const speak = useCallback(
     (text, opts = {}) => {
@@ -16,8 +17,12 @@ export const useTTS = (
 
       setSpeaking(true);
 
+      const genderPitch = ttsGender === "male" ? 0.6 : 1.1;
+
       speakUtil(text, {
-        ...defaultOptions,
+        language: ttsLanguage, // 언어
+        rate: ttsSpeed, // 속도
+        pitch: genderPitch, // 성별
         ...opts,
         onDone: () => {
           setSpeaking(false);
@@ -29,7 +34,7 @@ export const useTTS = (
         },
       });
     },
-    [defaultOptions]
+    [ttsLanguage, ttsSpeed, ttsGender]
   );
 
   const stop = useCallback(async () => {
