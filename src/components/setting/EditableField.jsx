@@ -1,5 +1,5 @@
 // 수정 버튼이 있는 필드
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,16 +13,21 @@ import { COLORS } from "../../styles/color";
 const EditableField = ({
   label,
   value,
-  onChange,
+  onComplete,
   placeholder = "",
   width = 141,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
 
+  // value가 바뀌면 inputValue 동기화
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
   const toggleEdit = () => {
     if (isEditing) {
-      onChange(inputValue);
+      onComplete(inputValue);
     }
     setIsEditing(!isEditing);
   };
