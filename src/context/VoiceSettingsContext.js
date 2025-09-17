@@ -8,7 +8,7 @@ export const VoiceSettingsProvider = ({ children, initialSettings }) => {
     initialSettings || {
       ttsSpeed: 1.0,
       ttsLanguage: "ko",
-      ttsGender: "female",
+      ttsGender: "male",
     }
   );
 
