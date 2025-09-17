@@ -31,11 +31,7 @@ export const TalkInput = () => {
   });
 
   // TTS 관련 훅
-  const { speaking, speak, stop } = useTTS({
-    language: "ko",
-    pitch: 1.0,
-    rate: 0.8,
-  });
+  const { speaking, speak, stop } = useTTS();
 
   // handleRightPress + TTS
   const handleRightTTS = () => {

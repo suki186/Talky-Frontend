@@ -3,11 +3,7 @@ import { COLORS } from "../../../styles/color";
 import { useTTS } from "../../../hooks/useTTS";
 
 export const AfterMainSentence = ({ onPress, isSelected, text, pressed }) => {
-  const { speaking, speak, stop } = useTTS({
-    language: "ko",
-    pitch: 1.0,
-    rate: 0.8,
-  });
+  const { speaking, speak, stop } = useTTS();
 
   // TTS 실행 함수
   const handlePress = async () => {

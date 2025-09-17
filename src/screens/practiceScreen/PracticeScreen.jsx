@@ -54,11 +54,7 @@ const PracticeScreen = () => {
     resetState,
   } = useToast();
 
-  const { speaking, speak, stop } = useTTS({
-    language: "ko",
-    pitch: 1.0,
-    rate: 0.8,
-  });
+  const { speaking, speak, stop } = useTTS();
 
   const [speakingId, setSpeakingId] = useState(null);
 
