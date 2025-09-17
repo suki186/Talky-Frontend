@@ -11,6 +11,7 @@ import { useVoiceSettings } from "../../context/VoiceSettingsContext";
 
 const UserSettingScreen = () => {
   const { settings, setSettings } = useVoiceSettings(); // Context 가져오기
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -87,6 +88,7 @@ const UserSettingScreen = () => {
           setSettings(newSettings); // Context 갱신
         }}
       />
+
 
       {/* 로그아웃 버튼 */}
       <LogoutButton />
