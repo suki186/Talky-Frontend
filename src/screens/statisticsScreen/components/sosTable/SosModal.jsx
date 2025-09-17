@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: COLORS.BLACK,
     fontSize: 12,
-    fontWeight: 600,
+    fontFamily: "PretendardSemiBold",
   },
   mapContainer: {
     width: 273,

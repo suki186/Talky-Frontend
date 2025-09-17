@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 
     locationText: {
         fontSize: 15.68,
-        fontWeight: "400",
+        fontFamily: "PretendardRegular",
         lineHeight: 20
     }
 })

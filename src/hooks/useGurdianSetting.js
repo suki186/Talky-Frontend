@@ -1,9 +1,29 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import postGuardianCodeApi from "../apis/guardian/postGuardianCodeApi";
+import deleteGuardianCodeApi from "../apis/guardian/deleteGuardianCodeApi";
+import getConnectUserApi from "../apis/guardian/getConnectUserApi";
 
 export const useGuardianSetting = (openDialog, handleRealDelete) => {
     const [plus, setPlus] = useState([{ id: Date.now(), isRegistered: false, value: "" }]);
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const [toastMessage, setToastMessage] = useState("");
     const [showToast, setShowToast] = useState(false);
+
+    const refreshUsers = async () => {
+        const users = await getConnectUserApi();
+        setPlus(
+            users.length > 0
+            ? users.map((u) => ({
+                id: u.id,
+                userId: u.id,
+                value: u.connectionCode,
+                isRegistered: true,
+                }))
+            : [{ id: Date.now(), isRegistered: false, value: "" }]
+        );
+    };
+
+    useEffect(() => { refreshUsers(); }, []);
 
     // 추가 시 id 부여
     const handleAddComponent = () => {
@@ -14,22 +34,28 @@ export const useGuardianSetting = (openDialog, handleRealDelete) => {
         ]);
     };
 
-    const handleRegister = (index) => {
-        const updated = [...plus];
+    const handleRegister = async (index) => {
+        const code = plus[index].value;
+        const success = await postGuardianCodeApi(code);
 
-        if (!updated[index].isRegistered) {
-            updated[index].isRegistered = true;
-            setPlus(updated);           
-            setShowToast(true);
+        if (success) {
+            await refreshUsers();
+            setToastMessage("연결 계정 등록 완료!");
         } else {
-            setSelectedIndex(index);
-            openDialog();
+            setToastMessage("연결 계정 등록 실패");
         }
+        setShowToast(true);
     };
 
-    const handleDeleteConfirm = () => {
-        setPlus(prev => prev.filter((_, i) => i !== selectedIndex));
-        handleRealDelete(); 
+    const handleDeleteConfirm = async () => {
+        const normalUserId = plus[selectedIndex]?.userId;
+        const success = await deleteGuardianCodeApi(normalUserId);
+
+        if (success) {
+            await refreshUsers();
+        };
+
+        handleRealDelete();
     };
 
     const handleChange = (index, text) => {
@@ -47,6 +73,7 @@ export const useGuardianSetting = (openDialog, handleRealDelete) => {
         setPlus,
         selectedIndex,
         setSelectedIndex,
+        toastMessage,
         showToast,
         setShowToast,
         handleAddComponent,

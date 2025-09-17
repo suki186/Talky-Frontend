@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   selectorBox: { flexDirection: "column", gap: 3 },
   labelText: {
     fontSize: 10,
-    fontWeight: "500",
+    fontFamily: "PretendardMedium",
     marginLeft: 8,
     color: COLORS.SUB_BLACK,
   },
