@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import RootNavigator from "./src/navigation/RootNavigator";
 import SplashScreen from "./src/screens/SplashScreen";
-import { AuthProvider, useAuth } from "./src/context/AuthContext";
+import { AuthProvider } from "./src/context/AuthContext";
+import { VoiceSettingsProvider } from "./src/context/VoiceSettingsContext";
 import { Text } from "react-native";
 import { useFonts } from "expo-font";
+import getUserInfoApi from "./src/apis/userSetting/getUserInfoApi";
 
 export default function App() {
   const [splashDone, setSplashDone] = useState(false);
-  const isLoggedIn = true;
+  const [userSettings, setUserSettings] = useState(null);
 
   // 폰트 불러오기
   const [fontsLoaded] = useFonts({
@@ -35,19 +37,45 @@ export default function App() {
     }
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) return null;
+  // Splash 완료 후 유저 TTS 설정 불러오기
+  useEffect(() => {
+    if (!splashDone) return;
 
+    const fetchUserSettings = async () => {
+      try {
+        const data = await getUserInfoApi();
+        setUserSettings(
+          data?.ttsSettings || {
+            ttsSpeed: 1.0,
+            ttsLanguage: "ko",
+            ttsGender: "male",
+          }
+        );
+      } catch (e) {
+        console.error("유저 TTS 설정 불러오기 실패", e);
+        setUserSettings({
+          ttsSpeed: 1.0,
+          ttsLanguage: "ko",
+          ttsGender: "male",
+        });
+      }
+    };
+
+    fetchUserSettings();
+  }, [splashDone]);
+
+  // 완료 대기
+  if (!fontsLoaded) return null;
   if (!splashDone) {
-    return (
-      <SplashScreen
-        onFinish={() => setSplashDone(true)}
-      />
-    );
+    return <SplashScreen onFinish={() => setSplashDone(true)} />;
   }
+  if (!userSettings) return null;
 
   return (
     <AuthProvider>
-      <RootNavigator />
+      <VoiceSettingsProvider initialSettings={userSettings}>
+        <RootNavigator />
+      </VoiceSettingsProvider>
     </AuthProvider>
   );
 }

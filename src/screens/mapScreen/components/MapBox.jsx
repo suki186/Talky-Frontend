@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 import stores from "../../../datas/centerLocation.json";
 
 const MapBox = ({ width = 328, height = 480, selectedRegion }) => {
-    const baseLocation = { latitude: 37.5820, longitude: 127.0104 };
+  const baseLocation = { latitude: 37.582, longitude: 127.0104 };
 
   // 거리 계산 함수 (Haversine)
   const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
@@ -30,7 +30,10 @@ const MapBox = ({ width = 328, height = 480, selectedRegion }) => {
       return [0, max];
     }
     if (label.includes("~")) {
-      const [min, max] = label.replace("km", "").split("~").map((v) => parseInt(v.trim()));
+      const [min, max] = label
+        .replace("km", "")
+        .split("~")
+        .map((v) => parseInt(v.trim()));
       return [min, max];
     }
     return [0, Infinity];
@@ -52,34 +55,37 @@ const MapBox = ({ width = 328, height = 480, selectedRegion }) => {
   });
 
   return (
-    <View style = { [styles.mapContainer, { width, height }] }>
+    <View style={[styles.mapContainer, { width, height }]}>
       <MapView
-        style = { StyleSheet.absoluteFillObject }
-        initialRegion = {{ // 학교 위치로 고정
+        style={StyleSheet.absoluteFillObject}
+        initialRegion={{
+          // 학교 위치로 고정
           latitude: baseLocation.latitude,
           longitude: baseLocation.longitude,
-          latitudeDelta: 0.01, 
+          latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
-        zoomEnabled = { true }       
-        zoomControlEnabled = { true } 
-        scrollEnabled = { true }       
-        showsCompass = { true } 
+        zoomEnabled={true}
+        zoomControlEnabled={true}
+        scrollEnabled={true}
+        showsCompass={true}
       >
-
         <Marker
-          coordinate = { baseLocation}
-          image = { require("../../../assets/images/map/map-marker.png") }
-          style = {{ width: 35, height: 41 }}
+          coordinate={baseLocation}
+          image={require("../../../assets/images/map/map-marker.png")}
+          style={{ width: 35, height: 41 }}
         />
 
-        { filteredStores.map((store, idx) => (
+        {filteredStores.map((store, idx) => (
           <Marker
-            key = { idx }
-            coordinate = {{ latitude: parseFloat(store.latitude), longitude: parseFloat(store.longitude) }}
-            title = { store["제공 기관명"] }
-            image = { require("../../../assets/images/map/map-marker.png") }
-            style = {{ width: 35, height: 41 }}
+            key={idx}
+            coordinate={{
+              latitude: parseFloat(store.latitude),
+              longitude: parseFloat(store.longitude),
+            }}
+            title={store["제공 기관명"]}
+            image={require("../../../assets/images/map/map-marker.png")}
+            style={{ width: 35, height: 41 }}
           />
         ))}
       </MapView>

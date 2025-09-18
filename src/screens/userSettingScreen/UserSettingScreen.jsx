@@ -7,8 +7,11 @@ import LogoutButton from "../../components/auth/LogoutButton";
 import { COLORS } from "../../styles/color";
 import getUserInfoApi from "../../apis/userSetting/getUserInfoApi";
 import { buildUserSettingHandlers } from "./userSettingHandlers";
+import { useVoiceSettings } from "../../context/VoiceSettingsContext";
 
 const UserSettingScreen = () => {
+  const { settings, setSettings } = useVoiceSettings(); // Context 가져오기
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -74,7 +77,18 @@ const UserSettingScreen = () => {
       />
 
       {/* 음성 설정 */}
-      <VoiceSetting ttsSettings={user?.ttsSettings} onSave={handleTtsChange} />
+      <VoiceSetting
+        ttsSettings={user?.ttsSettings || settings}
+        onSave={(newSettings) => {
+          handleTtsChange(newSettings); // DB 저장
+          setUser((prev) => ({
+            ...prev,
+            ttsSettings: newSettings,
+          }));
+          setSettings(newSettings); // Context 갱신
+        }}
+      />
+
 
       {/* 로그아웃 버튼 */}
       <LogoutButton />

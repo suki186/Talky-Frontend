@@ -47,7 +47,7 @@ const Selector = ({
     }).start(() => {
       if (!modalVisible) setIsFocused(false);
     });
-  }, [modalVisible, itemHeight]);
+  }, [modalVisible, itemHeight, dropdownHeight, items.length]);
 
   const handleSelect = (role) => {
     onSelect(role);

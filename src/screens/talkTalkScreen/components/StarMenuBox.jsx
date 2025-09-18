@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
   menuTitle: {
     width: 142,
     height: 31.33,
+    justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
     backgroundColor: "#FFEC9F",
@@ -71,12 +72,10 @@ const styles = StyleSheet.create({
   titleText: {
     textAlign: "center",
     borderRadius: 16.67,
-    fontSize: 14,
+    fontSize: 17,
     lineHeight: 14,
     fontFamily: "PretendardSemiBold",
-    fontSize: 18,
     color: "#4E4E4E",
-    lineHeight: 25,
   },
 
   leftIcon: {

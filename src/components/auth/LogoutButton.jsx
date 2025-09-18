@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS } from "../../styles/color";
 import { useAuth } from "../../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";

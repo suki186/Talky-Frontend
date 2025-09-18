@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Alert,
-  Linking,
-} from "react-native";
+import { TouchableOpacity, Image, StyleSheet, Linking } from "react-native";
 import SOS from "../assets/images/sos-call.png";
 
 const SosCall = ({ size = 34 }) => {
