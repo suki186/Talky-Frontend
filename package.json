@@ -34,7 +34,8 @@
     "react-native-screens": "~4.11.1",
     "react-native-svg": "15.11.2",
     "react-native-webview": "13.13.5",
-    "validator": "^13.15.15"
+    "validator": "^13.15.15",
+    "expo-audio": "~0.4.9"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
