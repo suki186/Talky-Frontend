@@ -35,12 +35,20 @@ const TalkTalkScreen = () => {
 
   // 문장 선택 후 TTS -> 녹음 -> 추천문장
   const handleNext = async ({ ttsSentence, recordedFile }) => {
+    const fileObj = {
+      uri: recordedFile,
+      type: "audio/m4a",
+      name: "recording.m4a",
+    };
+
     const data = await createContextApi({
-      file: recordedFile, // 녹음 파일
+      file: fileObj, // 녹음 파일
       keywords: selectedLocations,
       context: stateText,
       choose: ttsSentence, // 선택한 문장
     });
+
+    console.log("[TalkTalkScreen] createContextApi 결과", data);
     if (data) {
       setRecommendedSentences(data.recommended_sentences || []);
       console.log("[TalkTalkScreen] 추천문장 상태 업데이트 완료");

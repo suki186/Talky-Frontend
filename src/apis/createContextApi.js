@@ -8,6 +8,8 @@ const createContextApi = async ({
   context = "",
   choose = null,
 }) => {
+  console.log("[createContextApi] file object:", file);
+
   if (!keywords.length) {
     console.warn("keywords는 최소 1개 이상이어야 합니다.");
     return null;
