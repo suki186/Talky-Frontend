@@ -16,15 +16,17 @@ const createContextApi = async ({
   try {
     const formData = new FormData();
 
-    // 파일 첨부 (선택)
-    if (file) {
+    if (file && file.uri) {
+      // Android/iOS에 따라 uri 처리
+      const uri =
+        Platform.OS === "android" ? file.uri : file.uri.replace("file://", "");
+      const name = file.name || `record-${Date.now()}.m4a`; // 이름 동적 생성
+      const type = file.type || "audio/m4a";
+
       formData.append("file", {
-        uri:
-          Platform.OS === "android"
-            ? file.uri
-            : file.uri.replace("file://", ""),
-        type: file.type || "audio/m4a",
-        name: file.name || "record.m4a",
+        uri,
+        type,
+        name,
       });
     }
 
@@ -34,9 +36,10 @@ const createContextApi = async ({
       context: context || "",
       choose: choose ?? null,
     };
-
     formData.append("metadata", JSON.stringify(metadata));
+    console.log("[createContextApi] metadata:", metadata);
 
+    //console.log("[createContextApi] API 요청 전송");
     const response = await defaultInstance.post(
       `/recommendations/context`,
       formData,

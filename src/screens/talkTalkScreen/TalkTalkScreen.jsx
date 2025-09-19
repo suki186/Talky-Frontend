@@ -16,24 +16,10 @@ const TalkTalkScreen = () => {
   const [stateText, setStateText] = useState("");
   const [recommendedSentences, setRecommendedSentences] = useState([]);
 
+  // 처음 시작: 키워드, 장소 -> 추천문장
   const handleStart = async ({ selectedLocations, stateText }) => {
-    const formData = new FormData();
-
-    // 파일 없으면 null
-    formData.append("file", null);
-
-    // metadata는 JSON 문자열
-    formData.append(
-      "metadata",
-      JSON.stringify({
-        keywords: selectedLocations,
-        context: stateText || "",
-        choose: null,
-      })
-    );
-
     const data = await createContextApi({
-      file: null,
+      file: null, // 아직 녹음 파일 없음
       keywords: selectedLocations,
       context: stateText,
       choose: null,
@@ -44,6 +30,20 @@ const TalkTalkScreen = () => {
       setSelectedLocations(selectedLocations);
       setStateText(stateText);
       setStarted(true);
+    }
+  };
+
+  // 문장 선택 후 TTS -> 녹음 -> 추천문장
+  const handleNext = async ({ ttsSentence, recordedFile }) => {
+    const data = await createContextApi({
+      file: recordedFile, // 녹음 파일
+      keywords: selectedLocations,
+      context: stateText,
+      choose: ttsSentence, // 선택한 문장
+    });
+    if (data) {
+      setRecommendedSentences(data.recommended_sentences || []);
+      console.log("[TalkTalkScreen] 추천문장 상태 업데이트 완료");
     }
   };
 
@@ -65,7 +65,10 @@ const TalkTalkScreen = () => {
               location={selectedLocations}
               mystate={stateText}
             />
-            <AfterMainBox recommendedSentences={recommendedSentences} />
+            <AfterMainBox
+              recommendedSentences={recommendedSentences}
+              onSelectSentence={handleNext}
+            />
           </>
         )}
 

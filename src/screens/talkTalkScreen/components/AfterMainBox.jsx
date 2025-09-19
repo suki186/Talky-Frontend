@@ -5,7 +5,7 @@ import RESET from "../../../assets/images/talktalk/reset.png";
 import { useState, useEffect } from "react";
 import { COLORS } from "../../../styles/color";
 
-export const AfterMainBox = ({ recommendedSentences }) => {
+export const AfterMainBox = ({ recommendedSentences, onSelectSentence }) => {
   const [sentences, setSentences] = useState([]);
 
   // 추천 문장이 변경될 때 상태 업데이트
@@ -32,7 +32,13 @@ export const AfterMainBox = ({ recommendedSentences }) => {
           </TouchableOpacity>
         </View>
         {sentences.map((sentence, index) => (
-          <AfterMainSentence key={index} text={sentence.text} />
+          <AfterMainSentence
+            key={index}
+            text={sentence.text}
+            onSelect={(text, recordedFile) =>
+              onSelectSentence({ ttsSentence: text, recordedFile })
+            }
+          />
         ))}
       </View>
     </View>

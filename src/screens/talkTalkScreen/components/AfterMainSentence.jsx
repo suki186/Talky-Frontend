@@ -1,21 +1,44 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { COLORS } from "../../../styles/color";
 import { useTTS } from "../../../hooks/useTTS";
+import { useRecorder } from "../../../hooks/useRecorder";
 
-export const AfterMainSentence = ({ onPress, isSelected, text, pressed }) => {
-  const { speaking, speak, stop } = useTTS();
+export const AfterMainSentence = ({ isSelected, text, pressed, onSelect }) => {
+  const { speak, speaking, stop } = useTTS();
+  const { start, stop: stopRec } = useRecorder();
 
-  // TTS 실행 함수
-  const handlePress = async () => {
-    if (onPress) onPress();
+  const recordForSeconds = (seconds) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await start(); // 녹음 시작
+        setTimeout(async () => {
+          try {
+            const uri = await stopRec(); // 녹음 종료
+            resolve(uri);
+          } catch (err) {
+            reject(err);
+          }
+        }, seconds * 1000);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  };
 
-    // 이미 말하고 있으면 -> 다시 재생
-    if (speaking) await stop();
+  const handlePress = () => {
+    if (speaking) stop();
 
-    // TTS 실행
     speak(text, {
-      onDone: () => console.log("TTS 완료"),
-      onError: (e) => console.warn("TTS 에러:", e),
+      onDone: async () => {
+        console.log("[TTS 완료]", text);
+
+        try {
+          const recordedFile = await recordForSeconds(5);
+          if (onSelect) onSelect(text, recordedFile);
+        } catch (err) {
+          console.error("녹음 처리 오류:", err);
+        }
+      },
     });
   };
 
