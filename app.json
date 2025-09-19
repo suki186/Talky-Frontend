@@ -19,6 +19,7 @@
       "bundleIdentifier": "com.sukiii.Talky"
     },
     "android": {
+      "permissions": ["RECORD_AUDIO"],
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/splash/splash-bg.png",
         "backgroundColor": "#FFFEF6"
@@ -36,6 +37,14 @@
     },
     "updates": {
       "url": "https://u.expo.dev/b1ecf1da-b65c-4c46-8106-63b73c6184ee"
-    }
+    },
+    "plugins": [
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "음성 녹음을 위해 마이크 접근이 필요합니다."
+        }
+      ]
+    ]
   }
 }
