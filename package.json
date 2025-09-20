@@ -19,7 +19,7 @@
     "axios": "^1.11.0",
     "expo": "~53.0.13",
     "expo-blur": "~14.1.5",
-    "expo-dev-client": "^5.2.4",
+    "expo-dev-client": "~5.2.4",
     "expo-linear-gradient": "~14.1.5",
     "expo-location": "~18.1.6",
     "expo-speech": "~13.1.7",
