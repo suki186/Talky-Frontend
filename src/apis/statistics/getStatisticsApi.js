@@ -1,6 +1,6 @@
 import defaultInstance from "../utils/instance";
 
-const getConnectUserApi = async (normalId) => {
+const getStatisticsApi = async (normalId) => {
   try {
     const response = await defaultInstance.get(`/guardians/me/statistics/${normalId}`);
 	
@@ -19,4 +19,4 @@ const getConnectUserApi = async (normalId) => {
   }
 };
 
-export default getConnectUserApi;
+export default getStatisticsApi;
