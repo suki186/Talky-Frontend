@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Selector from "../../components/Selector";
 import UsingCount from "./components/usingCount/UsingCount";
 import UsingTop from "./components/usingTop/UsingTop";
@@ -15,54 +15,94 @@ import SosModal from "./components/sosTable/SosModal";
 import { COLORS } from "../../styles/color";
 import Entypo from "@expo/vector-icons/Entypo";
 
-import countDummy from "../../datas/countDummy.json";
-import topDummy from "../../datas/topDummy.json";
-import donut1Dummy from "../../datas/donut1Dummy.json";
-import donut2Dummy from "../../datas/donut2Dummy.json";
 import { useSosModal } from "../../hooks/useSosModal";
+import getConnectUserApi from "../../apis/guardian/getConnectUserApi";
+import getStatisticsApi from "../../apis/statistics/getStatisticsApi";
 
 const StatisticsScreen = () => {
-  const countData = countDummy; // 발화 횟수 예시 데이터
-  const users = ["김예나", "조주한"]; // 연결된 계정 목록
+  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(null);
 
-  const [user, setUser] = useState(users[0]);
   const [sosOpen, setSosOpen] = useState(false); // 토글 상태
   const { row: selectedRow, open, close, ModalContainer } = useSosModal(); // 모달 제어
 
-  const rows = [
-    // 긴급 호출 예시 데이터
-    ["6/30", "14:30", "서울특별시 성북구 삼선교로16길 116", "보호자"],
-    ["", "", "", ""],
-    ["", "", "", ""],
-    ["", "", "", ""],
-    ["", "", "", ""],
-  ];
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const data = await getConnectUserApi();
+      if (data.length > 0) {
+        const formatted = data.map((user) => ({ 
+          id: user.id, 
+          name: user.username 
+        }));
+        setUsers(formatted);
+        setUser(formatted[0]);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  const [statistics, setStatistics] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getStatisticsApi(user.id);
+
+      console.log("📊 usedWhen:", data.usedWhen);
+      console.log("📊 usedPlace:", data.usedPlace);
+      
+      setStatistics(data);
+    };
+
+    fetchData();
+  }, [user]);
+
 
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.userList}>
           {/* 연결된 일반 사용자 목록 */}
-          <Selector
-            items={users}
-            width="94"
-            selectedValue={user}
-            onSelect={setUser}
-            variant="user"
-          />
+          { user && (
+            <Selector
+              items={users.map((user) => user.name)}
+              width="94"
+              selectedValue={user.name}
+              onSelect={(name) => {
+                setUser(users.find((user) => user.name === name));
+              }}
+              variant="user"
+            />            
+          )}
           <Text style={styles.infoText}>
-            최근 7일 동안의 활동 데이터를 기반으로한 결과입니다.
+            최근 7일 동안의 활동 데이터를 기반으로 한 결과입니다.
           </Text>
         </View>
 
         {/* 발화 기능 사용 횟수 꺾은선 그래프 */}
-        <UsingCount data={countData} />
+        { statistics && (
+          <UsingCount data={statistics.howManyUsed} />
+        )}
 
         {/* 자주 사용하는 문장 TOP 5 리스트 */}
-        <UsingTop data={topDummy} />
+        { statistics && (
+          <UsingTop data={statistics.top5Used} />
+        )}
 
         {/* 시간, 장소별 사용 분포 원 그래프*/}
-        <UsingInfo data1={donut1Dummy} data2={donut2Dummy} />
+        { statistics && (
+          <UsingInfo 
+            data1={statistics.usedWhen.map((when, idx) => ({
+              value: when.count,
+              label: when.when,
+              rank: idx,  // 색상 구분용
+            }))} 
+            data2={statistics.usedPlace.map((place, idx) => ({
+              value: place.count,
+              label: place.place,
+              rank: idx,  // 색상 구분용
+            }))}
+          />
+        )}
 
         {/* 긴급 호출 이력 표 */}
         <TouchableOpacity
@@ -85,7 +125,9 @@ const StatisticsScreen = () => {
           <Text style={styles.sosToggleText}>긴급 호출 이력</Text>
         </TouchableOpacity>
 
-        {sosOpen && <SosTable rows={rows} onPressPlace={open} />}
+        { statistics && sosOpen && (
+          <SosTable rows={statistics.histories} onPressPlace={open} />
+        )}
       </ScrollView>
 
       <ModalContainer>
