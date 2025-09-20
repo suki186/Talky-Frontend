@@ -15,6 +15,7 @@ const TalkTalkScreen = () => {
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [stateText, setStateText] = useState("");
   const [recommendedSentences, setRecommendedSentences] = useState([]);
+  const [lastRecordedFile, setLastRecordedFile] = useState(null); // 최신 녹음
 
   // 처음 시작: 키워드, 장소 -> 추천문장
   const handleStart = async ({ selectedLocations, stateText }) => {
@@ -35,6 +36,8 @@ const TalkTalkScreen = () => {
 
   // 문장 선택 후 TTS -> 녹음 -> 추천문장
   const handleNext = async ({ ttsSentence, recordedFile }) => {
+    setLastRecordedFile(recordedFile);
+
     const fileObj = {
       uri: recordedFile,
       type: "audio/m4a",
@@ -48,10 +51,34 @@ const TalkTalkScreen = () => {
       choose: ttsSentence, // 선택한 문장
     });
 
-    console.log("[TalkTalkScreen] createContextApi 결과", data);
+    console.log("[TalkTalkScreen] handleNext 결과", data);
     if (data) {
       setRecommendedSentences(data.recommended_sentences || []);
       console.log("[TalkTalkScreen] 추천문장 상태 업데이트 완료");
+    }
+  };
+
+  // 문장 새로고침
+  const handleReset = async () => {
+    // file이 없으면 null, 있으면 객체 생성
+    const fileObj = lastRecordedFile
+      ? {
+          uri: lastRecordedFile,
+          type: "audio/m4a",
+          name: "recording.m4a",
+        }
+      : null;
+
+    const data = await createContextApi({
+      file: fileObj,
+      keywords: selectedLocations,
+      context: stateText,
+      choose: null,
+    });
+
+    console.log("[TalkTalkScreen] handleReset 결과", data);
+    if (data) {
+      setRecommendedSentences(data.recommended_sentences || []);
     }
   };
 
@@ -76,6 +103,7 @@ const TalkTalkScreen = () => {
             <AfterMainBox
               recommendedSentences={recommendedSentences}
               onSelectSentence={handleNext}
+              onReset={handleReset}
             />
           </>
         )}

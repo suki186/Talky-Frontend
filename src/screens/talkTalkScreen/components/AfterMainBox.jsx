@@ -5,7 +5,11 @@ import RESET from "../../../assets/images/talktalk/reset.png";
 import { useState, useEffect } from "react";
 import { COLORS } from "../../../styles/color";
 
-export const AfterMainBox = ({ recommendedSentences, onSelectSentence }) => {
+export const AfterMainBox = ({
+  recommendedSentences,
+  onSelectSentence,
+  onReset,
+}) => {
   const [sentences, setSentences] = useState([]);
 
   // 추천 문장이 변경될 때 상태 업데이트
@@ -15,7 +19,7 @@ export const AfterMainBox = ({ recommendedSentences, onSelectSentence }) => {
 
   // 새로고침 -> 수정 예정
   const handleReset = () => {
-    setSentences([]);
+    onReset();
   };
 
   return (
