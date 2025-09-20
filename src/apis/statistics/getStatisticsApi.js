@@ -2,7 +2,7 @@ import defaultInstance from "../utils/instance";
 
 const getStatisticsApi = async (normalId) => {
   try {
-    const response = await defaultInstance.get(`/guardians/me/statistics/${normalId}`);
+    const response = await defaultInstance.get(`/guardians/me/statics/${normalId}`);
 	
     const { httpStatus, isSuccess, data, message } = response.data;
 
@@ -11,11 +11,11 @@ const getStatisticsApi = async (normalId) => {
         return data;
     } else {
         console.warn("연결된 피보호자 통계 조회 실패: ", message);
-        return [];
+        return null;
     }
   } catch (e) {
     console.error(e);
-    return [];
+    return null;
   }
 };
 
