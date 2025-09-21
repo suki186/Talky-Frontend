@@ -46,10 +46,6 @@ const StatisticsScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getStatisticsApi(user.id);
-
-      console.log("📊 usedWhen:", data.usedWhen);
-      console.log("📊 usedPlace:", data.usedPlace);
-      
       setStatistics(data);
     };
 
