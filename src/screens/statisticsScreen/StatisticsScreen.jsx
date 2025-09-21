@@ -102,12 +102,12 @@ const StatisticsScreen = () => {
             data1={statistics.usedWhen.map((when, idx) => ({
               value: when.count,
               label: when.when,
-              rank: idx,
+              rank: idx + 1,
             }))} 
             data2={statistics.usedPlace.map((place, idx) => ({
               value: place.count,
               label: place.place,
-              rank: idx,
+              rank: idx + 1,
             }))}
           />
         )}
