@@ -87,8 +87,13 @@ const StatisticsScreen = () => {
         />
 
         {/* 자주 사용하는 문장 TOP 5 리스트 */}
-        { statistics && (
-          <UsingTop data={statistics.top5Used} />
+        {statistics && (
+          <UsingTop
+            data={statistics.top5Used.map((item, idx) => ({
+              rank: idx + 1,
+              text: item.sentence,
+            }))}
+          />
         )}
 
         {/* 시간, 장소별 사용 분포 원 그래프*/}
