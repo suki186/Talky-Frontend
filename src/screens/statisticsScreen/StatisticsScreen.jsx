@@ -75,17 +75,16 @@ const StatisticsScreen = () => {
         </View>
 
         {/* 발화 기능 사용 횟수 꺾은선 그래프 */}
-        { statistics && (
-          <UsingCount
-            data={[...statistics.howManyUsed]
-              .reverse()
-              .map(item => ({
-                value: item.value,
-                label: item.date,
-                dataPointText: item.value
-              }))}
-          />
-        )}
+        <UsingCount
+          data={(statistics?.howManyUsed || [])
+            .slice()
+            .reverse()
+            .map(item => ({
+              value: item.value,
+              label: item.date,
+              dataPointText: String(item.value),
+            }))}
+        />
 
         {/* 자주 사용하는 문장 TOP 5 리스트 */}
         { statistics && (
@@ -93,20 +92,19 @@ const StatisticsScreen = () => {
         )}
 
         {/* 시간, 장소별 사용 분포 원 그래프*/}
-        {statistics && statistics.usedWhen.length > 0 && statistics.usedPlace.length > 0 && (
-          <UsingInfo 
-            data1={statistics.usedWhen.map((when, idx) => ({
-              value: when.count,
-              label: when.when,
-              rank: idx + 1,
-            }))} 
-            data2={statistics.usedPlace.map((place, idx) => ({
-              value: place.count,
-              label: place.place,
-              rank: idx + 1,
-            }))}
-          />
-        )}
+        <UsingInfo 
+          data1={(statistics?.usedWhen || []).map((when, idx) => ({
+            value: when.count,
+            label: when.when,
+            rank: idx + 1,
+          }))}
+          data2={(statistics?.usedPlace || []).map((place, idx) => ({
+            value: place.count,
+            label: place.place,
+            rank: idx + 1,
+          }))}
+        />
+
 
         {/* 긴급 호출 이력 표 */}
         <TouchableOpacity
