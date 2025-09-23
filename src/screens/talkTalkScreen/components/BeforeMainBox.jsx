@@ -30,20 +30,13 @@ export const BeforeMainBox = ({ onStart }) => {
       <BeforeLocationComponent
         selected={selectedLocations}
         onSelect={(location) => {
-          setSelectedLocations((prev) => {
-            const newSelected = prev.includes(location)
-              ? prev.filter((l) => l !== location)
-              : [...prev, location];
-
-            //console.log("selectedLocations", newSelected);
-            return newSelected;
-          });
+          setSelectedLocations([location]);
         }}
       />
       <TouchableOpacity
         style={styles.startBtn}
         onPress={() => {
-          if (!selectedLocations.length) return; // 최소 1개 필수
+          if (!selectedLocations.length) return; // 필수
           onStart({ selectedLocations, stateText });
         }}
       >
