@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 26.67,
     backgroundColor: COLORS.WHITE,
+    color: "black",
     paddingLeft: 10,
     fontSize: 12,
     fontFamily: "PretendardMedium",
