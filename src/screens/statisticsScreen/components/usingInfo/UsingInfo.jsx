@@ -13,9 +13,17 @@ const UsingInfo = ({ data1, data2 }) => {
       borderColor={COLORS.MAIN_YELLOW1}
     >
       <View style={styles.container}>
-        <DonutGraph data={data1} />
-        <DonutGraph data={data2} />
+        {data1.length > 0 || data2.length > 0 ? (
+          <>
+            <DonutGraph data={data1} />
+            <DonutGraph data={data2} />
+          </>
+        ) : (
+          null
+        )}
       </View>
+
+      
     </StatisticsBox>
   );
 };
