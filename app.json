@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "runtimeVersion": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon2.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
@@ -19,10 +19,7 @@
       "bundleIdentifier": "com.sukiii.Talky"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFEF6"
-      },
+      "permissions": ["RECORD_AUDIO"],
       "edgeToEdgeEnabled": true,
       "package": "com.sukiii.Talky"
     },
@@ -36,6 +33,14 @@
     },
     "updates": {
       "url": "https://u.expo.dev/b1ecf1da-b65c-4c46-8106-63b73c6184ee"
-    }
+    },
+    "plugins": [
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "음성 녹음을 위해 마이크 접근이 필요합니다."
+        }
+      ]
+    ]
   }
 }

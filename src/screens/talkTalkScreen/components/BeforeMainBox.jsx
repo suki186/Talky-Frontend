@@ -12,24 +12,7 @@ import { COLORS } from "../../../styles/color";
 
 export const BeforeMainBox = ({ onStart }) => {
   const [stateText, setStateText] = useState(""); // 입력 상태 저장
-
-  const [selectedLocation, setSelectedLocation] = useState(null);
-
-  const [sentences, setSentences] = useState([
-    "안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕 1",
-    "안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕 2",
-    "안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕 3",
-    "안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕안녕 4",
-  ]);
-
-  const handleReset = () => {
-    setSentences([
-      "새 문장 새 문장 새 문장 새 문장 새 문장 1",
-      "새 문장 새 문장 새 문장 새 문장 새 문장 2",
-      "새 문장 새 문장 새 문장 새 문장 새 문장 3",
-      "새 문장 새 문장 새 문장 새 문장 새 문장 4",
-    ]);
-  };
+  const [selectedLocations, setSelectedLocations] = useState([]);
 
   return (
     <View style={styles.container}>
@@ -39,20 +22,22 @@ export const BeforeMainBox = ({ onStart }) => {
         </View>
       </View>
       <TextInput
-        placeholder="장소, 현재 상태를 간단하게 입력해 주세요."
+        placeholder="장소, 현재 상태를 간단하게 입력해 주세요.(선택)"
         placeholderTextColor={COLORS.PLACE_HOLDER}
         style={styles.input}
         onChangeText={setStateText} // 입력 상태 업데이트
       />
       <BeforeLocationComponent
-        selected={selectedLocation}
-        onSelect={setSelectedLocation}
+        selected={selectedLocations}
+        onSelect={(location) => {
+          setSelectedLocations([location]);
+        }}
       />
       <TouchableOpacity
         style={styles.startBtn}
         onPress={() => {
-          if (!selectedLocation || !stateText.trim()) return;
-          onStart(selectedLocation, stateText);
+          if (!selectedLocations.length) return; // 필수
+          onStart({ selectedLocations, stateText });
         }}
       >
         <Text style={styles.buttonText}>시작</Text>
@@ -101,6 +86,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 26.67,
     backgroundColor: COLORS.WHITE,
+    color: "black",
     paddingLeft: 10,
     fontSize: 12,
     fontFamily: "PretendardMedium",
