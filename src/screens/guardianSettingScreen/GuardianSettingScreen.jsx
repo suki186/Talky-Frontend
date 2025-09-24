@@ -3,33 +3,55 @@ import { StyleSheet, View } from "react-native";
 import { LocationInfo } from "./components/LocationInfo";
 import { GuardianInfo } from "./components/GuardianInfo";
 import LogoutButton from "../../components/auth/LogoutButton";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { COLORS } from "../../styles/color";
 import guardianProfileApi from "../../apis/guardian/guardianProfileApi";
 
 const GuardianSettingScreen = () => {
   const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchProfile = async () => {
-      const data = await guardianProfileApi();
-      if (data) {
-        setProfile(data);
+      setLoading(true);
+      try {
+        const data = await guardianProfileApi();
+        if (!isMounted) return;
+        if (data) {
+          setProfile(data);
+        }
+      } catch (e) {
+        console.error("GuardianSettingScreen fetchProfile Error:", e);
+      } finally {
+        if (isMounted) setLoading(false);
       }
     };
     fetchProfile();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
     <View style={styles.container}>
-      <LocationInfo />
-      {profile && (
-        <GuardianInfo
-          name={profile.name}
-          id={profile.id}
-          onChangeName={(newName) =>
-            setProfile((prev) => ({ ...prev, name: newName }))
-          }
-        />
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <LocationInfo />
+          {profile && (
+            <GuardianInfo
+              name={profile.name}
+              id={profile.id}
+              onChangeName={(newName) =>
+                setProfile((prev) => ({ ...prev, name: newName }))
+              }
+            />
+          )}
+        </>
       )}
       <LogoutButton />
     </View>

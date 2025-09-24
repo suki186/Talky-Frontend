@@ -12,6 +12,7 @@ import UsingTop from "./components/usingTop/UsingTop";
 import UsingInfo from "./components/usingInfo/UsingInfo";
 import SosTable from "./components/sosTable/SosTable";
 import SosModal from "./components/sosTable/SosModal";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { COLORS } from "../../styles/color";
 import Entypo from "@expo/vector-icons/Entypo";
 
@@ -22,35 +23,66 @@ import getStatisticsApi from "../../apis/statistics/getStatisticsApi";
 const StatisticsScreen = () => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(null);
+  const [statistics, setStatistics] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [sosOpen, setSosOpen] = useState(false); // 토글 상태
   const { row: selectedRow, open, close, ModalContainer } = useSosModal(); // 모달 제어
 
+  // 사용자 목록 조회
   useEffect(() => {
+    let isMounted = true;
     const fetchUsers = async () => {
-      const data = await getConnectUserApi();
-      if (data.length > 0) {
-        const formatted = data.map((user) => ({
-          id: user.id,
-          name: user.username,
-        }));
-        setUsers(formatted);
-        setUser(formatted[0]);
+      try {
+        const data = await getConnectUserApi();
+        if (!isMounted) return;
+        if (data.length > 0) {
+          const formatted = data.map((user) => ({
+            id: user.id,
+            name: user.username,
+          }));
+          setUsers(formatted);
+          setUser(formatted[0]);
+        }
+      } catch (e) {
+        console.error("StatisticsScreen fetchUsers Error:", e);
       }
     };
     fetchUsers();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const [statistics, setStatistics] = useState(null);
-
+  // 통계 조회
   useEffect(() => {
+    if (!user) return;
+    let isMounted = true;
     const fetchData = async () => {
-      const data = await getStatisticsApi(user.id);
-      setStatistics(data);
+      setLoading(true);
+      try {
+        const data = await getStatisticsApi(user.id);
+        if (!isMounted) return;
+        setStatistics(data);
+      } catch (e) {
+        console.error("StatisticsScreen fetchData Error:", e);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
     };
-
     fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, [user]);
+
+  if (loading || !statistics) {
+    return (
+      <View style={styles.container}>
+        <LoadingSpinner />
+      </View>
+    );
+  }
 
   return (
     <>
