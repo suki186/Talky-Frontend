@@ -10,31 +10,38 @@ import {
   isValidPhone,
 } from "../../../utils/phone";
 import editUserGuardianInfoApi from "../../../apis/userSetting/editUserGuardianInfoApi";
+import { useEmergencyContact } from "../../../context/EmergencyContactContext";
 
 const PHONE_PLACEHOLDER = "010-0000-0000";
 
 const EmergencyContact = ({
   initGuardName,
   initGuardPhone,
-  selectedTarget = "119",
+  selectedTarget: initSelectedTarget = "119",
   onChangeTarget,
 }) => {
   const [guardName, setGuardName] = useState(initGuardName ?? ""); // 보호자 이름
-  const [guardPhone, setGuardPhone] = useState(initGuardPhone ?? ""); // 보호자 연락처
+  const { selectedTarget, setSelectedTarget, guardianPhone, setGuardianPhone } =
+    useEmergencyContact();
 
+  // 초기값 세팅
   useEffect(() => {
     if (typeof initGuardName === "string") setGuardName(initGuardName);
   }, [initGuardName]);
 
   useEffect(() => {
-    if (typeof initGuardPhone === "string") setGuardPhone(initGuardPhone);
-  }, [initGuardPhone]);
+    if (initGuardPhone) setGuardianPhone(initGuardPhone);
+  }, [initGuardPhone, setGuardianPhone]);
+
+  useEffect(() => {
+    if (initSelectedTarget) setSelectedTarget(initSelectedTarget);
+  }, [initSelectedTarget, setSelectedTarget]);
 
   // 보호자 이름 수정
   const handleGuardNameComplete = (newName) => {
     if (newName === guardName) return;
 
-    if (!isValidPhone(guardPhone)) {
+    if (!isValidPhone(guardianPhone)) {
       Alert.alert(
         "연락처 필요",
         "이름을 수정하려면 먼저 유효한 보호자 연락처를 입력해 주세요."
@@ -45,20 +52,10 @@ const EmergencyContact = ({
     const prev = guardName;
     setGuardName(newName);
 
-    editUserGuardianInfoApi(newName, guardPhone)
-      .then((success) => {
-        if (!success) {
-          setGuardName(prev);
-          Alert.alert(
-            "오류",
-            "보호자 이름 수정에 실패했습니다. 다시 시도해주세요."
-          );
-        }
-      })
-      .catch(() => {
-        setGuardName(prev);
-        Alert.alert("오류", "보호자 이름 수정 중 오류가 발생했습니다.");
-      });
+    editUserGuardianInfoApi(newName, guardianPhone).catch(() => {
+      setGuardName(prev);
+      Alert.alert("오류", "보호자 이름 수정 중 오류가 발생했습니다.");
+    });
   };
 
   // 보호자 연락처 수정
@@ -70,30 +67,25 @@ const EmergencyContact = ({
       return;
     }
 
-    if (serverPhone === guardPhone) return;
+    if (serverPhone === guardianPhone) return;
 
-    const prev = guardPhone;
-    setGuardPhone(serverPhone);
+    const prev = guardianPhone;
+    setGuardianPhone(serverPhone);
 
-    editUserGuardianInfoApi(guardName, serverPhone)
-      .then((success) => {
-        if (!success) {
-          setGuardPhone(prev);
-          Alert.alert(
-            "오류",
-            "보호자 연락처 수정에 실패했습니다. 다시 시도해주세요."
-          );
-        }
-      })
-      .catch(() => {
-        setGuardPhone(prev);
-        Alert.alert("오류", "보호자 연락처 수정 중 오류가 발생했습니다.");
-      });
+    editUserGuardianInfoApi(guardName, serverPhone).catch(() => {
+      setGuardianPhone(prev);
+      Alert.alert("오류", "보호자 연락처 수정 중 오류가 발생했습니다.");
+    });
+  };
+
+  // 긴급호출 대상 선택
+  const handleTargetPress = (target) => {
+    setSelectedTarget(target); // Context 업데이트
+    onChangeTarget?.(target); // 기존 콜백 호출
   };
 
   return (
     <SettingBox height={162} title="긴급 연락처" bgColor={COLORS.MAIN_YELLOW1}>
-      {/* 보호자 정보 */}
       <View style={styles.infoContainer}>
         <EditableField
           label="보호자 이름"
@@ -104,25 +96,27 @@ const EmergencyContact = ({
         />
         <EditableField
           label="보호자 연락처"
-          value={formatPhoneToDisplay(guardPhone)}
+          value={formatPhoneToDisplay(guardianPhone)}
           placeholder={PHONE_PLACEHOLDER}
           width={126}
           onComplete={handlePhoneComplete}
         />
       </View>
+
       <View style={styles.alignRow}>
         <Text style={styles.text}>긴급호출 연락처</Text>
       </View>
+
       <View style={styles.radioContainer}>
         <RadioButton
           label="보호자"
           selected={selectedTarget === "guardian"}
-          onPress={() => onChangeTarget?.("guardian")}
+          onPress={() => handleTargetPress("guardian")}
         />
         <RadioButton
           label="119"
           selected={selectedTarget === "119"}
-          onPress={() => onChangeTarget?.("119")}
+          onPress={() => handleTargetPress("119")}
         />
       </View>
     </SettingBox>
@@ -147,10 +141,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 10,
     fontFamily: "PretendardMedium",
-  },
-  item: {
-    marginTop: 8,
-    marginBottom: 8,
   },
 });
 

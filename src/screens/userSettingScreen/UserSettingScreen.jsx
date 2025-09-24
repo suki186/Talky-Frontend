@@ -8,9 +8,11 @@ import { COLORS } from "../../styles/color";
 import getUserInfoApi from "../../apis/userSetting/getUserInfoApi";
 import { buildUserSettingHandlers } from "./userSettingHandlers";
 import { useVoiceSettings } from "../../context/VoiceSettingsContext";
+import { useEmergencyContact } from "../../context/EmergencyContactContext";
 
 const UserSettingScreen = () => {
   const { settings, setSettings } = useVoiceSettings(); // Context 가져오기
+  const { emergencyTarget, setEmergencyTarget } = useEmergencyContact(); // 긴급연락처 Context 가져오기
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -68,8 +70,11 @@ const UserSettingScreen = () => {
 
       {/* 긴급 연락처 */}
       <EmergencyContact
-        selectedTarget={user?.emergencyTarget ?? "119"}
-        onChangeTarget={handleSosChange}
+        selectedTarget={user?.emergencyTarget ?? emergencyTarget}
+        onChangeTarget={(newTarget) => {
+          handleSosChange(newTarget);
+          setEmergencyTarget(newTarget); // Context 업데이트
+        }}
         initGuardName={
           user?.guardianInfo?.guardianName ?? "이름을 입력해 주세요"
         }
@@ -88,7 +93,6 @@ const UserSettingScreen = () => {
           setSettings(newSettings); // Context 갱신
         }}
       />
-
 
       {/* 로그아웃 버튼 */}
       <LogoutButton />

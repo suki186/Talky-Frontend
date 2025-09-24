@@ -1,9 +1,11 @@
-import React, { useState } from "react";
 import { TouchableOpacity, Image, StyleSheet, Linking } from "react-native";
 import SOS from "../assets/images/sos-call.png";
+import { useEmergencyContact } from "../context/EmergencyContactContext";
 
 const SosCall = ({ size = 34 }) => {
-  const [phoneNumber, setPhoneNumber] = useState("119"); // 긴급 연락처
+  const { selectedTarget, guardianPhone } = useEmergencyContact(); // Context에서 가져오기
+
+  const phoneNumber = selectedTarget === "guardian" ? guardianPhone : "119";
 
   const handlePress = () => {
     Linking.openURL(`tel:${phoneNumber}`);

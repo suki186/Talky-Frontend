@@ -3,6 +3,7 @@ import RootNavigator from "./src/navigation/RootNavigator";
 import SplashScreen from "./src/screens/SplashScreen";
 import { AuthProvider } from "./src/context/AuthContext";
 import { VoiceSettingsProvider } from "./src/context/VoiceSettingsContext";
+import { EmergencyContactProvider } from "./src/context/EmergencyContactContext";
 import { Text } from "react-native";
 import { useFonts } from "expo-font";
 import getUserInfoApi from "./src/apis/userSetting/getUserInfoApi";
@@ -73,9 +74,13 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <VoiceSettingsProvider initialSettings={userSettings}>
-        <RootNavigator />
-      </VoiceSettingsProvider>
+      <EmergencyContactProvider
+        initialTarget={userSettings?.emergencyTarget || "119"}
+      >
+        <VoiceSettingsProvider initialSettings={userSettings}>
+          <RootNavigator />
+        </VoiceSettingsProvider>
+      </EmergencyContactProvider>
     </AuthProvider>
   );
 }
