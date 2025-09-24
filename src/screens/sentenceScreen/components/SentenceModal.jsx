@@ -12,8 +12,9 @@ import { SentenceRow } from "./SentenceRow";
 import Dialog from "../../../components/dialog/Dialog";
 import { truncateText } from "../../../utils/truncateText";
 import { useDialogOpen } from "../../../hooks/useDialogOpen";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 
-export const SentenceModal = ({ visible, onClose, sentences }) => {
+export const SentenceModal = ({ visible, onClose, sentences, loading }) => {
   const {
     deleted,
     dialogVisible,
@@ -42,19 +43,23 @@ export const SentenceModal = ({ visible, onClose, sentences }) => {
             </TouchableOpacity>
           </View>
           <View style={modalStyles.sentence}>
-            {sentences.map((sentence, index) => {
-              if (deleted.includes(index)) return null;
-              return (
-                <SentenceRow
-                  key={index}
-                  index={index}
-                  text={sentence}
-                  deleted={deleted}
-                  onDelete={() => openDialog(index, sentence)}
-                  isPending={index === targetIndex}
-                />
-              );
-            })}
+            {loading ? (
+              <LoadingSpinner />
+            ) : (
+              sentences.map((sentence, index) => {
+                if (deleted.includes(index)) return null;
+                return (
+                  <SentenceRow
+                    key={index}
+                    index={index}
+                    text={sentence}
+                    deleted={deleted}
+                    onDelete={() => openDialog(index, sentence)}
+                    isPending={index === targetIndex}
+                  />
+                );
+              })
+            )}
           </View>
         </View>
 

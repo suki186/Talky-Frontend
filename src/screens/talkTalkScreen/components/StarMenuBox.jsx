@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   titleText: {
     textAlign: "center",
     borderRadius: 16.67,
-    fontSize: 17,
+    fontSize: 16,
     lineHeight: 14,
     fontFamily: "PretendardSemiBold",
     color: "#4E4E4E",
