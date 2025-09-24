@@ -30,9 +30,9 @@ const StatisticsScreen = () => {
     const fetchUsers = async () => {
       const data = await getConnectUserApi();
       if (data.length > 0) {
-        const formatted = data.map((user) => ({ 
-          id: user.id, 
-          name: user.username 
+        const formatted = data.map((user) => ({
+          id: user.id,
+          name: user.username,
         }));
         setUsers(formatted);
         setUser(formatted[0]);
@@ -52,13 +52,12 @@ const StatisticsScreen = () => {
     fetchData();
   }, [user]);
 
-
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.userList}>
           {/* 연결된 일반 사용자 목록 */}
-          { user && (
+          {user && (
             <Selector
               items={users.map((user) => user.name)}
               width="94"
@@ -67,7 +66,7 @@ const StatisticsScreen = () => {
                 setUser(users.find((user) => user.name === name));
               }}
               variant="user"
-            />            
+            />
           )}
           <Text style={styles.infoText}>
             최근 7일 동안의 활동 데이터를 기반으로 한 결과입니다.
@@ -79,7 +78,7 @@ const StatisticsScreen = () => {
           data={(statistics?.howManyUsed || [])
             .slice()
             .reverse()
-            .map(item => ({
+            .map((item) => ({
               value: item.value,
               label: item.date,
               dataPointText: String(item.value),
@@ -97,7 +96,7 @@ const StatisticsScreen = () => {
         )}
 
         {/* 시간, 장소별 사용 분포 원 그래프*/}
-        <UsingInfo 
+        <UsingInfo
           data1={(statistics?.usedWhen || []).map((when, idx) => ({
             value: when.count,
             label: when.when,
@@ -109,7 +108,6 @@ const StatisticsScreen = () => {
             rank: idx + 1,
           }))}
         />
-
 
         {/* 긴급 호출 이력 표 */}
         <TouchableOpacity
@@ -132,7 +130,7 @@ const StatisticsScreen = () => {
           <Text style={styles.sosToggleText}>긴급 호출 이력</Text>
         </TouchableOpacity>
 
-        { statistics && sosOpen && (
+        {statistics && sosOpen && (
           <SosTable rows={statistics.histories} onPressPlace={open} />
         )}
       </ScrollView>
@@ -150,7 +148,7 @@ const styles = StyleSheet.create({
     paddingBottom: 29,
     backgroundColor: COLORS.BACKGROUND,
     alignItems: "center",
-    gap: 15,
+    gap: 10,
   },
   userList: {
     flexDirection: "row",
@@ -171,6 +169,7 @@ const styles = StyleSheet.create({
     height: 21,
     borderWidth: 1,
     borderColor: COLORS.MAIN_YELLOW2,
+    marginTop: 20,
   },
   sosToggleText: {
     fontSize: 12,

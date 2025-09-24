@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { LocationInfo } from "./components/LocationInfo";
 import { GuardianInfo } from "./components/GuardianInfo";
 import LogoutButton from "../../components/auth/LogoutButton";
@@ -20,21 +20,19 @@ const GuardianSettingScreen = () => {
   }, []);
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <LocationInfo />
-        {profile && (
-          <GuardianInfo
-            name={profile.name}
-            id={profile.id}
-            onChangeName={(newName) =>
-              setProfile((prev) => ({ ...prev, name: newName }))
-            }
-          />
-        )}
-        <LogoutButton />
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <LocationInfo />
+      {profile && (
+        <GuardianInfo
+          name={profile.name}
+          id={profile.id}
+          onChangeName={(newName) =>
+            setProfile((prev) => ({ ...prev, name: newName }))
+          }
+        />
+      )}
+      <LogoutButton />
+    </View>
   );
 };
 
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: COLORS.BACKGROUND,
-    paddingTop: 45,
+    paddingTop: 20,
     gap: 24,
   },
 
