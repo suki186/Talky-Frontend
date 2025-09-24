@@ -41,6 +41,12 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     gap: 6,
     marginBottom: 22,
+
+    // Drop shadow
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    elevation: 2,
   },
 
   choiceContainer: {

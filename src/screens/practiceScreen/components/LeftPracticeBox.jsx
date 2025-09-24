@@ -29,6 +29,12 @@ const styles = StyleSheet.create({
     borderColor: COLORS.MAIN_YELLOW1,
     gap: 5,
     marginBottom: 22,
+
+    // Drop shadow
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    elevation: 2,
   },
 
   text: {
