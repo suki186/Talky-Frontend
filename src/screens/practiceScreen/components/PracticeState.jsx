@@ -48,7 +48,7 @@ export const PracticeState = ({ onSelect }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
+    paddingTop: 10,
     backgroundColor: COLORS.BACKGROUND,
     alignItems: "center",
     gap: 20,
