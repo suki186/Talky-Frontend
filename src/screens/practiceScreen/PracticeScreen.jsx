@@ -17,6 +17,7 @@ import { useToast } from "../../hooks/useToast";
 import { useTTS } from "../../hooks/useTTS";
 
 import Dialog from "../../components/dialog/Dialog";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 import HOSPITALWH from "../../assets/images/practice/wh-hospital.png";
 import RESTAURANTWH from "../../assets/images/practice/wh-restaurant.png";
@@ -68,6 +69,8 @@ const PracticeScreen = () => {
   const [pracId, setPracId] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   // LeftPracticeBox, RightPracticeBox 클릭 핸들러
   const handlePractice = async (id, text) => {
     // 이미 같은 질문 말하는 중이면 멈춤
@@ -92,7 +95,10 @@ const PracticeScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (pracId !== null) {
+        setLoading(true);
         const data = await sentencePracticeApi(pracId);
+        setLoading(false);
+
         if (data && data.question) {
           setPracticeSentence(data.question);
           setShownQuestionIds([data.question[0].id]);
@@ -118,6 +124,8 @@ const PracticeScreen = () => {
             setSelectedLocation(label);
           }}
         />
+      ) : loading ? ( // 로딩 중 스피너 표시
+        <LoadingSpinner />
       ) : (
         <>
           <View style={styles.practiceTop}>
@@ -226,7 +234,7 @@ export default PracticeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    height: 780,
+    paddingTop: 10,
     backgroundColor: COLORS.BACKGROUND,
     alignItems: "center",
     position: "relative",
@@ -280,11 +288,11 @@ const styles = StyleSheet.create({
 
   practiceChat: {
     width: 328,
-    height: 509,
+    height: 500,
     borderColor: COLORS.MAIN_YELLOW1,
     borderRadius: 14,
     borderWidth: 2,
-    marginTop: 15,
+    margin: 15,
     paddingVertical: 16,
     paddingHorizontal: 13,
     gap: 22,
