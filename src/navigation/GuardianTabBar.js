@@ -22,7 +22,7 @@ const GuardianTabNavigator = () => {
         headerTitleAlign: "center",
         headerStyle: {
           backgroundColor: COLORS.BACKGROUND,
-          height: 98.67,
+          height: 120,
           elevation: 0, // 그림자 제거
           shadowOpacity: 0,
           borderBottomWidth: 0,
