@@ -1,40 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { LocationInfo } from "./components/LocationInfo";
 import { GuardianInfo } from "./components/GuardianInfo";
 import LogoutButton from "../../components/auth/LogoutButton";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { COLORS } from "../../styles/color";
 import guardianProfileApi from "../../apis/guardian/guardianProfileApi";
 
 const GuardianSettingScreen = () => {
   const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchProfile = async () => {
-      const data = await guardianProfileApi();
-      if (data) {
-        setProfile(data);
+      setLoading(true);
+      try {
+        const data = await guardianProfileApi();
+        if (!isMounted) return;
+        if (data) {
+          setProfile(data);
+        }
+      } catch (e) {
+        console.error("GuardianSettingScreen fetchProfile Error:", e);
+      } finally {
+        if (isMounted) setLoading(false);
       }
     };
     fetchProfile();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <LocationInfo />
-        {profile && (
-          <GuardianInfo
-            name={profile.name}
-            id={profile.id}
-            onChangeName={(newName) =>
-              setProfile((prev) => ({ ...prev, name: newName }))
-            }
-          />
-        )}
-        <LogoutButton />
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <LocationInfo />
+          {profile && (
+            <GuardianInfo
+              name={profile.name}
+              id={profile.id}
+              onChangeName={(newName) =>
+                setProfile((prev) => ({ ...prev, name: newName }))
+              }
+            />
+          )}
+        </>
+      )}
+      <LogoutButton />
+    </View>
   );
 };
 
@@ -46,7 +66,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: COLORS.BACKGROUND,
-    paddingTop: 45,
+    paddingTop: 20,
     gap: 24,
   },
 

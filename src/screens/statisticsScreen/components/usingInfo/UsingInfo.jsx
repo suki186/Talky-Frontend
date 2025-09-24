@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import StatisticsBox from "../StatisticsBox";
 import { COLORS } from "../../../../styles/color";
 import DonutGraph from "./DonutGraph";
@@ -19,11 +19,9 @@ const UsingInfo = ({ data1, data2 }) => {
             <DonutGraph data={data2} />
           </>
         ) : (
-          null
+          <Text>아직 사용 내역이 없습니다!</Text>
         )}
       </View>
-
-      
     </StatisticsBox>
   );
 };
@@ -33,6 +31,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 58,
+    marginTop: 10,
   },
 });
 

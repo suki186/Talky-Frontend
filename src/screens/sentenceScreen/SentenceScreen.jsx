@@ -4,6 +4,7 @@ import getFavoriteApi from "../../apis/favorite/getFavoriteApi";
 
 export const SentenceScreen = ({ visible, onClose }) => {
   const [sentences, setSentences] = useState([]);
+  const [loading, setLoading] = useState(false); // 추가: 로딩 상태
 
   useEffect(() => {
     if (!visible) return; // 모달 닫혀 있으면 호출 x
@@ -11,6 +12,7 @@ export const SentenceScreen = ({ visible, onClose }) => {
     let canceled = false;
     // 즐겨찾기 조회
     (async () => {
+      setLoading(true); // 로딩 시작
       try {
         const list = await getFavoriteApi();
 
@@ -34,6 +36,8 @@ export const SentenceScreen = ({ visible, onClose }) => {
           console.error("SentenceScreen useEffect Error:", e);
           setSentences([]);
         }
+      } finally {
+        if (!canceled) setLoading(false); // 로딩 종료
       }
     })();
 
@@ -43,6 +47,11 @@ export const SentenceScreen = ({ visible, onClose }) => {
   }, [visible]);
 
   return (
-    <SentenceModal visible={visible} onClose={onClose} sentences={sentences} />
+    <SentenceModal
+      visible={visible}
+      onClose={onClose}
+      sentences={sentences}
+      loading={loading} // 추가: 로딩 상태 전달
+    />
   );
 };
