@@ -234,6 +234,7 @@ export default PracticeScreen;
 
 const styles = StyleSheet.create({
   container: {
+    height: 780,
     paddingTop: 10,
     backgroundColor: COLORS.BACKGROUND,
     alignItems: "center",
