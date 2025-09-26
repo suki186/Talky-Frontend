@@ -33,13 +33,13 @@ const styles = StyleSheet.create({
 
     labelText : {
         fontSize: 10,
-        fontWeight: "500",
+        fontFamily: "PretendardMedium",
         marginLeft: 10.84,
         marginRight: 14.33
     },
 
     valueText : {
         fontSize: 18,
-        fontWeight: "700"
+        fontFamily: "PretendardBold",
     }
 })

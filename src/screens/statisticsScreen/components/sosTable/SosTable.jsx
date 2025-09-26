@@ -3,12 +3,18 @@ import { View, Text, StyleSheet } from "react-native";
 import { COLORS } from "../../../../styles/color";
 
 const SosTable = ({ rows = [], onPressPlace }) => {
-  const numRows = rows.length + 1; // 헤더 포함 +1
-
-  const colWidths = [38, 39, 190, 61]; // 컬럼 너비
-  const rowHeight = 120 / numRows;
+  const colWidths = [38, 39, 190, 61];
+  const minRows = 5; // 항상 보여줄 최소 행 개수
+  const totalRows = Math.max(rows.length, minRows);
+  const rowHeight = 120 / (totalRows + 1); // +1은 헤더 포함
 
   const headerRow = ["날짜", "시간", "장소 (클릭시 상세조회)", "대상"];
+
+  // 데이터가 부족하면 빈 배열 채우기
+  const displayRows = [...rows];
+  while (displayRows.length < minRows) {
+    displayRows.push(["", "", "", ""]);
+  }
 
   return (
     <View style={styles.table}>
@@ -31,7 +37,7 @@ const SosTable = ({ rows = [], onPressPlace }) => {
               },
             ]}
           >
-            <Text style={[styles.text]} numberOfLines={1}>
+            <Text style={styles.text} numberOfLines={1}>
               {cell}
             </Text>
           </View>
@@ -39,7 +45,7 @@ const SosTable = ({ rows = [], onPressPlace }) => {
       </View>
 
       {/* 본문 */}
-      {rows.map((row, r) => (
+      {displayRows.map((row, r) => (
         <View
           key={`row-${r}`}
           style={[
@@ -54,17 +60,14 @@ const SosTable = ({ rows = [], onPressPlace }) => {
             return (
               <View
                 key={`cell-${r}-${c}`}
-                onPress={
-                  isPlaceCol && onPressPlace
-                    ? () => onPressPlace(row)
-                    : undefined
-                }
                 style={[
                   styles.cell,
                   {
                     width: colWidths[c],
                     borderRightColor: COLORS.BACKGROUND,
                     borderBottomColor: COLORS.BACKGROUND,
+                    justifyContent: "center",
+                    alignItems: "center",
                   },
                 ]}
               >
@@ -72,6 +75,9 @@ const SosTable = ({ rows = [], onPressPlace }) => {
                   style={[
                     styles.text,
                     isPlaceCol && hasText && styles.placeText,
+                    !hasText && isPlaceCol
+                      ? { color: COLORS.SUB_BLACK, fontSize: 12 }
+                      : {},
                   ]}
                   numberOfLines={1}
                   onPress={
@@ -109,11 +115,12 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.SUB_BLACK,
-    fontWeight: "400",
+    fontFamily: "PretendardRegular",
     fontSize: 8,
+    textAlign: "center",
   },
   placeText: {
-    fontWeight: "500",
+    fontFamily: "PretendardMedium",
     textDecorationLine: "underline",
   },
 });

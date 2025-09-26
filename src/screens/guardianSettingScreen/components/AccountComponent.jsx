@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { COLORS } from "../../../styles/color"
 
-{/* isRegisterd: 등록 여부, onPress: 등록 삭제 버튼 클릭 시 실행 함수 */}
-export const AccountComponent = ({ value, onChangeText, isRegistered, onPress }) => {
+{/* isRegistered: 등록 여부, onPress: 등록 삭제 버튼 클릭 시 실행 함수 */}
+export const AccountComponent = ({ value, onChangeText, isRegistered, onDelete, onRegister }) => {
     return (
         <View style = { styles.container }>
             <View style = { styles.input }>
@@ -10,21 +10,30 @@ export const AccountComponent = ({ value, onChangeText, isRegistered, onPress })
                     style = { styles.inputBox }
                     placeholder = "일반 계정에 있는 고유 번호를 입력해 주세요"
                     placeholderTextColor = { COLORS.PLACE_HOLDER }
+                    value = { value }
+                    onChangeText = { onChangeText }
+                    keyboardType = "numeric"
+                    maxLength = { 6 }
                 />
             </View>
             <TouchableOpacity 
                 style = {[ 
                     styles.registerBox,
-                    isRegistered ? styles.deleteBox : styles.registerBox // 등록 여부에 따라 스타일 변경
+                    isRegistered && styles.deleteBox, // 등록 여부에 따라 스타일 변경
                 ]}
-                onPress = { onPress }
+
+                onPress = { () => {
+                    if (isRegistered) {
+                        onDelete();
+                    } else {
+                        onRegister();
+                    }
+                }}
                 activeOpacity = { 0.5 }
-                value = { value }
-                onChangeText = { onChangeText }
             >
                 <Text style = {[ 
                     styles.registerText,
-                    isRegistered ? styles.deleteText : styles.registerText // 등록 여부에 따라 스타일 변경
+                    isRegistered && styles.deleteText // 등록 여부에 따라 스타일 변경
                 ]}>
                     { isRegistered ? "삭제" : "등록" }
                 </Text>
@@ -50,6 +59,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.BACKGROUND,
         borderRadius: 20,
         fontSize: 12,
+        fontFamily: "PretendardRegular",
         paddingVertical: 1,
         paddingHorizontal: 12,
     },
@@ -70,7 +80,7 @@ const styles = StyleSheet.create({
     registerText: {
         color: COLORS.CANCLE_CLICK,
         fontSize: 10,
-        fontWeight: "400",
+        fontFamily: "PretendardRegular",
         lineHeight: 15
     },
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { PracticeState } from "./components/PracticeState";
 import { LeftPracticeBox } from "./components/LeftPracticeBox";
 import { RightPracticeBox } from "./components/RightPracticeBox";
@@ -14,8 +14,10 @@ import {
 import { COLORS } from "../../styles/color";
 import { Toast } from "../../components/input/Toast";
 import { useToast } from "../../hooks/useToast";
+import { useTTS } from "../../hooks/useTTS";
 
 import Dialog from "../../components/dialog/Dialog";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 import HOSPITALWH from "../../assets/images/practice/wh-hospital.png";
 import RESTAURANTWH from "../../assets/images/practice/wh-restaurant.png";
@@ -25,6 +27,7 @@ import MOVEWH from "../../assets/images/practice/wh-move.png";
 import BANKWH from "../../assets/images/practice/wh-bank.png";
 import DRUGWH from "../../assets/images/practice/wh-drug.png";
 import STARWH from "../../assets/images/practice/wh-star.png";
+import sentencePracticeApi from "../../apis/practice/sentencePracticeApi";
 
 const locationImages = {
   병원: HOSPITALWH,
@@ -38,46 +41,91 @@ const locationImages = {
 };
 
 const PracticeScreen = () => {
+  const scrollViewRef = useRef(null); // 자동 하단 스크롤을 위한 ref
+
   const {
-    isSpeaking,
-    setIsSpeaking,
     isAnswered,
     setIsAnswered,
     showToast,
     toastMessage,
     toastImage,
-    handleSpeakToggle,
     handleSelectAnswer,
     handleNext,
     hideToast,
     resetState,
   } = useToast();
 
-  const [practiceSentence, setPracticeSentence] = useState([
-    {
-      left: "몇 명이세요?",
-      rightOptions: ["한 명이에요", "두 명이에요", "잠시만요"],
-    },
-    {
-      left: "드시고 가시나요?",
-      rightOptions: ["네", "아니요", "잠시만요"],
-    },
-    {
-      left: "주문하시겠어요?",
-      rightOptions: ["네 할게요", "조금만 더 볼게요", "추천 메뉴 있나요?"],
-    },
-  ]);
+  const { speaking, speak, stop } = useTTS();
 
-  const [currentSentence, setCurrentSentence] = useState(0);
+  const [speakingId, setSpeakingId] = useState(null);
+
+  const [practiceSentence, setPracticeSentence] = useState([]);
+
+  const [shownQuestionIds, setShownQuestionIds] = useState([]);
+  const [pendingNextId, setPendingNextId] = useState(null);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const [pracId, setPracId] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+
+  // LeftPracticeBox, RightPracticeBox 클릭 핸들러
+  const handlePractice = async (id, text) => {
+    // 이미 같은 질문 말하는 중이면 멈춤
+    if (speakingId === id && speaking) {
+      await stop();
+      setSpeakingId(null);
+      return;
+    }
+
+    // 다른 질문 말하는 중이면 멈추고 새로 시작
+    await stop();
+    speak(text, {
+      onDone: () => setSpeakingId(null),
+      onError: (e) => {
+        console.warn("TTS Error:", e);
+        setSpeakingId(null);
+      },
+    });
+    setSpeakingId(id);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (pracId !== null) {
+        setLoading(true);
+        const data = await sentencePracticeApi(pracId);
+        setLoading(false);
+
+        if (data && data.question) {
+          setPracticeSentence(data.question);
+          setShownQuestionIds([data.question[0].id]);
+        }
+      }
+    };
+    fetchData();
+  }, [pracId]);
+
+  // shownQuestionIds가 바뀔 때마다 하단 스크롤
+  useEffect(() => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollToEnd({ animated: true });
+    }
+  }, [shownQuestionIds]);
 
   return (
     <View style={styles.container}>
       {selectedLocation === null ? (
-        <PracticeState onSelect={setSelectedLocation} />
+        <PracticeState
+          onSelect={(id, label) => {
+            setPracId(id);
+            setSelectedLocation(label);
+          }}
+        />
+      ) : loading ? ( // 로딩 중 스피너 표시
+        <LoadingSpinner />
       ) : (
         <>
           <View style={styles.practiceTop}>
@@ -97,29 +145,48 @@ const PracticeScreen = () => {
           </View>
 
           <View style={styles.practiceChat}>
-            <ScrollView>
-              {practiceSentence.slice(0, currentSentence + 1).map((d, idx) => (
-                <View key={idx}>
-                  <LeftPracticeBox
-                    practiceText={d.left}
-                    isSpeaking={isSpeaking}
-                    onPress={handleSpeakToggle}
-                  />
-                  <RightPracticeBox
-                    options={d.rightOptions}
-                    onPress={handleSelectAnswer}
-                  />
-                </View>
-              ))}
+            <ScrollView ref={scrollViewRef}>
+              {shownQuestionIds.map((id) => {
+                const q = practiceSentence.find((item) => item.id === id);
+                if (!q) return null;
+                return (
+                  <View key={q.id}>
+                    <LeftPracticeBox
+                      practiceText={q.content}
+                      isSpeaking={speakingId === q.id}
+                      onPress={() => handlePractice(q.id, q.content)}
+                    />
+                    <RightPracticeBox
+                      options={q.answers.map((a) => a.answer)}
+                      onPress={(answer) => {
+                        handleSelectAnswer(answer);
+                        handlePractice(`answer-${q.id}-${answer}`, answer);
+                        const selected = q.answers.find(
+                          (a) => a.answer === answer
+                        );
+                        if (selected) {
+                          setPendingNextId(selected.nextQuestionId);
+                          setIsAnswered(true);
+                        }
+                      }}
+                    />
+                  </View>
+                );
+              })}
             </ScrollView>
-
             <View>
-              {isAnswered && currentSentence < practiceSentence.length - 1 && (
+              {isAnswered && (
                 <TouchableOpacity
                   style={styles.nextBox}
                   onPress={() => {
-                    setCurrentSentence((prev) => prev + 1);
-                    handleNext();
+                    if (pendingNextId === 0) {
+                      setIsDialogOpen(true);
+                    } else {
+                      setShownQuestionIds((prev) => [...prev, pendingNextId]);
+                      handleNext();
+                    }
+                    setPendingNextId(null);
+                    setIsAnswered(false);
                   }}
                 >
                   <Text style={styles.nextText}>다음</Text>
@@ -153,7 +220,7 @@ const PracticeScreen = () => {
             onConfirm={() => {
               setIsDialogOpen(false);
               setSelectedLocation(null);
-              setCurrentSentence(0);
+              resetState();
               setIsAnswered(false);
             }}
           />
@@ -168,9 +235,9 @@ export default PracticeScreen;
 const styles = StyleSheet.create({
   container: {
     height: 780,
+    paddingTop: 10,
     backgroundColor: COLORS.BACKGROUND,
     alignItems: "center",
-    paddingTop: 15,
     position: "relative",
   },
 
@@ -201,7 +268,7 @@ const styles = StyleSheet.create({
   locationText: {
     color: COLORS.BLACK,
     fontSize: 14,
-    fontWeight: 600,
+    fontFamily: "PretendardSemiBold",
     lineHeight: 16,
   },
 
@@ -216,17 +283,17 @@ const styles = StyleSheet.create({
 
   endText: {
     fontSize: 10,
-    fontWeight: 400,
+    fontFamily: "PretendardRegular",
     lineHeight: 15,
   },
 
   practiceChat: {
     width: 328,
-    height: 509,
+    height: 500,
     borderColor: COLORS.MAIN_YELLOW1,
     borderRadius: 14,
     borderWidth: 2,
-    marginTop: 15,
+    margin: 15,
     paddingVertical: 16,
     paddingHorizontal: 13,
     gap: 22,

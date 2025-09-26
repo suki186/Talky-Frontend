@@ -13,7 +13,7 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       {/* 로고 */}
-      <Logo width="140" height="43.73" />
+      <Logo width={140} height={43.73} />
       <View style={{ height: 63 }} />
       {/* 로그인 폼 */}
       <LoginForm />
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   signText: {
     fontSize: 8,
-    fontWeight: 500,
+    fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },
 });

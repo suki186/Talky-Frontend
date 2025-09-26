@@ -1,77 +1,90 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useState } from "react";
 
-import MENU_STAR from "../../../assets/images/talktalk/menu_star.png";
+import STAR_LEFT from "../../../assets/images/talktalk/menu-left.png";
+import STAR_RIGHT from "../../../assets/images/talktalk/menu-right.png";
 import { SentenceScreen } from "../../sentenceScreen/SentenceScreen";
 import { COLORS } from "../../../styles/color";
 
 export const StarMenuBox = () => {
-    const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
-    return (
-        <View style = { styles.boxContainer }>
-            <TouchableOpacity 
-                        onPress = { () => setModalOpen(true) }
-                        style = { styles.container }
-                    >
-                        <View style = { styles.menuTitle }>
-                            <Text style = { styles.titleText }>즐겨찾기 문장들</Text>
-                        </View>
-                        <Image 
-                            source = { MENU_STAR }
-                            style = { styles.iconImage }
-                            resizeMode = "contain"
-                        />
-            </TouchableOpacity>
+  return (
+    <View style={styles.boxContainer}>
+      <TouchableOpacity
+        onPress={() => setModalOpen(true)}
+        style={styles.container}
+      >
+        <Image
+          source={STAR_LEFT}
+          style={styles.leftIcon}
+          resizeMode="contain"
+        />
+        <View style={styles.menuTitle}>
+          <Text style={styles.titleText}>즐겨찾기 문장들</Text>
+        </View>
+        <Image
+          source={STAR_RIGHT}
+          style={styles.rightIcon}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
 
-            { modalOpen && (
-                <SentenceScreen
-                    visible = { modalOpen }
-                    onClose = { () => setModalOpen(false) }
-                />
-            )}
-        </View>   
-    )
-}
+      {modalOpen && (
+        <SentenceScreen
+          visible={modalOpen}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    boxContainer : {
-        flexDirection: "row",
-        gap: 13.33
-    },
+  boxContainer: {
+    flexDirection: "row",
+    gap: 13.33,
+  },
 
-    container: {
-        width: 228,
-        height: 125,
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "rgba(255, 236, 159, 0.2)",
-        borderColor: COLORS.MAIN_YELLOW3,
-        borderRadius: 16.67,
-        borderWidth: 6.67,
-        gap: 8
-    },
+  container: {
+    width: 327.33,
+    height: 125,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 236, 159, 0.2)",
+    borderColor: COLORS.MAIN_YELLOW3,
+    borderRadius: 16.67,
+    borderWidth: 6.67,
+    gap: 13,
+  },
 
-    menuTitle: {
-        alignItems: "center",
-        textAlign: "center"
-    },
+  menuTitle: {
+    width: 142,
+    height: 31.33,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    backgroundColor: "#FFEC9F",
+    borderRadius: 16.67,
+  },
 
-    titleText: {
-        backgroundColor: "rgba(255, 211, 33, 0.5)",
-        paddingHorizontal: 10,
-        paddingVertical: 6.67,
-        textAlign: "center",
-        borderRadius: 16.67,
-        fontSize: 14,
-        lineHeight: 14,
-        fontWeight: "600",
-        marginTop: 21.67
-    },
+  titleText: {
+    textAlign: "center",
+    borderRadius: 16.67,
+    fontSize: 16,
+    lineHeight: 14,
+    fontFamily: "PretendardSemiBold",
+    color: "#4E4E4E",
+  },
 
-    iconImage: {
-        height: 68,
-        marginBottom: 16.33
-    }
-})
+  leftIcon: {
+    width: 54.67,
+    height: 48.28,
+  },
+
+  rightIcon: {
+    width: 52.78,
+    height: 44.8,
+  },
+});

@@ -55,8 +55,6 @@ export const useInput = () => {
     if (status === "submitted") setRightPressed(true);
   };
 
-  const handleShowToast = () => setShowToast(true);
-
   return {
     text,
     status,
@@ -70,6 +68,5 @@ export const useInput = () => {
     onChangeText,
     onSubmit,
     handleRightPress,
-    handleShowToast,
   };
 };

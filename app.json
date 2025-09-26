@@ -4,8 +4,9 @@
     "slug": "Talky",
     "owner": "talky-front",
     "version": "1.0.0",
+    "runtimeVersion": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon2.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
@@ -14,13 +15,11 @@
       "backgroundColor": "#FFFEF6"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sukiii.Talky"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./src/assets/splash/splash-bg.png",
-        "backgroundColor": "#FFFEF6"
-      },
+      "permissions": ["RECORD_AUDIO"],
       "edgeToEdgeEnabled": true,
       "package": "com.sukiii.Talky"
     },
@@ -32,11 +31,16 @@
         "projectId": "b1ecf1da-b65c-4c46-8106-63b73c6184ee"
       }
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
     "updates": {
       "url": "https://u.expo.dev/b1ecf1da-b65c-4c46-8106-63b73c6184ee"
-    }
+    },
+    "plugins": [
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "음성 녹음을 위해 마이크 접근이 필요합니다."
+        }
+      ]
+    ]
   }
 }

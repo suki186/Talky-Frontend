@@ -5,12 +5,19 @@ import { ToggleComponent } from "./ToggleComponent"
 import LOCATION from "../../../assets/images/talktalk/location.png"
 import { useState } from "react"
 import { COLORS } from "../../../styles/color"
+import putGuardianNotifyApi from "../../../apis/guardian/putGuardianNotifyApi"
 
 export const LocationInfo = () => {
     const [isToggled, setIsToggled] = useState(false); // 위치 알림 토글 상태 관리
 
-    const handleToggle = () => {
-        setIsToggled(prev => !prev); // 토글 상태 반전
+    const handleToggle = async () => {
+        const newValue = !isToggled;
+        setIsToggled(newValue); // 토글 상태 반전
+
+        const success = await putGuardianNotifyApi(newValue);
+        if (!success) {
+            setIsToggled(!newValue);
+        }
     }
 
     return (
@@ -59,14 +66,14 @@ const styles = StyleSheet.create({
 
     notifyText: {
         fontSize: 16.29,
-        fontWeight: "400",
+        fontFamily: "PretendardRegular",
         lineHeight: 20,
         color: COLORS.BLACK
     },
 
     explain: {
         fontSize: 10,
-        fontWeight: "400",
+        fontFamily: "PretendardRegular",
         textAlign: "center",
         color: "#4E4E4E"
     },
@@ -82,7 +89,7 @@ const styles = StyleSheet.create({
 
     buttonText: {
         fontSize: 14,
-        fontWeight: "500",
+        fontFamily: "PretendardMedium",
         lineHeight: 16,
         color: COLORS.BLACK
     }

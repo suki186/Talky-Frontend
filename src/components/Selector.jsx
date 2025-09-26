@@ -45,12 +45,15 @@ const Selector = ({
       duration: 300,
       useNativeDriver: false,
     }).start(() => {
-      if (!modalVisible) setIsFocused(false);
+      // React18 경고 방지: 다음 tick에 setState 호출
+      if (!modalVisible) {
+        setTimeout(() => setIsFocused(false), 0);
+      }
     });
-  }, [modalVisible, itemHeight]);
+  }, [modalVisible, items.length, dropdownHeight]);
 
-  const handleSelect = (role) => {
-    onSelect(role);
+  const handleSelect = (item) => {
+    onSelect(item);
     setModalVisible(false);
     setIsFocused(false);
   };
@@ -80,7 +83,6 @@ const Selector = ({
         <Ionicons name="caret-down-sharp" size={12.67} color={iconColor} />
       </TouchableOpacity>
 
-      {/*  선택 항목 dropdown */}
       <Animated.View
         style={[
           styles.dropdown,
@@ -133,11 +135,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
-    zIndex: 2, // dropdown보다 위로
+    zIndex: 2,
   },
   selectorText: {
     fontSize: 11.33,
-    fontWeight: "500",
+    fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },
   dropdown: {
@@ -164,7 +166,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontSize: 11.33,
-    fontWeight: "500",
+    fontFamily: "PretendardMedium",
     color: COLORS.BLACK,
   },
 });
